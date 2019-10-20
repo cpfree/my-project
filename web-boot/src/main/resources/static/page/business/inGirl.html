@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>InGirl</title>
+    <link rel="stylesheet" href="../../etc/frame/element-ui/element.css"/>
+    <link rel="stylesheet" href="../../etc/frame/element-ui/element-ity.css" />
+    <link rel="stylesheet" href="../../etc/frame/font-awesome/css/font-awesome.min.css"/>
+
+    <script type="text/javascript" src="../../etc/frame/jquery/jquery-current.min.js"></script>
+    <script type="text/javascript" src="../../etc/frame/layer/layer.js"></script>
+    <script type="text/javascript" src="../../etc/js/base/base.js"></script>
+    <script type="text/javascript" src="../../etc/js/base/ity-common-utils.js"></script>
+    <script type="text/javascript" src="../../etc/frame/vue.js"></script>
+    <script type="text/javascript" src="../../etc/frame/element-ui/element.js"></script>
+</head>
+
+<body>
+
+<div style="color: white">
+    <div id="vue-content">
+        <!-- search bar -->
+        <div id="searchBar" class="form-horizontal">
+            <div class="row col-sm-12">
+                <el-row type="flex" class="row-bg">
+                    <el-col :span="10">
+                        <el-col :span="8">
+                            <label style="float: right">角色类型 ：</label>
+                        </el-col>
+                        <el-col :span="16">
+                            <template>
+                                <el-input size="small" v-model="inGirlGrid.conditions.blurRoleType" autocomplete="off"></el-input>
+                            </template>
+                        </el-col>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-col :span="8">
+                            <label style="float: right">人物类型 ：</label>
+                        </el-col>
+                        <el-col :span="16">
+                            <template>
+                                <el-input size="small" v-model="inGirlGrid.conditions.blurPeopleType" autocomplete="off"></el-input>
+                            </template>
+                        </el-col>
+                    </el-col>
+                    <el-col :span="4">
+                    </el-col>
+                </el-row>
+                <el-row type="flex" class="row-bg">
+                    <el-col :span="10">
+                        <el-col :span="8">
+                            <label style="float: right">名字 ：</label>
+                        </el-col>
+                        <el-col :span="16">
+                            <template>
+                                <el-input size="small" v-model="inGirlGrid.conditions.blurName" autocomplete="off"></el-input>
+                            </template>
+                        </el-col>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-col :span="8">
+                            <label style="float: right">昵称 ：</label>
+                        </el-col>
+                        <el-col :span="16">
+                            <template>
+                                <el-input size="small" v-model="inGirlGrid.conditions.blurNickname" autocomplete="off"></el-input>
+                            </template>
+                        </el-col>
+                    </el-col>
+                    <el-col :span="4">
+                    </el-col>
+                </el-row>
+                <el-row type="flex" class="row-bg">
+                    <el-col :span="10">
+                        <el-col :span="8">
+                            <label style="float: right">来自 ：</label>
+                        </el-col>
+                        <el-col :span="16">
+                            <template>
+                                <el-input size="small" v-model="inGirlGrid.conditions.blurWorld" autocomplete="off"></el-input>
+                            </template>
+                        </el-col>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-col :span="8">
+                            <label style="float: right">位于 ：</label>
+                        </el-col>
+                        <el-col :span="16">
+                            <template>
+                                <el-input size="small" v-model="inGirlGrid.conditions.blurLocation" autocomplete="off"></el-input>
+                            </template>
+                        </el-col>
+                    </el-col>
+                    <el-col :span="4">
+                    </el-col>
+                </el-row>
+                <el-row type="flex" class="row-bg">
+                    <el-col :span="10">
+                        <el-col :span="8">
+                            <label style="float: right">关系 ：</label>
+                        </el-col>
+                        <el-col :span="16">
+                            <template>
+                                <el-input size="small" v-model="inGirlGrid.conditions.blurRelationship" autocomplete="off"></el-input>
+                            </template>
+                        </el-col>
+                    </el-col>
+                    <el-col :span="14">
+                    </el-col>
+                </el-row>
+                <div style="margin: 10px 0;">
+                    <div style="height: 1px;border: solid 1px #474e55;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- toolbar -->
+        <div id="toolBar" class="form-horizontal">
+            <div class="row col-sm-12">
+                <div class="divRow1">
+                    <div class="form-group row">
+                        <el-button size="small" @click="addInGirlModel.preAddStatus()" type="primary">新增记录</el-button>
+                        <el-button size="small" @click="deleteSelection" type="primary">删除选中记录</el-button>
+                    </div>
+                </div>
+                <div style="margin: 10px 0;">
+                    <div style="height: 1px;border: solid 1px #282c2f;"></div>
+                    <div style="height: 1px;border: solid 1px #474e55;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12" style="width: 100%">
+            <el-table :data="inGirlGrid.data" :fit="true"
+                      @selection-change="handleSelectionChange"
+                      style="background: center;" stripe style="width: 100%">
+                <template>
+                    <el-table-column type="selection" width="55">
+                    </el-table-column>
+                </template>
+
+                <template v-for="{ width, prop, label, component, render } in inGirlGrid.cols">
+                    <el-table-column :show-overflow-tooltip="!component" :width="width" :prop="prop" :label="label">
+                        <template slot-scope="scope">
+                            <component :is="component ? component : 'cText' " :row="scope.row" :val="prop" @callmethod="thisCall"></component>
+                        </template>
+                    </el-table-column>
+                </template>
+            </el-table>
+
+            <div>
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :page-sizes="[10, 20, 30, 50]"
+                        :page-size="inGirlGrid.pagination.pageSize"
+                        :current-page.sync="inGirlGrid.pagination.pageNumber"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="inGirlGrid.pagination.total">
+                </el-pagination>
+            </div>
+        </div>
+
+
+        <el-dialog title="新增 inGirl 记录" :visible.sync="addInGirlModel.dialogVisible" destroy-on-close>
+            <el-form :model="addInGirlModel.form" :rules="addInGirlModel.formRule" ref="addInGirlModel.form" hide-required-asterisk>
+                    <el-form-item label="身份类型 ：" label-width="120px" prop="roleType">
+                    <el-input v-model="addInGirlModel.form.roleType" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="人物类型 ：" label-width="120px" prop="peopleType">
+                    <el-input v-model="addInGirlModel.form.peopleType" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="姓名 ：" label-width="120px" prop="name">
+                    <el-input v-model="addInGirlModel.form.name" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="称呼 ：" label-width="120px" prop="nickname">
+                    <el-input v-model="addInGirlModel.form.nickname" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="来自世界 ：" label-width="120px" prop="world">
+                    <el-input v-model="addInGirlModel.form.world" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="位于 ：" label-width="120px" prop="location">
+                    <el-input v-model="addInGirlModel.form.location" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="与主角关系 ：" label-width="120px" prop="relationship">
+                    <el-input v-model="addInGirlModel.form.relationship" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="简介 ：" label-width="120px" prop="summary">
+                    <el-input v-model="addInGirlModel.form.summary" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="描述 ：" label-width="120px" prop="des">
+                    <el-input v-model="addInGirlModel.form.des" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="addInGirlModel.dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addInGirl">确 定</el-button>
+            </div>
+        </el-dialog>
+
+
+
+        <!-- edit dialog -->
+        <el-dialog title="修改 inGirl 记录" :visible.sync="editInGirlModel.dialogVisible" destroy-on-close>
+            <el-form :model="editInGirlModel.form" :rules="editInGirlModel.formRule" ref="editInGirlModel.form" hide-required-asterisk>
+                    <el-form-item label="身份类型 ：" label-width="120px" prop="roleType">
+                    <el-input v-model="editInGirlModel.form.roleType" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="人物类型 ：" label-width="120px" prop="peopleType">
+                    <el-input v-model="editInGirlModel.form.peopleType" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="姓名 ：" label-width="120px" prop="name">
+                    <el-input v-model="editInGirlModel.form.name" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="称呼 ：" label-width="120px" prop="nickname">
+                    <el-input v-model="editInGirlModel.form.nickname" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="来自世界 ：" label-width="120px" prop="world">
+                    <el-input v-model="editInGirlModel.form.world" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="位于 ：" label-width="120px" prop="location">
+                    <el-input v-model="editInGirlModel.form.location" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="与主角关系 ：" label-width="120px" prop="relationship">
+                    <el-input v-model="editInGirlModel.form.relationship" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="简介 ：" label-width="120px" prop="summary">
+                    <el-input v-model="editInGirlModel.form.summary" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="描述 ：" label-width="120px" prop="des">
+                    <el-input v-model="editInGirlModel.form.des" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="editInGirlModel.dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="editInGirl">保 存</el-button>
+            </div>
+        </el-dialog>
+
+    </div>
+
+</div>
+
+<script type="text/javascript" src="./inGirl.js"></script>
+
+</body>
+</html>
