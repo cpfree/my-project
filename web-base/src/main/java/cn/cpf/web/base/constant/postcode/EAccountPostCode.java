@@ -10,6 +10,9 @@ import cn.cpf.web.base.lang.base.IPostCode;
  **/
 public enum EAccountPostCode implements IPostCode {
 
+    /**
+     * 未发现有效账户
+     */
     notFoundActiveAccount("3011", "未发现有效账户, 请检查相关信息是否正确");
 
     private String code;

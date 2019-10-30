@@ -13,17 +13,17 @@ public interface RegexValidateUtils {
     /**
      * yyyy-MM-dd
      */
-    String REGEX_DATE = "\\d{4}-(0?[1-9]|1[0-2])-((0?[1-9])|((1|2)[0-9])|30|31)";
+    String REGEX_DATE = "^\\d{4}-(0?[1-9]|1[0-2])-((0?[1-9])|((1|2)[0-9])|30|31)$";
 
     /**
      * hh:mm:ss
      */
-    String REGEX_TIME = "((0?[1-9])|(1[0-9])|(2[0-3]))(:((0?[1-9])|([0-5][0-9]))){2}";
+    String REGEX_TIME = "^((0?[1-9])|(1[0-9])|(2[0-3]))(:((0?[1-9])|([0-5][0-9]))){2}$";
 
     /**
      * yyyy-MM-dd hh:mm:ss
      */
-    String REGEX_DATE_TIME = REGEX_DATE + " " + REGEX_TIME;
+    String REGEX_DATE_TIME = REGEX_DATE.substring(0, REGEX_DATE.length() -1 ) + " " + REGEX_TIME.substring(1);
 
     String REGEX_EMAIL = "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$";
 

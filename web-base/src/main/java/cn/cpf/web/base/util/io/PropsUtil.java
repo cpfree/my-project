@@ -12,6 +12,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 
+/**
+ *
+ */
 public final class PropsUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PropsUtil.class);
