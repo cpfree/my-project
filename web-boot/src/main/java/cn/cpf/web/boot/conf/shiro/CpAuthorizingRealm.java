@@ -1,10 +1,8 @@
 package cn.cpf.web.boot.conf.shiro;
 
-import cn.cpf.web.base.constant.dic.DicCommon;
-import cn.cpf.web.base.constant.postcode.ELoginPostCode;
 import cn.cpf.web.base.model.entity.AccUser;
-import cn.cpf.web.base.util.exception.PostException;
 import cn.cpf.web.base.util.validate.RegexValidateUtils;
+import cn.cpf.web.boot.util.CpSessionUtils;
 import cn.cpf.web.service.base.api.IAccUser;
 import cn.cpf.web.service.logic.api.IAccessLogic;
 import cn.cpf.web.service.mod.shiro.AccessBean;
@@ -70,6 +68,7 @@ public class CpAuthorizingRealm extends AuthorizingRealm {
 
         final String username = token.getUsername();
         AccUser user;
+        // 通过用户名寻找出用户
         if (RegexValidateUtils.isPhone(username)) {
             // 如果是手机号码
             user = iAccUser.findByPhone(username);
@@ -81,12 +80,8 @@ public class CpAuthorizingRealm extends AuthorizingRealm {
             user = iAccUser.findByUserName(username);
         }
         if (user != null) {
-            // TODO 如果当前用户以禁用的话, 那就没必要继续往下了
-            if (DicCommon.State.disable.isCode(user.getState())) {
-                if (user.getPassword().equals(String.valueOf(token.getPassword()))) {
-                    throw new PostException(ELoginPostCode.ACCOUNT_IS_DISABLED);
-                }
-            }
+            // 存储 session
+            CpSessionUtils.setUser(user);
             return new SimpleAuthenticationInfo(user.getName(), user.getPassword(), getName());
         }
         return null;

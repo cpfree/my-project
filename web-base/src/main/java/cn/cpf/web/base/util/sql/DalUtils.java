@@ -1,7 +1,6 @@
 package cn.cpf.web.base.util.sql;
 
 import cn.cpf.web.base.constant.postcode.ECommonWarningCode;
-import cn.cpf.web.base.util.exception.PostException;
 import cn.cpf.web.base.util.thread.LocalThreadHolder;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;

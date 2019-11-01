@@ -37,9 +37,19 @@ spring:
   freemarker:
     suffix: .html
     charset: utf-8
+    #"关闭缓存, 即时刷新"
+    cache: false
   mvc:
     # 配置静态资源映射路径，/public、/resources路径失效
     static-path-pattern: /static/**
+  devtools:
+    restart:
+      #热部署生效
+      enabled: true
+      additional-paths: src/main/java
+      exclude: classpath:mappers/**
+debug: true
+
 mybatis:
   #注意：一定要对应mapper映射xml文件的所在路径
   mapper-locations: classpath:mappers/base/*.xml
