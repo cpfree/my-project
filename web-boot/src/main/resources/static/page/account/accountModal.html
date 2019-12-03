@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+<html>
+
+<head>
+    <base href="/">
+    <title>I同业用户登陆/注册</title>
+
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link rel="stylesheet" href="/etc/frame/element-ui/element.css"/>
+    <!--<link rel="stylesheet" href="/etc/frame/element-ui/element-ity.css"/>-->
+    <link rel="stylesheet" href="/etc/frame/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/etc/css/base/color.css"/>
+
+    <script type="text/javascript" src="/etc/frame/jquery/jquery-current.min.js"></script>
+    <script type="text/javascript" src="/etc/js/base/base.js"></script>
+    <script type="text/javascript" src="/etc/js/plugins/layer/layer.js"></script>
+    <script type="text/javascript" src="/etc/js/plugins/bootstrap/bootstrap.js"></script>
+    <script type="text/javascript" src="/etc/js/base/ity-common-utils.js"></script>
+    <script type="text/javascript" src="/etc/js/vue.js"></script>
+    <script type="text/javascript" src="/etc/frame/element-ui/element.js"></script>
+    <script type="text/javascript" src="/etc/js/plugins/forge/forge.min.js"></script>
+    <script type="text/javascript" src="/etc/js/constant/dic-base.js"></script>
+    <style type="text/css">
+        /*对话框*/
+        .el-dialog__body {
+            background-color: #303539;
+        }
+        .el-input-group__prepend {
+            background-color: #23272e;
+            border: unset;
+        }
+
+        /*标签页-选中标签*/
+        .el-tabs__item.is-active {
+            color: var(--div-background);
+        }
+        .el-tabs__item {
+            color: #f5f5f5;
+            font-size: larger;
+        }
+
+        .el-button {
+            font-size: larger;
+            width: inherit;
+        }
+        .el-input-group__append > .el-button {
+            width: unset;
+        }
+        .el-input-group__append button.el-button {
+            background-color: var(--i-orange);
+            border: 0;
+            color: white;
+        }
+        .el-input-group__append button.el-button.is-disabled {
+            background-color: unset;
+            border: 0;
+            color: #C0C4CC;
+        }
+        .el-button--primary, .el-tabs__active-bar {
+            background-color: var(--i-orange);
+            border-color: var(--i-orange);
+        }
+
+        .login-logo {
+            background: url('/etc/img/logo.png') top center no-repeat;
+            width: 100%;
+            height: 22px;
+            float: left;
+            margin-bottom: 56px;
+        }
+
+        #pane-register > div > form > div:nth-child(4) > div > div > div.el-input-group__append,
+        #pane-login > div > form > div:nth-child(3) > div > div > div.el-input-group__append{
+            padding: 0;
+        }
+
+        message-box__input input.invalid:focus {
+            background: #fee;
+        }
+
+        .el-input-group__prepend {
+            padding: 0 10px;
+        }
+
+        /*错误提示*/
+        .el-form-item__error {
+            margin-left: 60px;
+        }
+        .el-form-item.is-error .el-input__inner {
+            background: antiquewhite;
+        }
+        .el-autocomplete {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body style="overflow-y:scroll; height: 100%; background:#3c4349">
+
+<div id="accountModal" style="padding: 10px">
+    <template>
+        <div style="margin: 20px auto;text-align: center;">
+            <img src="/etc/img/logo.png" alt="" >
+        </div>
+        <el-tabs v-model="activeName" stretch>
+            <el-tab-pane label="账号登陆" name="login">
+                <div style="background-color: #262c38; padding: 20px">
+                    <el-form label-width="0" :model="loginForm" :rules="loginFormRules" ref="loginForm">
+                        <el-form-item prop="phone">
+                            <el-input placeholder="请输入手机号" v-model="loginForm.phone" maxlength="13">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-phone"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="pwd">
+                            <el-input placeholder="请输入密码" v-model="loginForm.pwd" type="password" maxlength="20" show-password>
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-lock"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="captcha" v-if="needLoginCaptcha">
+                            <el-input placeholder="请输入图片验证码" v-model="loginForm.captcha" maxlength="6">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-shield"></div></template>
+                                <div slot="append" @click="changeCaptcha()" >
+                                    <img style="width: fit-content; height: 100%;" :src="captchaUrl"/>
+                                </div>
+                            </el-input>
+                        </el-form-item>
+                        <div style="width: 100%; padding-bottom: 15px;margin: 0 auto;text-align: center;">
+                            <el-button type="primary" @click="login">登  陆</el-button>
+                        </div>
+                        <div style="padding-bottom: 25px;">
+                            <a @click="toSetPwd" style="float:right;cursor: pointer; color: goldenrod"><span style="color: var(--i-orange)">忘记密码</span></a>
+                        </div>
+                    </el-form>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane label="用户注册" name="register">
+                <div style="background-color: #262c38; padding: 20px">
+                    <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm" hide-required-asterisk>
+                        <el-form-item prop="phone">
+                            <el-input placeholder="请输入手机号" v-model="registerForm.phone" maxlength="13">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-phone"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="pwd1">
+                            <el-input placeholder="请输入6-20位密码" v-model="registerForm.pwd1" type="password" show-password maxlength="20">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-lock"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="pwd2">
+                            <el-input placeholder="请再次输入密码" v-model="registerForm.pwd2" type="password" show-password maxlength="20">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-lock"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="captcha">
+                            <el-input placeholder="请输入图片验证码" v-model="registerForm.captcha" maxlength="6">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-shield"></div></template>
+                                <div slot="append" @click="changeCaptcha()" class="padding-0">
+                                    <img style="width: fit-content; height: 100%;" :src="captchaUrl"/>
+                                </div>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="verifyCode">
+                            <el-input placeholder="请输入手机验证码" v-model="registerForm.verifyCode" maxlength="6">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-shield"></div></template>
+                                <el-button slot="append" @click="getVerificationCode"
+                                           :disabled="btnGetVerifyCode.disabled"><span>{{btnGetVerifyCode.text}}</span></el-button>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="instName">
+
+                            <!--<el-input placeholder="请输入所属机构全称" v-model="registerForm.instName" maxlength="40">-->
+                                <!--<template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>-->
+                            <!--</el-input>-->
+                            <el-autocomplete placeholder="请输入所属机构全称" v-model="registerForm.instName" :maxlength="40"
+                                             @select="handleSelect" :fetch-suggestions="querySearchAsync" autocomplete>
+                                <template slot-scope="{ item }">
+                                    <div style="float: left;">{{ item.name }}</div>
+                                    <span style="color: #999; float: left; padding-left: 5px;">({{ item.statusText }})</span>
+                                </template>
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>
+                            </el-autocomplete>
+
+                            <!--<el-select v-model="registerForm.instName" filterable allow-create placeholder="请输入所属机构全称" maxlength="40">-->
+                                <!--<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>-->
+                                <!--<template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>-->
+                            <!--</el-select>-->
+                        </el-form-item>
+                        <el-form-item prop="userName">
+                            <el-input placeholder="请输入真实姓名" v-model="registerForm.userName" maxlength="20">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-user-o"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="departmentName">
+                            <el-input placeholder="请输入部门" v-model="registerForm.departmentName" maxlength="40">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-sitemap"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="position">
+                            <el-input placeholder="请输入职位" v-model="registerForm.position" maxlength="50">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-address-card-o"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="email">
+                            <el-input placeholder="请输入工作邮箱" v-model="registerForm.email" maxlength="40">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-envelope-o"></div></template>
+                            </el-input>
+                        </el-form-item>
+                        <div style="width: 100%; padding-bottom: 15px;margin: 0 auto;text-align: center;">
+                            <el-button type="primary" @click="register">注  册</el-button>
+                        </div>
+                    </el-form>
+                </div>
+            </el-tab-pane>
+        </el-tabs>
+    </template>
+</div>
+
+<script type="text/javascript" src="/etc/page/singleAgencyQuotationHall/accountModal.js"></script>
+</body>
+
+</html>

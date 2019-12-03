@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2019/10/29 23:44
  **/
 @Slf4j
+@Component
 public class RememberAuthenticationFilter extends FormAuthenticationFilter {
 
     @Autowired

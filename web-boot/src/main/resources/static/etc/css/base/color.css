@@ -1,0 +1,10 @@
+:root {
+    --white : #9b9b9b;
+    --i-orange : #f79433;
+    --div-background : var(--i-orange);
+    --text-size-small : 12px;
+    --color-bg-table: #363c41;
+    --color-bg-form: #3c4349;
+    --color-body: #3c4349;
+    --color-text-no-bg: #d5d3d3;
+}

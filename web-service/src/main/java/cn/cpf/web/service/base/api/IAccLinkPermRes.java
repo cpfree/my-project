@@ -2,8 +2,8 @@ package cn.cpf.web.service.base.api;
 
 import cn.cpf.web.base.model.entity.AccLinkPermRes;
 import cn.cpf.web.base.model.example.AccLinkPermResExample;
+
 import java.util.List;
-import java.util.Map;
 
 /**
  * 权限资源关系表(AccLinkPermRes)表服务接口

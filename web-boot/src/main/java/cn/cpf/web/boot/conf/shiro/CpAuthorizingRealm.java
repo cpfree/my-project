@@ -14,6 +14,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * <b>Description : </b>
@@ -22,12 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2019/10/29 23:43
  **/
 @Slf4j
+@Component
 public class CpAuthorizingRealm extends AuthorizingRealm {
 
     @Autowired
-    IAccUser iAccUser;
+    private IAccUser iAccUser;
     @Autowired
-    IAccessLogic iAccessLogic;
+    private IAccessLogic iAccessLogic;
 
     /**
      * doGetAuthorizationInfo方法是在我们调用SecurityUtils.getSubject().isPermitted（）这个方法时会调用

@@ -4,6 +4,7 @@ import cn.cpf.web.base.model.entity.AccLinkPermRes;
 import cn.cpf.web.base.model.example.AccLinkPermResExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 public interface AccLinkPermResMapper {
     long countByExample(AccLinkPermResExample example);

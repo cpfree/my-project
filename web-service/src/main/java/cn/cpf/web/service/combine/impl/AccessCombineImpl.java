@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
@@ -27,11 +28,11 @@ import java.util.Set;
 @Slf4j
 public class AccessCombineImpl implements IAccessCombine {
 
-    @Autowired
+    @Resource
     AccessCombineMapper mapper;
-    @Autowired
+    @Resource
     AccLinkRolePermMapper accLinkRolePermMapper;
-    @Autowired
+    @Resource
     AccLinkUserRoleMapper accLinkUserRoleMapper;
 
     /**

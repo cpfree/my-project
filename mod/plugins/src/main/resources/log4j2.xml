@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Configuration>
+    <!-- 输出日志到控制台  ConsoleAppender -->
+    <Properties>
+        <!--申明全局别名，下面可以直接使用-->
+        <Property name="APP_Name">my-project</Property>
+        <Property name="log.dir">D:/temp/logs/my-project</Property>
+    </Properties>
+
+    <Appenders>
+        <!--这个输出控制台的配置，这里输出除了warn和error级别的信息到System.out -->
+        <Console name="console_out_appender" target="SYSTEM_OUT">
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
+            <!-- 输出日志的格式 -->
+            <PatternLayout pattern="[%p] [ity-institution] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n" />
+        </Console>
+
+        <RollingFile name="FILE_DEBUG" fileName="${log.dir}/debug-${APP_Name}.log"
+                     filePattern="${log.dir}/%d{yyyy-MM-dd}/debug-%d{yyyy-MM-dd}-%i.log">
+            <!-- 当使用组合过滤器的时候，onMatch/onMismatch=NEUTRAL的时候 日志消息会继续往后面流转-->
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %c - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="false"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="8"/>
+        </RollingFile>
+    </Appenders>
+
+    <!-- 控制某包下面的日志输出级别，只有大于等于这个级别才会输出 -->
+    <Loggers>
+        <Logger name="java.sql" level="DEBUG"/>
+        <Logger name="org.springframework" level="WARN"/>
+        <Logger name="org.apache.velocity" level="WARN"/>
+        <Logger name="org.apache.http" level="WARN"/>
+        <Logger name="org.apache.commons" level="WARN"/>
+        <Logger name="org.apache.struts" level="WARN"/>
+        <Logger name="org.mybatis.spring" level="DEBUG"/>
+
+        <Root level="INFO">
+            <AppenderRef ref="console_out_appender" />
+        </Root>
+    </Loggers>
+
+</Configuration>

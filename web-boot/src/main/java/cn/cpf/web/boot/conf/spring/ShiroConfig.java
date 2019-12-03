@@ -62,6 +62,7 @@ public class ShiroConfig {
         bean.setFilters(filters);
         // setFilterChainDefinitionMap
         Map<String, String> map = Maps.newHashMap();
+        map.put("/account/**", "anon");
         map.put("/debug/**", "anon");
         map.put("/static/**", "anon");
         map.put("/logout", "logout");

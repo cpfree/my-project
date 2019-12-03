@@ -7,7 +7,7 @@ CREATE TABLE `sys_dict` (
     `code` varchar(20) NOT NULL COMMENT '数据编码',
     `text` varchar(200) NOT NULL COMMENT '数据名称',
     `sort` int(11) NOT NULL DEFAULT '50' COMMENT '顺序',
-    `level` int(1) NOT NULL,
+    `level` int(1) NOT NULL comment '等级',
     `remark` varchar(400) NOT NULL DEFAULT '' COMMENT '数据描述',
     `add_time` datetime NOT NULL COMMENT '添加时间',
     `update_time` datetime NOT NULL COMMENT '更新时间',

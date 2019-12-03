@@ -49,10 +49,11 @@ spring:
       additional-paths: src/main/java
       exclude: classpath:mappers/**
 debug: true
+logging.level.org.springframework.boot.autoconfigure: ERROR
 
 mybatis:
   #注意：一定要对应mapper映射xml文件的所在路径
-  mapper-locations: classpath:mappers/base/*.xml
+  mapper-locations: classpath:mappers/base/*.xml,classpath:mappers/combine/*.xml
   # 虽然可以配置这项来进行pojo包扫描，但其实我更倾向于在mapper.xml写全类名
   type-aliases-package: cn.cpf.web.base.model.entity
 
@@ -70,3 +71,20 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
   returnPageInfo: check
+
+#aliyun account: itongye/klinkitongye2016
+sms:
+  # 控制是否需要短信验证 Y：需要短信验证，N：不需要短信验证
+  needSms: Y
+  accessKey: LTAIAMVMPTdbLRq4
+  secret: fgXaAfrrPz0TaiwvEIfAsuFyxI9fIn
+  # 短信发送服务器所在区域
+  regionId: cn-zhengzhou
+  signName: itongye
+  # 验证码有效时间,单位:秒
+  expireTime: 600
+  # 验证码长度
+  checkCodeLength: 6
+
+  # 邮件发送的最小时间间隔(秒)
+mail.timeInterval: 60
