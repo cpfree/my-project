@@ -1,3 +1,8 @@
 ##test hello world!
 
 $hello
+
+
+#foreach($column in $list0)
+    $tool.getField($column)
+#end

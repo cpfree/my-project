@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>SysDictItem</title>
+    <base href="/">
+    <link rel="stylesheet" href="/static/etc/frame/element-ui/element.css"/>
+    <link rel="stylesheet" href="/static/etc/frame/element-ui/element-custom.css"/>
+    <link rel="stylesheet" href="/static/etc/frame/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/etc/css/base/color.css"/>
+
+    <script type="text/javascript" src="/static/etc/frame/jquery/jquery-current.min.js"></script>
+    <script type="text/javascript" src="/static/etc/js/base/base.js"></script>
+    <script type="text/javascript" src="/static/etc/frame/layer/layer.js"></script>
+    <script type="text/javascript" src="/static/etc/js/base/ity-common-utils.js"></script>
+    <script type="text/javascript" src="/static/etc/frame/vue.js"></script>
+    <script type="text/javascript" src="/static/etc/frame/element-ui/element.js"></script>
+    <script type="text/javascript" src="/static/etc/frame/axios.js"></script>
+</head>
+
+<body>
+
+<div style="color: white">
+    <div id="vue-content">
+
+        <el-container>
+            <el-aside width="200px" style="background-color: rgb(38, 41, 46)">
+                <vo-sysdictitem></vo-sysdictitem>
+                <child-component message = "动态局部组件"></child-component>
+            </el-aside>
+            <el-container>
+                <el-main>
+                    <!-- search bar -->
+                    <div id="searchBar" class="form-horizontal">
+                        <div class="row col-sm-12">
+                            <el-row type="flex" class="row-bg">
+                                <el-col :span="10">
+                                    <el-col :span="8">
+                                        <label style="float: right">父级代码 ：</label>
+                                    </el-col>
+                                    <el-col :span="16">
+                                        <template>
+                                            <el-input size="small" v-model="sysDictItemGrid.conditions.blurParCode" autocomplete="off"></el-input>
+                                        </template>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="10">
+                                    <el-col :span="8">
+                                        <label style="float: right">代码 ：</label>
+                                    </el-col>
+                                    <el-col :span="16">
+                                        <template>
+                                            <el-input size="small" v-model="sysDictItemGrid.conditions.blurCode" autocomplete="off"></el-input>
+                                        </template>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="4">
+                                </el-col>
+                            </el-row>
+                            <el-row type="flex" class="row-bg">
+                                <el-col :span="10">
+                                    <el-col :span="8">
+                                        <label style="float: right">标签 ：</label>
+                                    </el-col>
+                                    <el-col :span="16">
+                                        <template>
+                                            <el-input size="small" v-model="sysDictItemGrid.conditions.blurText" autocomplete="off"></el-input>
+                                        </template>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="10">
+                                    <el-col :span="8">
+                                        <label style="float: right">等级 ：</label>
+                                    </el-col>
+                                    <el-col :span="16">
+                                        <template>
+                                        </template>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="4">
+                                </el-col>
+                            </el-row>
+                            <el-row type="flex" class="row-bg">
+                                <el-col :span="10">
+                                    <el-col :span="8">
+                                        <label style="float: right">更新时间 ：</label>
+                                    </el-col>
+                                    <el-col :span="16">
+                                        <template>
+                                            <el-date-picker style="width:100%" align="right" unlink-panels
+                                                start-placeholder="开始日期" end-placeholder="结束日期" range-separator="-"
+                                                v-model="sysDictItemGrid.conditions.updateTimeRange"
+                                                type="daterange"
+                                                value-format="timestamp"
+                                                :unlink-panels="true">
+                                            </el-date-picker>
+                                        </template>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="10">
+                                    <el-col :span="8">
+                                        <label style="float: right">状态 ：</label>
+                                    </el-col>
+                                    <el-col :span="16">
+                                        <template>
+                                            <el-input size="small" v-model="sysDictItemGrid.conditions.blurState" autocomplete="off"></el-input>
+                                        </template>
+                                    </el-col>
+                                </el-col>
+                                <el-col :span="4">
+                                </el-col>
+                            </el-row>
+                            <div style="margin: 10px 0;">
+                                <div style="height: 1px;border: solid 1px #474e55;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- toolbar -->
+                    <div id="toolBar" class="form-horizontal">
+                        <div class="row col-sm-12">
+                            <div class="divRow1">
+                                <div class="form-group row">
+                                    <el-button size="small" @click="addSysDictItemModel.preAddStatus()" type="primary">新增记录</el-button>
+                                    <el-button size="small" @click="deleteSelection" type="primary">删除选中记录</el-button>
+                                </div>
+                            </div>
+                            <div style="margin: 10px 0;">
+                                <div style="height: 1px;border: solid 1px #282c2f;"></div>
+                                <div style="height: 1px;border: solid 1px #474e55;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" style="width: 100%">
+                        <el-table :data="sysDictItemGrid.data" :fit="true"
+                                  @selection-change="handleSelectionChange"
+                                  style="background: center;" stripe style="width: 100%">
+                            <template>
+                                <el-table-column type="selection" width="55">
+                                </el-table-column>
+                            </template>
+
+                            <template v-for="{ width, prop, label, component, render } in sysDictItemGrid.cols">
+                                <el-table-column :show-overflow-tooltip="!component" :width="width" :prop="prop" :label="label">
+                                    <template slot-scope="scope">
+                                        <component :is="component ? component : 'cText' " :row="scope.row" :val="prop" @callmethod="thisCall"></component>
+                                    </template>
+                                </el-table-column>
+                            </template>
+                        </el-table>
+
+                        <div>
+                            <el-pagination
+                                    @size-change="handleSizeChange"
+                                    @current-change="handleCurrentChange"
+                                    :page-sizes="[10, 20, 30, 50]"
+                                    :page-size="sysDictItemGrid.pagination.pageSize"
+                                    :current-page.sync="sysDictItemGrid.pagination.pageNumber"
+                                    layout="total, sizes, prev, pager, next, jumper"
+                                    :total="sysDictItemGrid.pagination.total">
+                            </el-pagination>
+                        </div>
+                    </div>
+                </el-main>
+            </el-container>
+        </el-container>
+
+        <el-dialog title="新增 sysDictItem 记录" :visible.sync="addSysDictItemModel.dialogVisible" destroy-on-close>
+            <el-form :model="addSysDictItemModel.form" :rules="addSysDictItemModel.formRule" ref="addSysDictItemModel.form" hide-required-asterisk>
+                    <el-form-item label="父ID ：" label-width="120px" prop="parCode">
+                    <el-input v-model="addSysDictItemModel.form.parCode" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="数据编码 ：" label-width="120px" prop="code">
+                    <el-input v-model="addSysDictItemModel.form.code" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="数据名称 ：" label-width="120px" prop="text">
+                    <el-input v-model="addSysDictItemModel.form.text" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="顺序 ：" label-width="120px" prop="sort">
+                    <el-input v-model="addSysDictItemModel.form.sort" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="等级 ：" label-width="120px" prop="level">
+                    <el-input v-model="addSysDictItemModel.form.level" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="数据描述 ：" label-width="120px" prop="comment">
+                    <el-input v-model="addSysDictItemModel.form.comment" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="y正常,n删除 ：" label-width="120px" prop="state">
+                    <el-input v-model="addSysDictItemModel.form.state" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="addSysDictItemModel.dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addSysDictItem">确 定</el-button>
+            </div>
+        </el-dialog>
+
+
+
+        <!-- edit dialog -->
+        <el-dialog title="修改 sysDictItem 记录" :visible.sync="editSysDictItemModel.dialogVisible" destroy-on-close>
+            <el-form :model="editSysDictItemModel.form" :rules="editSysDictItemModel.formRule" ref="editSysDictItemModel.form" hide-required-asterisk>
+                    <el-form-item label="父ID ：" label-width="120px" prop="parCode">
+                    <el-input v-model="editSysDictItemModel.form.parCode" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="数据编码 ：" label-width="120px" prop="code">
+                    <el-input v-model="editSysDictItemModel.form.code" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="数据名称 ：" label-width="120px" prop="text">
+                    <el-input v-model="editSysDictItemModel.form.text" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="顺序 ：" label-width="120px" prop="sort">
+                    <el-input v-model="editSysDictItemModel.form.sort" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="等级 ：" label-width="120px" prop="level">
+                    <el-input v-model="editSysDictItemModel.form.level" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="数据描述 ：" label-width="120px" prop="comment">
+                    <el-input v-model="editSysDictItemModel.form.comment" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+                <el-form-item label="y正常,n删除 ：" label-width="120px" prop="state">
+                    <el-input v-model="editSysDictItemModel.form.state" autocomplete="off" maxlength="11"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="editSysDictItemModel.dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="editSysDictItem">保 存</el-button>
+            </div>
+        </el-dialog>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript" src="/static/etc/js/page/sys/sysDictItem.js"></script>
+
+</body>
+</html>

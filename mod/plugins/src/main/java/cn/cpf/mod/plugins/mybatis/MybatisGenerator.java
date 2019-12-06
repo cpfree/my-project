@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <b>Description : </b>
+ * <b>Description : </b> mybatis 生成代码
  *
  * @author CPF
  * @date 2019/10/14 17:39
@@ -26,7 +26,7 @@ import java.util.List;
 public class MybatisGenerator {
 
 //    private static String[] tableNameArr = {};
-    private static String[] tableNameArr = {"sys_dict_item","sys_dict_type","sys_table","sys_field"};
+    private static String[] tableNameArr = {"sys_dict_item"};
 
     public static void main(String[] args) throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
         List<String> warnings = new ArrayList<>();

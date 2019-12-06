@@ -105,76 +105,6 @@ public class SysDictTypeExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andGuidIsNull() {
-            addCriterion("guid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidIsNotNull() {
-            addCriterion("guid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidEqualTo(String value) {
-            addCriterion("guid =", value, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidNotEqualTo(String value) {
-            addCriterion("guid <>", value, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidGreaterThan(String value) {
-            addCriterion("guid >", value, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidGreaterThanOrEqualTo(String value) {
-            addCriterion("guid >=", value, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidLessThan(String value) {
-            addCriterion("guid <", value, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidLessThanOrEqualTo(String value) {
-            addCriterion("guid <=", value, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidLike(String value) {
-            addCriterion("guid like", value, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidNotLike(String value) {
-            addCriterion("guid not like", value, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidIn(List<String> values) {
-            addCriterion("guid in", values, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidNotIn(List<String> values) {
-            addCriterion("guid not in", values, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidBetween(String value1, String value2) {
-            addCriterion("guid between", value1, value2, "guid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGuidNotBetween(String value1, String value2) {
-            addCriterion("guid not between", value1, value2, "guid");
-            return (Criteria) this;
-        }
-
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;
@@ -312,6 +242,76 @@ public class SysDictTypeExample {
 
         public Criteria andTextNotBetween(String value1, String value2) {
             addCriterion("text not between", value1, value2, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(String value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(String value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(String value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(String value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(String value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLike(String value) {
+            addCriterion("type like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotLike(String value) {
+            addCriterion("type not like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<String> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<String> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(String value1, String value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(String value1, String value2) {
+            addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
 

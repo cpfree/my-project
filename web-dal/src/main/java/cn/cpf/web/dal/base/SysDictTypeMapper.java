@@ -10,7 +10,7 @@ public interface SysDictTypeMapper {
 
     int deleteByExample(SysDictTypeExample example);
 
-    int deleteByPrimaryKey(String guid);
+    int deleteByPrimaryKey(String name);
 
     int insert(SysDictType record);
 
@@ -18,7 +18,7 @@ public interface SysDictTypeMapper {
 
     List<SysDictType> selectByExample(SysDictTypeExample example);
 
-    SysDictType selectByPrimaryKey(String guid);
+    SysDictType selectByPrimaryKey(String name);
 
     int updateByExampleSelective(@Param("record") SysDictType record, @Param("example") SysDictTypeExample example);
 

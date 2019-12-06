@@ -2,17 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cpf.web.dal.base.SysDictItemMapper">
   <resultMap id="BaseResultMap" type="cn.cpf.web.base.model.entity.SysDictItem">
-    <id column="guid" jdbcType="VARCHAR" property="guid" />
-    <result column="key" jdbcType="VARCHAR" property="key" />
-    <result column="par_code" jdbcType="VARCHAR" property="parCode" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="text" jdbcType="VARCHAR" property="text" />
+    <id column="type" jdbcType="VARCHAR" property="type" />
+    <id column="value" jdbcType="VARCHAR" property="value" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="p_value" jdbcType="VARCHAR" property="pValue" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="level" jdbcType="INTEGER" property="level" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="state" jdbcType="CHAR" property="state" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    guid, key, par_code, code, text, sort, level, comment, add_time, update_time, state
+    type, value, label, p_value, sort, level, comment, add_time, update_time, state
   </sql>
   <select id="selectByExample" parameterType="cn.cpf.web.base.model.example.SysDictItemExample" resultMap="BaseResultMap">
     select
@@ -89,15 +88,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysDictItemKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sys_dict_item
-    where guid = #{guid,jdbcType=VARCHAR}
+    where type = #{type,jdbcType=VARCHAR}
+      and value = #{value,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysDictItemKey">
     delete from sys_dict_item
-    where guid = #{guid,jdbcType=VARCHAR}
+    where type = #{type,jdbcType=VARCHAR}
+      and value = #{value,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.cpf.web.base.model.example.SysDictItemExample">
     delete from sys_dict_item
@@ -106,32 +107,29 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.cpf.web.base.model.entity.SysDictItem">
-    insert into sys_dict_item (guid, key, par_code, 
-      code, text, sort, level, 
+    insert into sys_dict_item (type, value, label, 
+      p_value, sort, level, 
       comment, add_time, update_time, 
       state)
-    values (#{guid,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{parCode,jdbcType=VARCHAR}, 
-      #{code,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+    values (#{type,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, 
+      #{pValue,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
       #{comment,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER})
+      #{state,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.cpf.web.base.model.entity.SysDictItem">
     insert into sys_dict_item
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="guid != null">
-        guid,
+      <if test="type != null">
+        type,
       </if>
-      <if test="key != null">
-        key,
+      <if test="value != null">
+        value,
       </if>
-      <if test="parCode != null">
-        par_code,
+      <if test="label != null">
+        label,
       </if>
-      <if test="code != null">
-        code,
-      </if>
-      <if test="text != null">
-        text,
+      <if test="pValue != null">
+        p_value,
       </if>
       <if test="sort != null">
         sort,
@@ -153,20 +151,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="guid != null">
-        #{guid,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
-      <if test="key != null">
-        #{key,jdbcType=VARCHAR},
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
       </if>
-      <if test="parCode != null">
-        #{parCode,jdbcType=VARCHAR},
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
       </if>
-      <if test="code != null">
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="text != null">
-        #{text,jdbcType=VARCHAR},
+      <if test="pValue != null">
+        #{pValue,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
@@ -184,7 +179,7 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null">
-        #{state,jdbcType=INTEGER},
+        #{state,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -197,20 +192,17 @@
   <update id="updateByExampleSelective" parameterType="map">
     update sys_dict_item
     <set>
-      <if test="record.guid != null">
-        guid = #{record.guid,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
       </if>
-      <if test="record.key != null">
-        key = #{record.key,jdbcType=VARCHAR},
+      <if test="record.value != null">
+        value = #{record.value,jdbcType=VARCHAR},
       </if>
-      <if test="record.parCode != null">
-        par_code = #{record.parCode,jdbcType=VARCHAR},
+      <if test="record.label != null">
+        label = #{record.label,jdbcType=VARCHAR},
       </if>
-      <if test="record.code != null">
-        code = #{record.code,jdbcType=VARCHAR},
-      </if>
-      <if test="record.text != null">
-        text = #{record.text,jdbcType=VARCHAR},
+      <if test="record.pValue != null">
+        p_value = #{record.pValue,jdbcType=VARCHAR},
       </if>
       <if test="record.sort != null">
         sort = #{record.sort,jdbcType=INTEGER},
@@ -228,7 +220,7 @@
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.state != null">
-        state = #{record.state,jdbcType=INTEGER},
+        state = #{record.state,jdbcType=CHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -237,17 +229,16 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update sys_dict_item
-    set guid = #{record.guid,jdbcType=VARCHAR},
-      key = #{record.key,jdbcType=VARCHAR},
-      par_code = #{record.parCode,jdbcType=VARCHAR},
-      code = #{record.code,jdbcType=VARCHAR},
-      text = #{record.text,jdbcType=VARCHAR},
+    set type = #{record.type,jdbcType=VARCHAR},
+      value = #{record.value,jdbcType=VARCHAR},
+      label = #{record.label,jdbcType=VARCHAR},
+      p_value = #{record.pValue,jdbcType=VARCHAR},
       sort = #{record.sort,jdbcType=INTEGER},
       level = #{record.level,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      state = #{record.state,jdbcType=INTEGER}
+      state = #{record.state,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -255,17 +246,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.cpf.web.base.model.entity.SysDictItem">
     update sys_dict_item
     <set>
-      <if test="key != null">
-        key = #{key,jdbcType=VARCHAR},
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
       </if>
-      <if test="parCode != null">
-        par_code = #{parCode,jdbcType=VARCHAR},
-      </if>
-      <if test="code != null">
-        code = #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="text != null">
-        text = #{text,jdbcType=VARCHAR},
+      <if test="pValue != null">
+        p_value = #{pValue,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
@@ -283,23 +268,23 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null">
-        state = #{state,jdbcType=INTEGER},
+        state = #{state,jdbcType=CHAR},
       </if>
     </set>
-    where guid = #{guid,jdbcType=VARCHAR}
+    where type = #{type,jdbcType=VARCHAR}
+      and value = #{value,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysDictItem">
     update sys_dict_item
-    set key = #{key,jdbcType=VARCHAR},
-      par_code = #{parCode,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR},
-      text = #{text,jdbcType=VARCHAR},
+    set label = #{label,jdbcType=VARCHAR},
+      p_value = #{pValue,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
       level = #{level,jdbcType=INTEGER},
       comment = #{comment,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER}
-    where guid = #{guid,jdbcType=VARCHAR}
+      state = #{state,jdbcType=CHAR}
+    where type = #{type,jdbcType=VARCHAR}
+      and value = #{value,jdbcType=VARCHAR}
   </update>
 </mapper>

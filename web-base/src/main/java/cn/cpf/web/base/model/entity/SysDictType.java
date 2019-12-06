@@ -3,11 +3,11 @@ package cn.cpf.web.base.model.entity;
 import java.util.Date;
 
 public class SysDictType {
-    private String guid;
-
     private String name;
 
     private String text;
+
+    private String type;
 
     private Integer sort;
 
@@ -20,14 +20,6 @@ public class SysDictType {
     private Date updateTime;
 
     private String state;
-
-    public String getGuid() {
-        return guid;
-    }
-
-    public void setGuid(String guid) {
-        this.guid = guid == null ? null : guid.trim();
-    }
 
     public String getName() {
         return name;
@@ -43,6 +35,14 @@ public class SysDictType {
 
     public void setText(String text) {
         this.text = text == null ? null : text.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public Integer getSort() {

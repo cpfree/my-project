@@ -2,16 +2,10 @@ package cn.cpf.web.base.model.entity;
 
 import java.util.Date;
 
-public class SysDictItem {
-    private String guid;
+public class SysDictItem extends SysDictItemKey {
+    private String label;
 
-    private String key;
-
-    private String parCode;
-
-    private String code;
-
-    private String text;
+    private String pValue;
 
     private Integer sort;
 
@@ -23,46 +17,22 @@ public class SysDictItem {
 
     private Date updateTime;
 
-    private Integer state;
+    private String state;
 
-    public String getGuid() {
-        return guid;
+    public String getLabel() {
+        return label;
     }
 
-    public void setGuid(String guid) {
-        this.guid = guid == null ? null : guid.trim();
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
     }
 
-    public String getKey() {
-        return key;
+    public String getpValue() {
+        return pValue;
     }
 
-    public void setKey(String key) {
-        this.key = key == null ? null : key.trim();
-    }
-
-    public String getParCode() {
-        return parCode;
-    }
-
-    public void setParCode(String parCode) {
-        this.parCode = parCode == null ? null : parCode.trim();
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text == null ? null : text.trim();
+    public void setpValue(String pValue) {
+        this.pValue = pValue == null ? null : pValue.trim();
     }
 
     public Integer getSort() {
@@ -105,11 +75,11 @@ public class SysDictItem {
         this.updateTime = updateTime;
     }
 
-    public Integer getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
     }
 }

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cpf.web.dal.base.SysDictTypeMapper">
   <resultMap id="BaseResultMap" type="cn.cpf.web.base.model.entity.SysDictType">
-    <id column="guid" jdbcType="VARCHAR" property="guid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <id column="name" jdbcType="VARCHAR" property="name" />
     <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="max_level" jdbcType="INTEGER" property="maxLevel" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    guid, name, text, sort, max_level, comment, add_time, update_time, state
+    name, text, type, sort, max_level, comment, add_time, update_time, state
   </sql>
   <select id="selectByExample" parameterType="cn.cpf.web.base.model.example.SysDictTypeExample" resultMap="BaseResultMap">
     select
@@ -91,11 +91,11 @@
     select 
     <include refid="Base_Column_List" />
     from sys_dict_type
-    where guid = #{guid,jdbcType=VARCHAR}
+    where name = #{name,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from sys_dict_type
-    where guid = #{guid,jdbcType=VARCHAR}
+    where name = #{name,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.cpf.web.base.model.example.SysDictTypeExample">
     delete from sys_dict_type
@@ -104,11 +104,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.cpf.web.base.model.entity.SysDictType">
-    insert into sys_dict_type (guid, name, text, 
+    insert into sys_dict_type (name, text, type, 
       sort, max_level, comment, 
       add_time, update_time, state
       )
-    values (#{guid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
+    values (#{name,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{sort,jdbcType=INTEGER}, #{maxLevel,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=CHAR}
       )
@@ -116,14 +116,14 @@
   <insert id="insertSelective" parameterType="cn.cpf.web.base.model.entity.SysDictType">
     insert into sys_dict_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="guid != null">
-        guid,
-      </if>
       <if test="name != null">
         name,
       </if>
       <if test="text != null">
         text,
+      </if>
+      <if test="type != null">
+        type,
       </if>
       <if test="sort != null">
         sort,
@@ -145,14 +145,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="guid != null">
-        #{guid,jdbcType=VARCHAR},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="text != null">
         #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
@@ -183,14 +183,14 @@
   <update id="updateByExampleSelective" parameterType="map">
     update sys_dict_type
     <set>
-      <if test="record.guid != null">
-        guid = #{record.guid,jdbcType=VARCHAR},
-      </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.text != null">
         text = #{record.text,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
       </if>
       <if test="record.sort != null">
         sort = #{record.sort,jdbcType=INTEGER},
@@ -217,9 +217,9 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update sys_dict_type
-    set guid = #{record.guid,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+    set name = #{record.name,jdbcType=VARCHAR},
       text = #{record.text,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
       sort = #{record.sort,jdbcType=INTEGER},
       max_level = #{record.maxLevel,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=VARCHAR},
@@ -233,11 +233,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.cpf.web.base.model.entity.SysDictType">
     update sys_dict_type
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
       <if test="text != null">
         text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
@@ -258,18 +258,18 @@
         state = #{state,jdbcType=CHAR},
       </if>
     </set>
-    where guid = #{guid,jdbcType=VARCHAR}
+    where name = #{name,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysDictType">
     update sys_dict_type
-    set name = #{name,jdbcType=VARCHAR},
-      text = #{text,jdbcType=VARCHAR},
+    set text = #{text,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
       max_level = #{maxLevel,jdbcType=INTEGER},
       comment = #{comment,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=CHAR}
-    where guid = #{guid,jdbcType=VARCHAR}
+    where name = #{name,jdbcType=VARCHAR}
   </update>
 </mapper>
