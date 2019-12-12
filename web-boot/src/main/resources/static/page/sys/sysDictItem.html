@@ -176,8 +176,8 @@
 
         <el-dialog title="新增 sysDictItem 记录" :visible.sync="addSysDictItemModel.dialogVisible" destroy-on-close>
             <el-form :model="addSysDictItemModel.form" :rules="addSysDictItemModel.formRule" ref="addSysDictItemModel.form" hide-required-asterisk>
-                    <el-form-item label="父ID ：" label-width="120px" prop="pValue">
-                    <el-input v-model="addSysDictItemModel.form.pValue" autocomplete="off" maxlength="11"></el-input>
+                    <el-form-item label="父ID ：" label-width="120px" prop="parValue">
+                    <el-input v-model="addSysDictItemModel.form.parValue" autocomplete="off" maxlength="11"></el-input>
                 </el-form-item>
                 <el-form-item label="数据编码 ：" label-width="120px" prop="value">
                     <el-input v-model="addSysDictItemModel.form.value" autocomplete="off" maxlength="11"></el-input>
@@ -209,8 +209,8 @@
         <!-- edit dialog -->
         <el-dialog title="修改 sysDictItem 记录" :visible.sync="editSysDictItemModel.dialogVisible" destroy-on-close>
             <el-form :model="editSysDictItemModel.form" :rules="editSysDictItemModel.formRule" ref="editSysDictItemModel.form" hide-required-asterisk>
-                    <el-form-item label="父ID ：" label-width="120px" prop="pValue">
-                    <el-input v-model="editSysDictItemModel.form.pValue" autocomplete="off" maxlength="11"></el-input>
+                    <el-form-item label="父ID ：" label-width="120px" prop="parValue">
+                    <el-input v-model="editSysDictItemModel.form.parValue" autocomplete="off" maxlength="11"></el-input>
                 </el-form-item>
                 <el-form-item label="数据编码 ：" label-width="120px" prop="value">
                     <el-input v-model="editSysDictItemModel.form.value" autocomplete="off" maxlength="11"></el-input>

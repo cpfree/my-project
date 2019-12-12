@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class SysDictItemKey {
     private String type;
 
-    private String value;
+    private String name;
 
     public String getType() {
         return type;
@@ -18,11 +18,11 @@ public class SysDictItemKey {
         this.type = type == null ? null : type.trim();
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
-    public void setValue(String value) {
-        this.value = value == null ? null : value.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 }

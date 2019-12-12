@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DictItemDto  {
 
-    private String pValue;
+    private String parValue;
 
     private String value;
 
@@ -24,19 +24,19 @@ public class DictItemDto  {
 
     public static DictItemDto enOf(SysDictItem sysDictItem) {
         DictItemDto dto = new DictItemDto();
-        dto.setPValue(sysDictItem.getPValue());
+        dto.setParValue(sysDictItem.getParValue());
         dto.setValue(sysDictItem.getValue());
         dto.setLabel(sysDictItem.getEnLabel());
-        dto.setSort(sysDictItem.getSort());
+        dto.setSort(sysDictItem.getOrd());
         return dto;
     }
 
     public static DictItemDto cnOf(SysDictItem sysDictItem) {
         DictItemDto dto = new DictItemDto();
-        dto.setPValue(sysDictItem.getPValue());
+        dto.setParValue(sysDictItem.getParValue());
         dto.setValue(sysDictItem.getValue());
         dto.setLabel(sysDictItem.getCnLabel());
-        dto.setSort(sysDictItem.getSort());
+        dto.setSort(sysDictItem.getOrd());
         return dto;
     }
 

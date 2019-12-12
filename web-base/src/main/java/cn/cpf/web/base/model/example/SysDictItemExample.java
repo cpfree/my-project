@@ -175,6 +175,76 @@ public class SysDictItemExample {
             return (Criteria) this;
         }
 
+        public Criteria andNameIsNull() {
+            addCriterion("name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameIsNotNull() {
+            addCriterion("name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameEqualTo(String value) {
+            addCriterion("name =", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotEqualTo(String value) {
+            addCriterion("name <>", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameGreaterThan(String value) {
+            addCriterion("name >", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameGreaterThanOrEqualTo(String value) {
+            addCriterion("name >=", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameLessThan(String value) {
+            addCriterion("name <", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameLessThanOrEqualTo(String value) {
+            addCriterion("name <=", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameLike(String value) {
+            addCriterion("name like", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotLike(String value) {
+            addCriterion("name not like", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameIn(List<String> values) {
+            addCriterion("name in", values, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotIn(List<String> values) {
+            addCriterion("name not in", values, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameBetween(String value1, String value2) {
+            addCriterion("name between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotBetween(String value1, String value2) {
+            addCriterion("name not between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
         public Criteria andValueIsNull() {
             addCriterion("value is null");
             return (Criteria) this;
@@ -242,76 +312,6 @@ public class SysDictItemExample {
 
         public Criteria andValueNotBetween(String value1, String value2) {
             addCriterion("value not between", value1, value2, "value");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelIsNull() {
-            addCriterion("en_label is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelIsNotNull() {
-            addCriterion("en_label is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelEqualTo(String value) {
-            addCriterion("en_label =", value, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelNotEqualTo(String value) {
-            addCriterion("en_label <>", value, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelGreaterThan(String value) {
-            addCriterion("en_label >", value, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelGreaterThanOrEqualTo(String value) {
-            addCriterion("en_label >=", value, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelLessThan(String value) {
-            addCriterion("en_label <", value, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelLessThanOrEqualTo(String value) {
-            addCriterion("en_label <=", value, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelLike(String value) {
-            addCriterion("en_label like", value, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelNotLike(String value) {
-            addCriterion("en_label not like", value, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelIn(List<String> values) {
-            addCriterion("en_label in", values, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelNotIn(List<String> values) {
-            addCriterion("en_label not in", values, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelBetween(String value1, String value2) {
-            addCriterion("en_label between", value1, value2, "enLabel");
-            return (Criteria) this;
-        }
-
-        public Criteria andEnLabelNotBetween(String value1, String value2) {
-            addCriterion("en_label not between", value1, value2, "enLabel");
             return (Criteria) this;
         }
 
@@ -385,133 +385,143 @@ public class SysDictItemExample {
             return (Criteria) this;
         }
 
-        public Criteria andPValueIsNull() {
-            addCriterion("p_value is null");
+        public Criteria andEnLabelIsNull() {
+            addCriterion("en_label is null");
             return (Criteria) this;
         }
 
-        public Criteria andPValueIsNotNull() {
-            addCriterion("p_value is not null");
+        public Criteria andEnLabelIsNotNull() {
+            addCriterion("en_label is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPValueEqualTo(String value) {
-            addCriterion("p_value =", value, "pValue");
+        public Criteria andEnLabelEqualTo(String value) {
+            addCriterion("en_label =", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueNotEqualTo(String value) {
-            addCriterion("p_value <>", value, "pValue");
+        public Criteria andEnLabelNotEqualTo(String value) {
+            addCriterion("en_label <>", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueGreaterThan(String value) {
-            addCriterion("p_value >", value, "pValue");
+        public Criteria andEnLabelGreaterThan(String value) {
+            addCriterion("en_label >", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueGreaterThanOrEqualTo(String value) {
-            addCriterion("p_value >=", value, "pValue");
+        public Criteria andEnLabelGreaterThanOrEqualTo(String value) {
+            addCriterion("en_label >=", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueLessThan(String value) {
-            addCriterion("p_value <", value, "pValue");
+        public Criteria andEnLabelLessThan(String value) {
+            addCriterion("en_label <", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueLessThanOrEqualTo(String value) {
-            addCriterion("p_value <=", value, "pValue");
+        public Criteria andEnLabelLessThanOrEqualTo(String value) {
+            addCriterion("en_label <=", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueLike(String value) {
-            addCriterion("p_value like", value, "pValue");
+        public Criteria andEnLabelLike(String value) {
+            addCriterion("en_label like", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueNotLike(String value) {
-            addCriterion("p_value not like", value, "pValue");
+        public Criteria andEnLabelNotLike(String value) {
+            addCriterion("en_label not like", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueIn(List<String> values) {
-            addCriterion("p_value in", values, "pValue");
+        public Criteria andEnLabelIn(List<String> values) {
+            addCriterion("en_label in", values, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueNotIn(List<String> values) {
-            addCriterion("p_value not in", values, "pValue");
+        public Criteria andEnLabelNotIn(List<String> values) {
+            addCriterion("en_label not in", values, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueBetween(String value1, String value2) {
-            addCriterion("p_value between", value1, value2, "pValue");
+        public Criteria andEnLabelBetween(String value1, String value2) {
+            addCriterion("en_label between", value1, value2, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andPValueNotBetween(String value1, String value2) {
-            addCriterion("p_value not between", value1, value2, "pValue");
+        public Criteria andEnLabelNotBetween(String value1, String value2) {
+            addCriterion("en_label not between", value1, value2, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andSortIsNull() {
-            addCriterion("sort is null");
+        public Criteria andParValueIsNull() {
+            addCriterion("par_value is null");
             return (Criteria) this;
         }
 
-        public Criteria andSortIsNotNull() {
-            addCriterion("sort is not null");
+        public Criteria andParValueIsNotNull() {
+            addCriterion("par_value is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSortEqualTo(Integer value) {
-            addCriterion("sort =", value, "sort");
+        public Criteria andParValueEqualTo(String value) {
+            addCriterion("par_value =", value, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortNotEqualTo(Integer value) {
-            addCriterion("sort <>", value, "sort");
+        public Criteria andParValueNotEqualTo(String value) {
+            addCriterion("par_value <>", value, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortGreaterThan(Integer value) {
-            addCriterion("sort >", value, "sort");
+        public Criteria andParValueGreaterThan(String value) {
+            addCriterion("par_value >", value, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortGreaterThanOrEqualTo(Integer value) {
-            addCriterion("sort >=", value, "sort");
+        public Criteria andParValueGreaterThanOrEqualTo(String value) {
+            addCriterion("par_value >=", value, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortLessThan(Integer value) {
-            addCriterion("sort <", value, "sort");
+        public Criteria andParValueLessThan(String value) {
+            addCriterion("par_value <", value, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortLessThanOrEqualTo(Integer value) {
-            addCriterion("sort <=", value, "sort");
+        public Criteria andParValueLessThanOrEqualTo(String value) {
+            addCriterion("par_value <=", value, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortIn(List<Integer> values) {
-            addCriterion("sort in", values, "sort");
+        public Criteria andParValueLike(String value) {
+            addCriterion("par_value like", value, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortNotIn(List<Integer> values) {
-            addCriterion("sort not in", values, "sort");
+        public Criteria andParValueNotLike(String value) {
+            addCriterion("par_value not like", value, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortBetween(Integer value1, Integer value2) {
-            addCriterion("sort between", value1, value2, "sort");
+        public Criteria andParValueIn(List<String> values) {
+            addCriterion("par_value in", values, "parValue");
             return (Criteria) this;
         }
 
-        public Criteria andSortNotBetween(Integer value1, Integer value2) {
-            addCriterion("sort not between", value1, value2, "sort");
+        public Criteria andParValueNotIn(List<String> values) {
+            addCriterion("par_value not in", values, "parValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andParValueBetween(String value1, String value2) {
+            addCriterion("par_value between", value1, value2, "parValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andParValueNotBetween(String value1, String value2) {
+            addCriterion("par_value not between", value1, value2, "parValue");
             return (Criteria) this;
         }
 
@@ -572,6 +582,66 @@ public class SysDictItemExample {
 
         public Criteria andLevelNotBetween(Integer value1, Integer value2) {
             addCriterion("level not between", value1, value2, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdIsNull() {
+            addCriterion("ord is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdIsNotNull() {
+            addCriterion("ord is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdEqualTo(Integer value) {
+            addCriterion("ord =", value, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdNotEqualTo(Integer value) {
+            addCriterion("ord <>", value, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdGreaterThan(Integer value) {
+            addCriterion("ord >", value, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ord >=", value, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdLessThan(Integer value) {
+            addCriterion("ord <", value, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdLessThanOrEqualTo(Integer value) {
+            addCriterion("ord <=", value, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdIn(List<Integer> values) {
+            addCriterion("ord in", values, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdNotIn(List<Integer> values) {
+            addCriterion("ord not in", values, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdBetween(Integer value1, Integer value2) {
+            addCriterion("ord between", value1, value2, "ord");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdNotBetween(Integer value1, Integer value2) {
+            addCriterion("ord not between", value1, value2, "ord");
             return (Criteria) this;
         }
 
@@ -642,6 +712,76 @@ public class SysDictItemExample {
 
         public Criteria andCommentNotBetween(String value1, String value2) {
             addCriterion("comment not between", value1, value2, "comment");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionIsNull() {
+            addCriterion("permission is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionIsNotNull() {
+            addCriterion("permission is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionEqualTo(String value) {
+            addCriterion("permission =", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionNotEqualTo(String value) {
+            addCriterion("permission <>", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionGreaterThan(String value) {
+            addCriterion("permission >", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionGreaterThanOrEqualTo(String value) {
+            addCriterion("permission >=", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionLessThan(String value) {
+            addCriterion("permission <", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionLessThanOrEqualTo(String value) {
+            addCriterion("permission <=", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionLike(String value) {
+            addCriterion("permission like", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionNotLike(String value) {
+            addCriterion("permission not like", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionIn(List<String> values) {
+            addCriterion("permission in", values, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionNotIn(List<String> values) {
+            addCriterion("permission not in", values, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionBetween(String value1, String value2) {
+            addCriterion("permission between", value1, value2, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionNotBetween(String value1, String value2) {
+            addCriterion("permission not between", value1, value2, "permission");
             return (Criteria) this;
         }
 

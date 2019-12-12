@@ -26,7 +26,7 @@ import java.util.List;
 public class MybatisGenerator {
 
 //    private static String[] tableNameArr = {};
-    private static String[] tableNameArr = {"sys_field_extend"};
+    private static String[] tableNameArr = {"sys_dict_item"};
 
     public static void main(String[] args) throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
         List<String> warnings = new ArrayList<>();
@@ -52,7 +52,7 @@ public class MybatisGenerator {
         Arrays.stream(tableNameArr).forEach(t->{
             TableConfiguration configuration = new TableConfiguration(context);
             configuration.setTableName(t);
-            configuration.setDomainObjectName(StrUtils.firstCharToUpperCase(StrUtils.camelize(t)));
+            configuration.setDomainObjectName(StrUtils.firstCharToUpperCase(StrUtils.lowerCamelize(t)));
             configuration.setCountByExampleStatementEnabled(true);
             configuration.setUpdateByExampleStatementEnabled(true);
             configuration.setUpdateByPrimaryKeyStatementEnabled(true);

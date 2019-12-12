@@ -14,9 +14,10 @@ import cn.cpf.web.base.util.exception.PostException;
 import cn.cpf.web.base.util.sql.PagingUtils;
 import cn.cpf.web.service.base.api.ISysDictItem;
 import cn.cpf.web.service.base.api.ISysDictType;
+import cn.cpf.web.service.combine.api.ISysDesignCombine;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.methods.HttpGet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -43,23 +44,26 @@ public class SysDictController {
 
     private final ISysDictType iSysDictType;
     private final ISysDictItem iSysDictItem;
+    private final ISysDesignCombine iSysDesignCombine;
 
-    public SysDictController(ISysDictType iSysDictType, ISysDictItem iSysDictItem) {
+    @Autowired
+    public SysDictController(ISysDictType iSysDictType, ISysDictItem iSysDictItem, ISysDesignCombine iSysDesignCombine) {
         this.iSysDictType = iSysDictType;
         this.iSysDictItem = iSysDictItem;
+        this.iSysDesignCombine = iSysDesignCombine;
     }
 
     /**
      * 查询 sysDictItem 表分页数据
      *
-     * @param pValue                    父值
+     * @param parValue                  父值
      * @param value                     值
      * @param pageNumber                页号
      * @param pageSize                  页面大小
      */
     @GetMapping("/item/page-info")
     public Map<String, Object> querySysDictItemPageInfo (HttpServletRequest request,
-                                                         @RequestParam(value = "pValue", required = false) String pValue,
+                                                         @RequestParam(value = "parValue", required = false) String parValue,
                                                          @RequestParam(value = "dictType", required = false) String dictType,
                                                          @RequestParam(value = "value", required = false) String value,
                                                          @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
@@ -67,8 +71,8 @@ public class SysDictController {
         SysDictItemExample example = new SysDictItemExample();
         SysDictItemExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("sort desc");
-        if (StringUtils.isNotBlank(pValue)) {
-            criteria.andPValueEqualTo(pValue);
+        if (StringUtils.isNotBlank(parValue)) {
+            criteria.andParValueEqualTo(parValue);
         }
         if (StringUtils.isNotBlank(dictType)) {
             criteria.andTypeEqualTo(dictType);
@@ -170,7 +174,7 @@ public class SysDictController {
      */
     @GetMapping("/type/structure")
     public Map<String, Object> querySysDictTypeStructure () {
-        final List<DictItemDto> dictItems = iSysDictItem.queryDictItemStructure();
+        final List<DictItemDto> dictItems = iSysDesignCombine.queryDictItemStructure();
         return PostBean.geneSimpleDataPostMap(dictItems);
     }
 

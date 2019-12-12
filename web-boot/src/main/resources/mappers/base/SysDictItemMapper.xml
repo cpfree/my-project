@@ -3,13 +3,15 @@
 <mapper namespace="cn.cpf.web.dal.base.SysDictItemMapper">
   <resultMap id="BaseResultMap" type="cn.cpf.web.base.model.entity.SysDictItem">
     <id column="type" jdbcType="VARCHAR" property="type" />
-    <id column="value" jdbcType="VARCHAR" property="value" />
-    <result column="en_label" jdbcType="VARCHAR" property="enLabel" />
+    <id column="name" jdbcType="VARCHAR" property="name" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="cn_label" jdbcType="VARCHAR" property="cnLabel" />
-    <result column="p_value" jdbcType="VARCHAR" property="pValue" />
-    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="en_label" jdbcType="VARCHAR" property="enLabel" />
+    <result column="par_value" jdbcType="VARCHAR" property="parValue" />
     <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="ord" jdbcType="INTEGER" property="ord" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="permission" jdbcType="CHAR" property="permission" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="state" jdbcType="CHAR" property="state" />
@@ -73,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    type, value, en_label, cn_label, p_value, sort, level, comment, add_time, update_time, 
-    state
+    type, name, value, cn_label, en_label, par_value, level, ord, comment, permission, 
+    add_time, update_time, state
   </sql>
   <select id="selectByExample" parameterType="cn.cpf.web.base.model.example.SysDictItemExample" resultMap="BaseResultMap">
     select
@@ -91,16 +93,16 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysDictItemKey" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
     from sys_dict_item
     where type = #{type,jdbcType=VARCHAR}
-    and value = #{value,jdbcType=VARCHAR}
+      and name = #{name,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysDictItemKey">
     delete from sys_dict_item
     where type = #{type,jdbcType=VARCHAR}
-      and value = #{value,jdbcType=VARCHAR}
+      and name = #{name,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.cpf.web.base.model.example.SysDictItemExample">
     delete from sys_dict_item
@@ -109,14 +111,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.cpf.web.base.model.entity.SysDictItem">
-    insert into sys_dict_item (type, value, en_label,
-                               cn_label, p_value, sort,
-                               level, comment, add_time,
-                               update_time, state)
-    values (#{type,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{enLabel,jdbcType=VARCHAR},
-            #{cnLabel,jdbcType=VARCHAR}, #{pValue,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
-            #{level,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP},
-            #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=CHAR})
+    insert into sys_dict_item (type, name, value, 
+      cn_label, en_label, par_value, 
+      level, ord, comment, 
+      permission, add_time, update_time, 
+      state)
+    values (#{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
+      #{cnLabel,jdbcType=VARCHAR}, #{enLabel,jdbcType=VARCHAR}, #{parValue,jdbcType=VARCHAR}, 
+      #{level,jdbcType=INTEGER}, #{ord,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
+      #{permission,jdbcType=CHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.cpf.web.base.model.entity.SysDictItem">
     insert into sys_dict_item
@@ -124,26 +128,32 @@
       <if test="type != null">
         type,
       </if>
+      <if test="name != null">
+        name,
+      </if>
       <if test="value != null">
         value,
-      </if>
-      <if test="enLabel != null">
-        en_label,
       </if>
       <if test="cnLabel != null">
         cn_label,
       </if>
-      <if test="pValue != null">
-        p_value,
+      <if test="enLabel != null">
+        en_label,
       </if>
-      <if test="sort != null">
-        sort,
+      <if test="parValue != null">
+        par_value,
       </if>
       <if test="level != null">
         level,
       </if>
+      <if test="ord != null">
+        ord,
+      </if>
       <if test="comment != null">
         comment,
+      </if>
+      <if test="permission != null">
+        permission,
       </if>
       <if test="addTime != null">
         add_time,
@@ -159,26 +169,32 @@
       <if test="type != null">
         #{type,jdbcType=VARCHAR},
       </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
       <if test="value != null">
         #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="enLabel != null">
-        #{enLabel,jdbcType=VARCHAR},
       </if>
       <if test="cnLabel != null">
         #{cnLabel,jdbcType=VARCHAR},
       </if>
-      <if test="pValue != null">
-        #{pValue,jdbcType=VARCHAR},
+      <if test="enLabel != null">
+        #{enLabel,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
+      <if test="parValue != null">
+        #{parValue,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
         #{level,jdbcType=INTEGER},
       </if>
+      <if test="ord != null">
+        #{ord,jdbcType=INTEGER},
+      </if>
       <if test="comment != null">
         #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=CHAR},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
@@ -203,26 +219,32 @@
       <if test="record.type != null">
         type = #{record.type,jdbcType=VARCHAR},
       </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
       <if test="record.value != null">
         value = #{record.value,jdbcType=VARCHAR},
-      </if>
-      <if test="record.enLabel != null">
-        en_label = #{record.enLabel,jdbcType=VARCHAR},
       </if>
       <if test="record.cnLabel != null">
         cn_label = #{record.cnLabel,jdbcType=VARCHAR},
       </if>
-      <if test="record.pValue != null">
-        p_value = #{record.pValue,jdbcType=VARCHAR},
+      <if test="record.enLabel != null">
+        en_label = #{record.enLabel,jdbcType=VARCHAR},
       </if>
-      <if test="record.sort != null">
-        sort = #{record.sort,jdbcType=INTEGER},
+      <if test="record.parValue != null">
+        par_value = #{record.parValue,jdbcType=VARCHAR},
       </if>
       <if test="record.level != null">
         level = #{record.level,jdbcType=INTEGER},
       </if>
+      <if test="record.ord != null">
+        ord = #{record.ord,jdbcType=INTEGER},
+      </if>
       <if test="record.comment != null">
         comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permission != null">
+        permission = #{record.permission,jdbcType=CHAR},
       </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -241,16 +263,18 @@
   <update id="updateByExample" parameterType="map">
     update sys_dict_item
     set type = #{record.type,jdbcType=VARCHAR},
-    value = #{record.value,jdbcType=VARCHAR},
-    en_label = #{record.enLabel,jdbcType=VARCHAR},
-    cn_label = #{record.cnLabel,jdbcType=VARCHAR},
-    p_value = #{record.pValue,jdbcType=VARCHAR},
-    sort = #{record.sort,jdbcType=INTEGER},
-    level = #{record.level,jdbcType=INTEGER},
-    comment = #{record.comment,jdbcType=VARCHAR},
-    add_time = #{record.addTime,jdbcType=TIMESTAMP},
-    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-    state = #{record.state,jdbcType=CHAR}
+      name = #{record.name,jdbcType=VARCHAR},
+      value = #{record.value,jdbcType=VARCHAR},
+      cn_label = #{record.cnLabel,jdbcType=VARCHAR},
+      en_label = #{record.enLabel,jdbcType=VARCHAR},
+      par_value = #{record.parValue,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=INTEGER},
+      ord = #{record.ord,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      permission = #{record.permission,jdbcType=CHAR},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -258,23 +282,29 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.cpf.web.base.model.entity.SysDictItem">
     update sys_dict_item
     <set>
-      <if test="enLabel != null">
-        en_label = #{enLabel,jdbcType=VARCHAR},
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
       </if>
       <if test="cnLabel != null">
         cn_label = #{cnLabel,jdbcType=VARCHAR},
       </if>
-      <if test="pValue != null">
-        p_value = #{pValue,jdbcType=VARCHAR},
+      <if test="enLabel != null">
+        en_label = #{enLabel,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
+      <if test="parValue != null">
+        par_value = #{parValue,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
         level = #{level,jdbcType=INTEGER},
       </if>
+      <if test="ord != null">
+        ord = #{ord,jdbcType=INTEGER},
+      </if>
       <if test="comment != null">
         comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=CHAR},
       </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -287,20 +317,22 @@
       </if>
     </set>
     where type = #{type,jdbcType=VARCHAR}
-    and value = #{value,jdbcType=VARCHAR}
+      and name = #{name,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysDictItem">
     update sys_dict_item
-    set en_label = #{enLabel,jdbcType=VARCHAR},
-        cn_label = #{cnLabel,jdbcType=VARCHAR},
-        p_value = #{pValue,jdbcType=VARCHAR},
-        sort = #{sort,jdbcType=INTEGER},
-        level = #{level,jdbcType=INTEGER},
-        comment = #{comment,jdbcType=VARCHAR},
-        add_time = #{addTime,jdbcType=TIMESTAMP},
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-        state = #{state,jdbcType=CHAR}
+    set value = #{value,jdbcType=VARCHAR},
+      cn_label = #{cnLabel,jdbcType=VARCHAR},
+      en_label = #{enLabel,jdbcType=VARCHAR},
+      par_value = #{parValue,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      ord = #{ord,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=CHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=CHAR}
     where type = #{type,jdbcType=VARCHAR}
-      and value = #{value,jdbcType=VARCHAR}
+      and name = #{name,jdbcType=VARCHAR}
   </update>
 </mapper>

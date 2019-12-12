@@ -1,12 +1,10 @@
 package cn.cpf.web.dal.base;
 
-import cn.cpf.web.base.model.dto.DictItemDto;
 import cn.cpf.web.base.model.entity.SysDictItem;
 import cn.cpf.web.base.model.example.SysDictItemExample;
 import cn.cpf.web.base.model.entity.SysDictItemKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 public interface SysDictItemMapper {
     long countByExample(SysDictItemExample example);
@@ -30,7 +28,4 @@ public interface SysDictItemMapper {
     int updateByPrimaryKeySelective(SysDictItem record);
 
     int updateByPrimaryKey(SysDictItem record);
-
-    @Select("select p_value pValue, value, cn_label label, sort from sys_dict_item where type = 'sys_dict_type_package' union all select type pValue, name value, text label, sort from sys_dict_type order by sort")
-    List<DictItemDto> queryDictItemStructure();
 }

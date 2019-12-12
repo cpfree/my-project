@@ -4,5 +4,5 @@ $hello
 
 
 #foreach($column in $list0)
-    $tool.Upperize($column)
+    $tool.getField($column)
 #end

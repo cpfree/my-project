@@ -1,7 +1,11 @@
 package cn.cpf.web.base.model.bo;
 
+import cn.cpf.web.base.model.entity.SysDictItem;
+import cn.cpf.web.base.model.entity.SysDictType;
 import cn.cpf.web.base.model.entity.SysFieldExtend;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * <b>Description : </b>
@@ -44,5 +48,12 @@ public class SysFieldBo extends SysFieldExtend {
      * 字段信息
      */
     private String columnComment;
-
+    /**
+     * 字典类型
+     */
+    private SysDictType sysDictType;
+    /**
+     * 字典项类型
+     */
+    private List<SysDictItem> sysDictItemList;
 }

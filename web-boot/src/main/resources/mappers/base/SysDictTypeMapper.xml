@@ -3,11 +3,12 @@
 <mapper namespace="cn.cpf.web.dal.base.SysDictTypeMapper">
   <resultMap id="BaseResultMap" type="cn.cpf.web.base.model.entity.SysDictType">
     <id column="name" jdbcType="VARCHAR" property="name" />
-    <result column="text" jdbcType="VARCHAR" property="text" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="ord" jdbcType="INTEGER" property="ord" />
     <result column="max_level" jdbcType="INTEGER" property="maxLevel" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="permission" jdbcType="CHAR" property="permission" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="state" jdbcType="CHAR" property="state" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    name, text, type, sort, max_level, comment, add_time, update_time, state
+    name, label, tag, ord, max_level, comment, permission, add_time, update_time, state
   </sql>
   <select id="selectByExample" parameterType="cn.cpf.web.base.model.example.SysDictTypeExample" resultMap="BaseResultMap">
     select
@@ -104,14 +105,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.cpf.web.base.model.entity.SysDictType">
-    insert into sys_dict_type (name, text, type, 
-      sort, max_level, comment, 
-      add_time, update_time, state
-      )
-    values (#{name,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=INTEGER}, #{maxLevel,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=CHAR}
-      )
+    insert into sys_dict_type (name, label, tag, 
+      ord, max_level, comment, 
+      permission, add_time, update_time, 
+      state)
+    values (#{name,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, 
+      #{ord,jdbcType=INTEGER}, #{maxLevel,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
+      #{permission,jdbcType=CHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.cpf.web.base.model.entity.SysDictType">
     insert into sys_dict_type
@@ -119,20 +120,23 @@
       <if test="name != null">
         name,
       </if>
-      <if test="text != null">
-        text,
+      <if test="label != null">
+        label,
       </if>
-      <if test="type != null">
-        type,
+      <if test="tag != null">
+        tag,
       </if>
-      <if test="sort != null">
-        sort,
+      <if test="ord != null">
+        ord,
       </if>
       <if test="maxLevel != null">
         max_level,
       </if>
       <if test="comment != null">
         comment,
+      </if>
+      <if test="permission != null">
+        permission,
       </if>
       <if test="addTime != null">
         add_time,
@@ -148,20 +152,23 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="text != null">
-        #{text,jdbcType=VARCHAR},
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
+      <if test="ord != null">
+        #{ord,jdbcType=INTEGER},
       </if>
       <if test="maxLevel != null">
         #{maxLevel,jdbcType=INTEGER},
       </if>
       <if test="comment != null">
         #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=CHAR},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
@@ -186,20 +193,23 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.text != null">
-        text = #{record.text,jdbcType=VARCHAR},
+      <if test="record.label != null">
+        label = #{record.label,jdbcType=VARCHAR},
       </if>
-      <if test="record.type != null">
-        type = #{record.type,jdbcType=VARCHAR},
+      <if test="record.tag != null">
+        tag = #{record.tag,jdbcType=VARCHAR},
       </if>
-      <if test="record.sort != null">
-        sort = #{record.sort,jdbcType=INTEGER},
+      <if test="record.ord != null">
+        ord = #{record.ord,jdbcType=INTEGER},
       </if>
       <if test="record.maxLevel != null">
         max_level = #{record.maxLevel,jdbcType=INTEGER},
       </if>
       <if test="record.comment != null">
         comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permission != null">
+        permission = #{record.permission,jdbcType=CHAR},
       </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -218,11 +228,12 @@
   <update id="updateByExample" parameterType="map">
     update sys_dict_type
     set name = #{record.name,jdbcType=VARCHAR},
-      text = #{record.text,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=VARCHAR},
-      sort = #{record.sort,jdbcType=INTEGER},
+      label = #{record.label,jdbcType=VARCHAR},
+      tag = #{record.tag,jdbcType=VARCHAR},
+      ord = #{record.ord,jdbcType=INTEGER},
       max_level = #{record.maxLevel,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=VARCHAR},
+      permission = #{record.permission,jdbcType=CHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       state = #{record.state,jdbcType=CHAR}
@@ -233,20 +244,23 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.cpf.web.base.model.entity.SysDictType">
     update sys_dict_type
     <set>
-      <if test="text != null">
-        text = #{text,jdbcType=VARCHAR},
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
+      <if test="tag != null">
+        tag = #{tag,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
+      <if test="ord != null">
+        ord = #{ord,jdbcType=INTEGER},
       </if>
       <if test="maxLevel != null">
         max_level = #{maxLevel,jdbcType=INTEGER},
       </if>
       <if test="comment != null">
         comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=CHAR},
       </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -262,11 +276,12 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysDictType">
     update sys_dict_type
-    set text = #{text,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
+    set label = #{label,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      ord = #{ord,jdbcType=INTEGER},
       max_level = #{maxLevel,jdbcType=INTEGER},
       comment = #{comment,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=CHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=CHAR}

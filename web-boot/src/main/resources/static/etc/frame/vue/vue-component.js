@@ -76,7 +76,7 @@ Vue.component("vc-tree", {
         $dict.querySysDictTypeStructure()
             .then(resp => {
                 let dictItemList = resp.data.data;
-                this.treeData = childConvert(dictItemList, 'value', 'pvalue');
+                this.treeData = childConvert(dictItemList, 'value', 'parValue');
             })
     },
     methods: {

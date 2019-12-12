@@ -65,7 +65,7 @@ public interface StrUtils {
      * @param string 待处理的字符串
      * @return 返回驼峰式字符串, 以'_'为分隔符
      */
-    static String camelize(@NonNull String string){
+    static String lowerCamelize(@NonNull String string){
         StringTokenizer tokenizer = new StringTokenizer(string);
         StringBuilder sb = null;
         while (tokenizer.hasMoreElements()) {
@@ -81,6 +81,15 @@ public interface StrUtils {
             return "";
         }
         return sb.toString();
+    }
+
+    /**
+     * 返回待处理字符串的驼峰格式
+     * @param string 待处理的字符串
+     * @return 返回驼峰式字符串, 以'_'为分隔符
+     */
+    static String upperCamelize(@NonNull String string){
+        return firstCharToUpperCase(lowerCamelize(string));
     }
 
 }

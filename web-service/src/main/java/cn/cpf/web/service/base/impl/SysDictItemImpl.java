@@ -9,8 +9,7 @@ import cn.cpf.web.service.base.api.ISysDictItem;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -104,15 +103,6 @@ public class SysDictItemImpl implements ISysDictItem {
         return selectByDictType(dictType).stream().map(DictItemDto::cnOf).collect(Collectors.toList());
     }
 
-    /**
-     * 查询列表数据
-     *
-     * @return 对象列表
-     */
-    @Override
-    public List<DictItemDto> queryDictItemStructure() {
-        return sysDictItemMapper.queryDictItemStructure();
-    }
 
     /**
      * 查询列表数据
@@ -121,11 +111,14 @@ public class SysDictItemImpl implements ISysDictItem {
      * @return 对象列表
      */
     @Override
-    public Map<String, List<SysDictItem>> selectByDictType(List<String> dictTypeList) {
+    public Map<String, List<SysDictItem>> selectByDictType(Set<String> dictTypeList) {
+        if (dictTypeList.isEmpty()) {
+            return new HashMap<>();
+        }
         SysDictItemExample example = new SysDictItemExample();
-        example.createCriteria().andTypeIn(dictTypeList);
+        example.createCriteria().andTypeIn(new ArrayList<>(dictTypeList));
         final List<SysDictItem> sysDictItems = sysDictItemMapper.selectByExample(example);
-        return sysDictItems.stream().collect(Collectors.groupingBy(SysDictItem::getValue));
+        return sysDictItems.stream().collect(Collectors.groupingBy(SysDictItem::getType));
     }
 
 }

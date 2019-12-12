@@ -73,7 +73,7 @@ let vueContent = new Vue({
                 if (pageInfo.list) {
                     let list = pageInfo.list;
                     list.forEach(item => this.pretreatment(item));
-                    list = childConvert(pageInfo.list, 'value', 'pvalue');
+                    list = childConvert(pageInfo.list, 'value', 'parvalue');
                     list.forEach(item => this.data.push(item));
                 }
                 this.pagination.total = pageInfo.total;
@@ -87,7 +87,7 @@ let vueContent = new Vue({
         addSysDictItemModel: {
             dialogVisible: false,
             form: {
-                pvalue: undefined,
+                parValue: undefined,
                 value: undefined,
                 text: undefined,
                 sort: undefined,
@@ -96,7 +96,7 @@ let vueContent = new Vue({
                 state: undefined
             },
             formRule: {
-                pvalue: [
+                parValue: [
                     {required: true, message: '请输入父级代码', trigger: 'change'}
                 ],
                 value: [
@@ -120,7 +120,7 @@ let vueContent = new Vue({
             },
             closeAndClear() {
                 this.dialogVisible = false;
-                this.form.pvalue = undefined;
+                this.form.parValue = undefined;
                 this.form.value = undefined;
                 this.form.text = undefined;
                 this.form.sort = undefined;
@@ -135,7 +135,7 @@ let vueContent = new Vue({
         editSysDictItemModel: {
             dialogVisible: false,
             form: {
-                pvalue: undefined,
+                parValue: undefined,
                 value: undefined,
                 text: undefined,
                 sort: undefined,
@@ -144,7 +144,7 @@ let vueContent = new Vue({
                 state: undefined
             },
             formRule: {
-                pvalue: [
+                parValue: [
                     {required: true, message: '请输入父级代码', trigger: 'change'}
                 ],
                 value: [
@@ -168,7 +168,7 @@ let vueContent = new Vue({
             },
             closeAndClear() {
                 this.dialogVisible = false;
-                this.form.pvalue = undefined;
+                this.form.parValue = undefined;
                 this.form.value = undefined;
                 this.form.text = undefined;
                 this.form.sort = undefined;
@@ -178,7 +178,7 @@ let vueContent = new Vue({
             },
             preEditStatus(record) {
                 this.form.guid = record.guid;
-                this.form.pvalue = record.pvalue;
+                this.form.parValue = record.parValue;
                 this.form.value = record.value;
                 this.form.text = record.text;
                 this.form.sort = record.sort;
@@ -238,7 +238,7 @@ let vueContent = new Vue({
             }
         },
         onTreeNodeClick: function (node) {
-            if (node.pvalue && !node.children) {
+            if (node.parValue && !node.children) {
                 this.sysDictItemGrid.conditions.dictType = node.value;
                 this.refresh();
             }

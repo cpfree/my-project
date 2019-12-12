@@ -1,11 +1,18 @@
-package cn.cpf.mod.plugins.dao;
+package cn.cpf.web.service.combine.api;
 
 import cn.cpf.web.base.model.bo.SysFieldBo;
 import cn.cpf.web.base.model.bo.SysTableBo;
+import cn.cpf.web.base.model.dto.DictItemDto;
 
 import java.util.List;
 
-public interface SysDesignCombineMapper {
+/**
+ * <b>Description : </b>
+ *
+ * @author CPF
+ * @date 2019/10/27 10:05
+ **/
+public interface ISysDesignCombine {
 
     /**
      * 通过表名称获取表数据
@@ -23,4 +30,8 @@ public interface SysDesignCombineMapper {
      */
     List<SysFieldBo> selectSysFieldBoByTableName(String tableName);
 
+    /**
+     * @return
+     */
+    List<DictItemDto> queryDictItemStructure();
 }

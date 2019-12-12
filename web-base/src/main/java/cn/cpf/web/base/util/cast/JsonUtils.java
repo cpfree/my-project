@@ -4,6 +4,8 @@ import cn.cpf.web.base.lang.base.PostDto;
 import cn.cpf.web.base.util.exception.PostException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,12 +18,9 @@ import java.util.Objects;
  * @author CPF
  * @date 2019/7/24 18:06
  **/
+@Slf4j
+@NoArgsConstructor
 public class JsonUtils {
-
-    private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
-
-    private JsonUtils() {
-    }
 
     /**
      * jackson 转换对象, 线程安全, 可以单例
@@ -41,7 +40,7 @@ public class JsonUtils {
         try {
             return convertJson2Object(json, clazz);
         } catch (Exception e) {
-            logger.error(throwMsg, e);
+            log.error(throwMsg, e);
             throw new PostException(throwMsg);
         }
     }
@@ -53,7 +52,7 @@ public class JsonUtils {
             postDto = mapper.readValue(json, javaType);
         } catch (IOException e) {
             String throwMsg = "convertJsonToPostDto 转换异常!, json : " + json + ", beanClass : " + beanClass.getName();
-            logger.error(throwMsg, e);
+            log.error(throwMsg, e);
             throw new PostException("PostDto转换异常");
         }
         return postDto;
@@ -70,7 +69,7 @@ public class JsonUtils {
         try {
             return convertObject2Json(obj);
         } catch (Exception e) {
-            logger.error("convertObject2Json 异常", e);
+            log.error("convertObject2Json 异常", e);
             throw new PostException(throwMsg);
         }
     }

@@ -5,15 +5,17 @@ import java.util.Date;
 public class SysDictType {
     private String name;
 
-    private String text;
+    private String label;
 
-    private String type;
+    private String tag;
 
-    private Integer sort;
+    private Integer ord;
 
     private Integer maxLevel;
 
     private String comment;
+
+    private String permission;
 
     private Date addTime;
 
@@ -29,28 +31,28 @@ public class SysDictType {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getText() {
-        return text;
+    public String getLabel() {
+        return label;
     }
 
-    public void setText(String text) {
-        this.text = text == null ? null : text.trim();
+    public void setLabel(String label) {
+        this.label = label == null ? null : label.trim();
     }
 
-    public String getType() {
-        return type;
+    public String getTag() {
+        return tag;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+    public void setTag(String tag) {
+        this.tag = tag == null ? null : tag.trim();
     }
 
-    public Integer getSort() {
-        return sort;
+    public Integer getOrd() {
+        return ord;
     }
 
-    public void setSort(Integer sort) {
-        this.sort = sort;
+    public void setOrd(Integer ord) {
+        this.ord = ord;
     }
 
     public Integer getMaxLevel() {
@@ -67,6 +69,14 @@ public class SysDictType {
 
     public void setComment(String comment) {
         this.comment = comment == null ? null : comment.trim();
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission == null ? null : permission.trim();
     }
 
     public Date getAddTime() {

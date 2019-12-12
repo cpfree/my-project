@@ -1,17 +1,15 @@
 package cn.cpf.mod.plugins.velocity;
 
-import cn.cpf.mod.plugins.dbutils.GlobalTool;
-import cn.cpf.mod.plugins.mybatis.MybatisFactory;
-import cn.cpf.web.base.model.bo.SysFieldBo;
-import cn.cpf.web.base.model.bo.SysTableBo;
-import cn.cpf.web.dal.combine.SysDesignCombineMapper;
-import org.apache.ibatis.session.SqlSession;
+import cn.cpf.web.base.lang.base.Record;
+import cn.cpf.web.base.util.io.IoUtils;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.Validate;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,42 +20,27 @@ import java.util.Map;
  * @author CPF
  * @date 2019/12/2 17:35
  **/
-public class DictGenerator {
+@Slf4j
+public class VelocityUtils {
 
-    private static final String HELLO_WORLD_VM_PATH = "mod/plugins/src/main/resources/template/userInfo.vm";
+    private static final String HELLO_WORLD_VM_PATH = "P:\\git\\my-project\\mod\\plugins\\src\\main\\resources\\template\\userInfo.vm";
+    private static final String SAVE_PATH = "P:\\git\\my-project\\mod\\plugins\\src\\main\\resources\\templateSave\\test.java";
 
     public static void main(String[] args) {
-        mainTest(HELLO_WORLD_VM_PATH);
+        test();
     }
 
-    private static void mainTest(String s) {
-        final SqlSession instance = MybatisFactory.getInstance();
-        final SysDesignCombineMapper designCombineMapper = instance.getMapper(SysDesignCombineMapper.class);
-
-        final List<SysFieldBo> sysFieldBos = designCombineMapper.selectSysFieldBoByTableName("sys_field_extend");
-        final SysTableBo sysTableBo = designCombineMapper.selectSysTableBoByTableName("sys_field_extend");
-        System.out.println(TableDataHandler.builder().sysFieldList(sysFieldBos).sysTable(sysTableBo).build().toString());
-
-
-    }
-
-    /**
-     * 简单的hello world
-     *
-     * @param fileVM
-     * @throws Exception
-     */
-    public static void test(String fileVM) {
-        final Map<String, Object> defaultParam = GlobalTool.getDefaultParam();
-        defaultParam.put("hello", "Hello world!!");
+    public static void test() {
+        final Record record = new Record();
+        record.put("hello", "Hello world!!");
         List<String> list = new ArrayList<>();
         list.add("par1");
         list.add("par3");
         list.add("par7");
         list.add("par23");
-
-        defaultParam.put("list0", list);
-        System.out.println(generate(fileVM, defaultParam));
+        record.put("list0", list);
+        final VelocityGeneInfoBean build = VelocityGeneInfoBean.builder().savePath(SAVE_PATH).vmPath(HELLO_WORLD_VM_PATH).build();
+        generate(build, record);
     }
 
 
@@ -78,13 +61,21 @@ public class DictGenerator {
         list.add("par3");
         list.add("par7");
         list.add("par23");
-
         context.put("list0", list);
         StringWriter writer = new StringWriter();
         t.merge(context, writer);
         System.out.println(writer.toString());
     }
 
+
+    public static void generate(@NonNull VelocityGeneInfoBean bean, @NonNull Map<String, Object> map) {
+        final String tools = "tool";
+        Validate.isTrue(!map.containsKey(tools), "map中不能包含 tools");
+        final String templateString = IoUtils.readFile((bean.getVmPath()));
+        map.put(tools, GlobalTool.class);
+        final String content = generate(templateString, map);
+        IoUtils.writeFile(bean.getSavePath(), content);
+    }
 
 
 
@@ -95,7 +86,7 @@ public class DictGenerator {
      * @param map      参数集合
      * @return 渲染结果
      */
-    public static String generate(String template, Map<String, Object> map) {
+    private static String generate(String template, Map<String, Object> map) {
         // 每次创建一个新实例，防止velocity缓存宏定义
         VelocityEngine velocityEngine = new VelocityEngine();
         // 创建上下文对象

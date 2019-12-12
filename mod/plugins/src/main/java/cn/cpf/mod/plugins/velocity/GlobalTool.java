@@ -1,5 +1,6 @@
-package cn.cpf.mod.plugins.dbutils;
+package cn.cpf.mod.plugins.velocity;
 
+import cn.cpf.web.base.util.common.StrUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
@@ -11,7 +12,6 @@ import java.util.*;
  * @version 1.0.0
  * @since 2018/08/14 18:11
  */
-@SuppressWarnings("unused")
 public class GlobalTool {
 
     private static volatile GlobalTool globalTool;
@@ -42,27 +42,13 @@ public class GlobalTool {
     }
 
 
-
-    /**
-     * 获取默认参数
-     *
-     * @return 参数
-     */
-    public static Map<String, Object> getDefaultParam() {
-        // 系统设置
-        Map<String, Object> param = new HashMap<>(20);
-        param.put("tool", GlobalTool.getInstance());
-        return param;
-    }
-
-
     /**
      * 创建集合
      *
      * @param items 初始元素
      * @return 集合对象
      */
-    public Set<?> newHashSet(Object... items) {
+    public static Set<?> newHashSet(Object... items) {
         return items == null ? new HashSet<>() : new HashSet<>(Arrays.asList(items));
     }
 
@@ -72,7 +58,7 @@ public class GlobalTool {
      * @param items 初始元素
      * @return 列表对象
      */
-    public List<?> newArrayList(Object... items) {
+    public static List<?> newArrayList(Object... items) {
         return items == null ? new ArrayList<>() : new ArrayList<>(Arrays.asList(items));
     }
 
@@ -81,7 +67,7 @@ public class GlobalTool {
      *
      * @return map对象
      */
-    public Map<?, ?> newLinkedHashMap() {
+    public static Map<?, ?> newLinkedHashMap() {
         return new LinkedHashMap<>();
     }
 
@@ -90,27 +76,30 @@ public class GlobalTool {
      *
      * @return map对象
      */
-    public Map<?, ?> newHashMap() {
+    public static Map<?, ?> newHashMap() {
         return new HashMap<>(16);
     }
 
-    /**
-     * 获取字段，私有属性一样强制访问
-     *
-     * @param fieldName 字段名
-     * @return 字段值
-     */
-    public String getField(String fieldName) {
-        return fieldName.toUpperCase();
-
+    public static String lowerCamelize(String field) {
+        return StrUtils.lowerCamelize(field);
     }
+
+    public static String upperCamelize(String field) {
+        return StrUtils.upperCamelize(field);
+    }
+
+
+    public static String Upperize(String field) {
+        return "5555";
+    }
+
 
     /**
      * 无返回执行，用于消除返回值
      *
      * @param obj 接收执行返回值
      */
-    public void call(Object... obj) {
+    public static void call(Object... obj) {
 
     }
 
