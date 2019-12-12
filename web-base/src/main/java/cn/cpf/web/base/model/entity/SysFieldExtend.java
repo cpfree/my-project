@@ -1,17 +1,9 @@
 package cn.cpf.web.base.model.entity;
 
-public class SysField {
-    private String guid;
-
-    private String name;
-
-    private String sysTableGuid;
-
+public class SysFieldExtend extends SysFieldExtendKey {
     private String label;
 
-    private String type;
-
-    private Integer length;
+    private String dictType;
 
     private String showSearch;
 
@@ -23,31 +15,9 @@ public class SysField {
 
     private String showDetail;
 
+    private Integer sort;
+
     private String comment;
-
-    public String getGuid() {
-        return guid;
-    }
-
-    public void setGuid(String guid) {
-        this.guid = guid == null ? null : guid.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getSysTableGuid() {
-        return sysTableGuid;
-    }
-
-    public void setSysTableGuid(String sysTableGuid) {
-        this.sysTableGuid = sysTableGuid == null ? null : sysTableGuid.trim();
-    }
 
     public String getLabel() {
         return label;
@@ -57,20 +27,12 @@ public class SysField {
         this.label = label == null ? null : label.trim();
     }
 
-    public String getType() {
-        return type;
+    public String getDictType() {
+        return dictType;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
+    public void setDictType(String dictType) {
+        this.dictType = dictType == null ? null : dictType.trim();
     }
 
     public String getShowSearch() {
@@ -111,6 +73,14 @@ public class SysField {
 
     public void setShowDetail(String showDetail) {
         this.showDetail = showDetail == null ? null : showDetail.trim();
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
     public String getComment() {

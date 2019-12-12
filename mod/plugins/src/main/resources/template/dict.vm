@@ -1,0 +1,26 @@
+package ats.ity.common.constant.dic;
+
+import ats.ity.common.model.base.CodeItemPool;
+import ats.ity.common.model.base.ICodeItem;
+
+/**
+* <b>Description : </b>
+*
+* @author CPF
+* @date 2019/5/27 16:03
+**/
+public interface DicItyGroup {
+
+/**
+* 状态
+*/
+enum Status implements ICodeItem {
+
+NORMAL("N", "正常"), C("C", "C"), S("S", "S");
+
+Status(String code, String text) {
+CodeItemPool.putCodeItem(this, code, text);
+}
+}
+
+}

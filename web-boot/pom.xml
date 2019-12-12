@@ -12,6 +12,7 @@
     <artifactId>web-boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>web-boot</name>
+    <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -130,9 +131,32 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
                 <configuration>
                     <fork>true</fork>
                     <mainClass>cn.cpf.web.boot.WebBootApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <!-- 注意不是maven-compiler-plugin -->
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <archive>
+                        <!-- 添加manifest.mf的配置 -->
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>cn.cpf.web.boot.WebBootApplication</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

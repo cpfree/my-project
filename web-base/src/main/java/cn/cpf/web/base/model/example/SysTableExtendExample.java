@@ -3,14 +3,14 @@ package cn.cpf.web.base.model.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SysTableExample {
+public class SysTableExtendExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SysTableExample() {
+    public SysTableExtendExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,73 +104,73 @@ public class SysTableExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andGuidIsNull() {
-            addCriterion("guid is null");
+        public Criteria andSchemaTagIsNull() {
+            addCriterion("schema_tag is null");
             return (Criteria) this;
         }
 
-        public Criteria andGuidIsNotNull() {
-            addCriterion("guid is not null");
+        public Criteria andSchemaTagIsNotNull() {
+            addCriterion("schema_tag is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGuidEqualTo(String value) {
-            addCriterion("guid =", value, "guid");
+        public Criteria andSchemaTagEqualTo(String value) {
+            addCriterion("schema_tag =", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidNotEqualTo(String value) {
-            addCriterion("guid <>", value, "guid");
+        public Criteria andSchemaTagNotEqualTo(String value) {
+            addCriterion("schema_tag <>", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidGreaterThan(String value) {
-            addCriterion("guid >", value, "guid");
+        public Criteria andSchemaTagGreaterThan(String value) {
+            addCriterion("schema_tag >", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidGreaterThanOrEqualTo(String value) {
-            addCriterion("guid >=", value, "guid");
+        public Criteria andSchemaTagGreaterThanOrEqualTo(String value) {
+            addCriterion("schema_tag >=", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidLessThan(String value) {
-            addCriterion("guid <", value, "guid");
+        public Criteria andSchemaTagLessThan(String value) {
+            addCriterion("schema_tag <", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidLessThanOrEqualTo(String value) {
-            addCriterion("guid <=", value, "guid");
+        public Criteria andSchemaTagLessThanOrEqualTo(String value) {
+            addCriterion("schema_tag <=", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidLike(String value) {
-            addCriterion("guid like", value, "guid");
+        public Criteria andSchemaTagLike(String value) {
+            addCriterion("schema_tag like", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidNotLike(String value) {
-            addCriterion("guid not like", value, "guid");
+        public Criteria andSchemaTagNotLike(String value) {
+            addCriterion("schema_tag not like", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidIn(List<String> values) {
-            addCriterion("guid in", values, "guid");
+        public Criteria andSchemaTagIn(List<String> values) {
+            addCriterion("schema_tag in", values, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidNotIn(List<String> values) {
-            addCriterion("guid not in", values, "guid");
+        public Criteria andSchemaTagNotIn(List<String> values) {
+            addCriterion("schema_tag not in", values, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidBetween(String value1, String value2) {
-            addCriterion("guid between", value1, value2, "guid");
+        public Criteria andSchemaTagBetween(String value1, String value2) {
+            addCriterion("schema_tag between", value1, value2, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidNotBetween(String value1, String value2) {
-            addCriterion("guid not between", value1, value2, "guid");
+        public Criteria andSchemaTagNotBetween(String value1, String value2) {
+            addCriterion("schema_tag not between", value1, value2, "schemaTag");
             return (Criteria) this;
         }
 
@@ -311,6 +311,76 @@ public class SysTableExample {
 
         public Criteria andSimpleNameNotBetween(String value1, String value2) {
             addCriterion("simple_name not between", value1, value2, "simpleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(String value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(String value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(String value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(String value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(String value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLike(String value) {
+            addCriterion("type like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotLike(String value) {
+            addCriterion("type not like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<String> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<String> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(String value1, String value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(String value1, String value2) {
+            addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
 

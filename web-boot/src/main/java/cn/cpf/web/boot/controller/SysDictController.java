@@ -4,7 +4,7 @@ import cn.cpf.web.base.constant.postcode.ECommonPostCode;
 import cn.cpf.web.base.constant.postcode.EFormPostCode;
 import cn.cpf.web.base.constant.string.EncodeString;
 import cn.cpf.web.base.lang.base.PostBean;
-import cn.cpf.web.base.model.bo.DictItem;
+import cn.cpf.web.base.model.dto.DictItemDto;
 import cn.cpf.web.base.model.entity.SysDictItem;
 import cn.cpf.web.base.model.entity.SysDictItemKey;
 import cn.cpf.web.base.model.entity.SysDictType;
@@ -16,6 +16,7 @@ import cn.cpf.web.service.base.api.ISysDictItem;
 import cn.cpf.web.service.base.api.ISysDictType;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.methods.HttpGet;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +60,7 @@ public class SysDictController {
     @GetMapping("/item/page-info")
     public Map<String, Object> querySysDictItemPageInfo (HttpServletRequest request,
                                                          @RequestParam(value = "pValue", required = false) String pValue,
+                                                         @RequestParam(value = "dictType", required = false) String dictType,
                                                          @RequestParam(value = "value", required = false) String value,
                                                          @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
                                                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
@@ -67,6 +69,9 @@ public class SysDictController {
         example.setOrderByClause("sort desc");
         if (StringUtils.isNotBlank(pValue)) {
             criteria.andPValueEqualTo(pValue);
+        }
+        if (StringUtils.isNotBlank(dictType)) {
+            criteria.andTypeEqualTo(dictType);
         }
         if (StringUtils.isNotBlank(value)) {
             criteria.andValueEqualTo(value);
@@ -97,7 +102,7 @@ public class SysDictController {
     @PutMapping("/type/item")
     @Transactional(rollbackFor = Exception.class)
     public Map<String, Object> editSysDictItem (HttpServletRequest request, @ModelAttribute SysDictItem record) {
-        if (StringUtils.isAnyBlank(record.getLabel(), record.getValue())) {
+        if (StringUtils.isAnyBlank(record.getEnLabel(), record.getCnLabel(), record.getValue())) {
             return PostBean.genePostMap(ECommonPostCode.ILLEGAL_ARGUMENT_EXCEPTION);
         }
         record.setUpdateTime(new Date());
@@ -165,7 +170,7 @@ public class SysDictController {
      */
     @GetMapping("/type/structure")
     public Map<String, Object> querySysDictTypeStructure () {
-        final List<DictItem> dictItems = iSysDictItem.queryDictItemStructure();
+        final List<DictItemDto> dictItems = iSysDictItem.queryDictItemStructure();
         return PostBean.geneSimpleDataPostMap(dictItems);
     }
 

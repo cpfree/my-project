@@ -3,14 +3,14 @@ package cn.cpf.web.base.model.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SysFieldExample {
+public class SysFieldExtendExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SysFieldExample() {
+    public SysFieldExtendExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,73 +104,143 @@ public class SysFieldExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andGuidIsNull() {
-            addCriterion("guid is null");
+        public Criteria andSchemaTagIsNull() {
+            addCriterion("schema_tag is null");
             return (Criteria) this;
         }
 
-        public Criteria andGuidIsNotNull() {
-            addCriterion("guid is not null");
+        public Criteria andSchemaTagIsNotNull() {
+            addCriterion("schema_tag is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGuidEqualTo(String value) {
-            addCriterion("guid =", value, "guid");
+        public Criteria andSchemaTagEqualTo(String value) {
+            addCriterion("schema_tag =", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidNotEqualTo(String value) {
-            addCriterion("guid <>", value, "guid");
+        public Criteria andSchemaTagNotEqualTo(String value) {
+            addCriterion("schema_tag <>", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidGreaterThan(String value) {
-            addCriterion("guid >", value, "guid");
+        public Criteria andSchemaTagGreaterThan(String value) {
+            addCriterion("schema_tag >", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidGreaterThanOrEqualTo(String value) {
-            addCriterion("guid >=", value, "guid");
+        public Criteria andSchemaTagGreaterThanOrEqualTo(String value) {
+            addCriterion("schema_tag >=", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidLessThan(String value) {
-            addCriterion("guid <", value, "guid");
+        public Criteria andSchemaTagLessThan(String value) {
+            addCriterion("schema_tag <", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidLessThanOrEqualTo(String value) {
-            addCriterion("guid <=", value, "guid");
+        public Criteria andSchemaTagLessThanOrEqualTo(String value) {
+            addCriterion("schema_tag <=", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidLike(String value) {
-            addCriterion("guid like", value, "guid");
+        public Criteria andSchemaTagLike(String value) {
+            addCriterion("schema_tag like", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidNotLike(String value) {
-            addCriterion("guid not like", value, "guid");
+        public Criteria andSchemaTagNotLike(String value) {
+            addCriterion("schema_tag not like", value, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidIn(List<String> values) {
-            addCriterion("guid in", values, "guid");
+        public Criteria andSchemaTagIn(List<String> values) {
+            addCriterion("schema_tag in", values, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidNotIn(List<String> values) {
-            addCriterion("guid not in", values, "guid");
+        public Criteria andSchemaTagNotIn(List<String> values) {
+            addCriterion("schema_tag not in", values, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidBetween(String value1, String value2) {
-            addCriterion("guid between", value1, value2, "guid");
+        public Criteria andSchemaTagBetween(String value1, String value2) {
+            addCriterion("schema_tag between", value1, value2, "schemaTag");
             return (Criteria) this;
         }
 
-        public Criteria andGuidNotBetween(String value1, String value2) {
-            addCriterion("guid not between", value1, value2, "guid");
+        public Criteria andSchemaTagNotBetween(String value1, String value2) {
+            addCriterion("schema_tag not between", value1, value2, "schemaTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameIsNull() {
+            addCriterion("table_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameIsNotNull() {
+            addCriterion("table_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameEqualTo(String value) {
+            addCriterion("table_name =", value, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameNotEqualTo(String value) {
+            addCriterion("table_name <>", value, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameGreaterThan(String value) {
+            addCriterion("table_name >", value, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameGreaterThanOrEqualTo(String value) {
+            addCriterion("table_name >=", value, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameLessThan(String value) {
+            addCriterion("table_name <", value, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameLessThanOrEqualTo(String value) {
+            addCriterion("table_name <=", value, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameLike(String value) {
+            addCriterion("table_name like", value, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameNotLike(String value) {
+            addCriterion("table_name not like", value, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameIn(List<String> values) {
+            addCriterion("table_name in", values, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameNotIn(List<String> values) {
+            addCriterion("table_name not in", values, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameBetween(String value1, String value2) {
+            addCriterion("table_name between", value1, value2, "tableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTableNameNotBetween(String value1, String value2) {
+            addCriterion("table_name not between", value1, value2, "tableName");
             return (Criteria) this;
         }
 
@@ -244,76 +314,6 @@ public class SysFieldExample {
             return (Criteria) this;
         }
 
-        public Criteria andSysTableGuidIsNull() {
-            addCriterion("sys_table_guid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidIsNotNull() {
-            addCriterion("sys_table_guid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidEqualTo(String value) {
-            addCriterion("sys_table_guid =", value, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidNotEqualTo(String value) {
-            addCriterion("sys_table_guid <>", value, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidGreaterThan(String value) {
-            addCriterion("sys_table_guid >", value, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidGreaterThanOrEqualTo(String value) {
-            addCriterion("sys_table_guid >=", value, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidLessThan(String value) {
-            addCriterion("sys_table_guid <", value, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidLessThanOrEqualTo(String value) {
-            addCriterion("sys_table_guid <=", value, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidLike(String value) {
-            addCriterion("sys_table_guid like", value, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidNotLike(String value) {
-            addCriterion("sys_table_guid not like", value, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidIn(List<String> values) {
-            addCriterion("sys_table_guid in", values, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidNotIn(List<String> values) {
-            addCriterion("sys_table_guid not in", values, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidBetween(String value1, String value2) {
-            addCriterion("sys_table_guid between", value1, value2, "sysTableGuid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysTableGuidNotBetween(String value1, String value2) {
-            addCriterion("sys_table_guid not between", value1, value2, "sysTableGuid");
-            return (Criteria) this;
-        }
-
         public Criteria andLabelIsNull() {
             addCriterion("label is null");
             return (Criteria) this;
@@ -384,133 +384,73 @@ public class SysFieldExample {
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNull() {
-            addCriterion("type is null");
+        public Criteria andDictTypeIsNull() {
+            addCriterion("dict_type is null");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNotNull() {
-            addCriterion("type is not null");
+        public Criteria andDictTypeIsNotNull() {
+            addCriterion("dict_type is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTypeEqualTo(String value) {
-            addCriterion("type =", value, "type");
+        public Criteria andDictTypeEqualTo(String value) {
+            addCriterion("dict_type =", value, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotEqualTo(String value) {
-            addCriterion("type <>", value, "type");
+        public Criteria andDictTypeNotEqualTo(String value) {
+            addCriterion("dict_type <>", value, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThan(String value) {
-            addCriterion("type >", value, "type");
+        public Criteria andDictTypeGreaterThan(String value) {
+            addCriterion("dict_type >", value, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("type >=", value, "type");
+        public Criteria andDictTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("dict_type >=", value, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThan(String value) {
-            addCriterion("type <", value, "type");
+        public Criteria andDictTypeLessThan(String value) {
+            addCriterion("dict_type <", value, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThanOrEqualTo(String value) {
-            addCriterion("type <=", value, "type");
+        public Criteria andDictTypeLessThanOrEqualTo(String value) {
+            addCriterion("dict_type <=", value, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLike(String value) {
-            addCriterion("type like", value, "type");
+        public Criteria andDictTypeLike(String value) {
+            addCriterion("dict_type like", value, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotLike(String value) {
-            addCriterion("type not like", value, "type");
+        public Criteria andDictTypeNotLike(String value) {
+            addCriterion("dict_type not like", value, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIn(List<String> values) {
-            addCriterion("type in", values, "type");
+        public Criteria andDictTypeIn(List<String> values) {
+            addCriterion("dict_type in", values, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotIn(List<String> values) {
-            addCriterion("type not in", values, "type");
+        public Criteria andDictTypeNotIn(List<String> values) {
+            addCriterion("dict_type not in", values, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeBetween(String value1, String value2) {
-            addCriterion("type between", value1, value2, "type");
+        public Criteria andDictTypeBetween(String value1, String value2) {
+            addCriterion("dict_type between", value1, value2, "dictType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotBetween(String value1, String value2) {
-            addCriterion("type not between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthIsNull() {
-            addCriterion("length is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthIsNotNull() {
-            addCriterion("length is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthEqualTo(Integer value) {
-            addCriterion("length =", value, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthNotEqualTo(Integer value) {
-            addCriterion("length <>", value, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthGreaterThan(Integer value) {
-            addCriterion("length >", value, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthGreaterThanOrEqualTo(Integer value) {
-            addCriterion("length >=", value, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthLessThan(Integer value) {
-            addCriterion("length <", value, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthLessThanOrEqualTo(Integer value) {
-            addCriterion("length <=", value, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthIn(List<Integer> values) {
-            addCriterion("length in", values, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthNotIn(List<Integer> values) {
-            addCriterion("length not in", values, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthBetween(Integer value1, Integer value2) {
-            addCriterion("length between", value1, value2, "length");
-            return (Criteria) this;
-        }
-
-        public Criteria andLengthNotBetween(Integer value1, Integer value2) {
-            addCriterion("length not between", value1, value2, "length");
+        public Criteria andDictTypeNotBetween(String value1, String value2) {
+            addCriterion("dict_type not between", value1, value2, "dictType");
             return (Criteria) this;
         }
 
@@ -861,6 +801,66 @@ public class SysFieldExample {
 
         public Criteria andShowDetailNotBetween(String value1, String value2) {
             addCriterion("show_detail not between", value1, value2, "showDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortIsNull() {
+            addCriterion("sort is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortIsNotNull() {
+            addCriterion("sort is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortEqualTo(Integer value) {
+            addCriterion("sort =", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortNotEqualTo(Integer value) {
+            addCriterion("sort <>", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortGreaterThan(Integer value) {
+            addCriterion("sort >", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sort >=", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortLessThan(Integer value) {
+            addCriterion("sort <", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortLessThanOrEqualTo(Integer value) {
+            addCriterion("sort <=", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortIn(List<Integer> values) {
+            addCriterion("sort in", values, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortNotIn(List<Integer> values) {
+            addCriterion("sort not in", values, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortBetween(Integer value1, Integer value2) {
+            addCriterion("sort between", value1, value2, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortNotBetween(Integer value1, Integer value2) {
+            addCriterion("sort not between", value1, value2, "sort");
             return (Criteria) this;
         }
 

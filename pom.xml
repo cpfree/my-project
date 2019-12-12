@@ -13,7 +13,7 @@
         <module>web-dal</module>
         <module>web-service</module>
         <module>web-boot</module>
-        <module>mod</module>
+<!--        <module>mod</module>-->
     </modules>
 
     <properties>

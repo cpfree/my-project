@@ -1,6 +1,6 @@
 package cn.cpf.web.dal.base;
 
-import cn.cpf.web.base.model.bo.DictItem;
+import cn.cpf.web.base.model.dto.DictItemDto;
 import cn.cpf.web.base.model.entity.SysDictItem;
 import cn.cpf.web.base.model.example.SysDictItemExample;
 import cn.cpf.web.base.model.entity.SysDictItemKey;
@@ -31,7 +31,6 @@ public interface SysDictItemMapper {
 
     int updateByPrimaryKey(SysDictItem record);
 
-    @Select("select p_value pValue, value, level, sort from sys_dict_item where type = 'sys_dict_type_package'" +
-            " union all select type pValue, name value, text level, sort from sys_dict_type order by sort")
-    List<DictItem> queryDictItemStructure();
+    @Select("select p_value pValue, value, cn_label label, sort from sys_dict_item where type = 'sys_dict_type_package' union all select type pValue, name value, text label, sort from sys_dict_type order by sort")
+    List<DictItemDto> queryDictItemStructure();
 }

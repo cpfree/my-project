@@ -1,15 +1,14 @@
 package cn.cpf.web.service.base.impl;
 
-import cn.cpf.web.base.model.bo.DictItem;
-import cn.cpf.web.base.model.entity.SysDictItemKey;
-import cn.cpf.web.dal.base.SysDictItemMapper;
+import cn.cpf.web.base.model.dto.DictItemDto;
 import cn.cpf.web.base.model.entity.SysDictItem;
+import cn.cpf.web.base.model.entity.SysDictItemKey;
 import cn.cpf.web.base.model.example.SysDictItemExample;
+import cn.cpf.web.dal.base.SysDictItemMapper;
 import cn.cpf.web.service.base.api.ISysDictItem;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -101,8 +100,8 @@ public class SysDictItemImpl implements ISysDictItem {
      * @return 对象列表
      */
     @Override
-    public List<DictItem> queryDictItem(String dictType) {
-        return selectByDictType(dictType).stream().map(DictItem::new).collect(Collectors.toList());
+    public List<DictItemDto> queryDictItem(String dictType) {
+        return selectByDictType(dictType).stream().map(DictItemDto::cnOf).collect(Collectors.toList());
     }
 
     /**
@@ -111,7 +110,7 @@ public class SysDictItemImpl implements ISysDictItem {
      * @return 对象列表
      */
     @Override
-    public List<DictItem> queryDictItemStructure() {
+    public List<DictItemDto> queryDictItemStructure() {
         return sysDictItemMapper.queryDictItemStructure();
     }
 

@@ -1,9 +1,10 @@
 package cn.cpf.web.service.base.api;
 
-import cn.cpf.web.base.model.bo.DictItem;
+import cn.cpf.web.base.model.dto.DictItemDto;
 import cn.cpf.web.base.model.entity.SysDictItem;
 import cn.cpf.web.base.model.entity.SysDictItemKey;
 import cn.cpf.web.base.model.example.SysDictItemExample;
+
 import java.util.List;
 import java.util.Map;
 
@@ -69,12 +70,12 @@ public interface ISysDictItem {
      * @param dictType 字典类型
      * @return 对象列表
      */
-    List<DictItem> queryDictItem(String dictType);
+    List<DictItemDto> queryDictItem(String dictType);
 
     /**
      * 查询列表结构数据
      */
-    List<DictItem> queryDictItemStructure();
+    List<DictItemDto> queryDictItemStructure();
 
     /**
      * 查询列表数据

@@ -10,13 +10,16 @@
     <link rel="stylesheet" href="/static/etc/frame/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/static/etc/css/base/color.css"/>
 
+    <script type="text/javascript" src="/static/etc/frame/axios.js"></script>
+    <script type="text/javascript" src="/static/etc/frame/qs.js"></script>
     <script type="text/javascript" src="/static/etc/frame/jquery/jquery-current.min.js"></script>
     <script type="text/javascript" src="/static/etc/js/base/base.js"></script>
     <script type="text/javascript" src="/static/etc/frame/layer/layer.js"></script>
     <script type="text/javascript" src="/static/etc/js/base/ity-common-utils.js"></script>
-    <script type="text/javascript" src="/static/etc/frame/vue.js"></script>
+    <script type="text/javascript" src="/static/etc/js/service/http-service.js"></script>
+    <script type="text/javascript" src="/static/etc/frame/vue/vue.js"></script>
+    <script type="text/javascript" src="/static/etc/frame/vue/vue-component.js"></script>
     <script type="text/javascript" src="/static/etc/frame/element-ui/element.js"></script>
-    <script type="text/javascript" src="/static/etc/frame/axios.js"></script>
 </head>
 
 <body>
@@ -26,8 +29,7 @@
 
         <el-container>
             <el-aside width="200px" style="background-color: rgb(38, 41, 46)">
-                <vo-sysdictitem></vo-sysdictitem>
-                <child-component message = "动态局部组件"></child-component>
+                <vc-tree title="枚举类型树" @ontreenodeclick="onTreeNodeClick"></vc-tree>
             </el-aside>
             <el-container>
                 <el-main>
@@ -89,6 +91,7 @@
                                     <el-col :span="16">
                                         <template>
                                             <el-date-picker style="width:100%" align="right" unlink-panels
+                                                size="small"
                                                 start-placeholder="开始日期" end-placeholder="结束日期" range-separator="-"
                                                 v-model="sysDictItemGrid.conditions.updateTimeRange"
                                                 type="daterange"
@@ -104,7 +107,10 @@
                                     </el-col>
                                     <el-col :span="16">
                                         <template>
-                                            <el-input size="small" v-model="sysDictItemGrid.conditions.blurState" autocomplete="off"></el-input>
+                                            <el-select size="small" v-model="sysDictItemGrid.conditions.blurState" placeholder="请选择">
+                                                <el-option v-for="item in dict.table_state" :key="item.value" :label="item.label" :value="item.value">
+                                                </el-option>
+                                            </el-select>
                                         </template>
                                     </el-col>
                                 </el-col>
@@ -136,7 +142,8 @@
                     <div class="col-sm-12" style="width: 100%">
                         <el-table :data="sysDictItemGrid.data" :fit="true"
                                   @selection-change="handleSelectionChange"
-                                  style="background: center;" stripe style="width: 100%">
+                                  style="background: center;" stripe style="width: 100%"
+                                  row-key="value" default-expand-all :tree-props="{children: 'children'}">
                             <template>
                                 <el-table-column type="selection" width="55">
                                 </el-table-column>
@@ -169,11 +176,11 @@
 
         <el-dialog title="新增 sysDictItem 记录" :visible.sync="addSysDictItemModel.dialogVisible" destroy-on-close>
             <el-form :model="addSysDictItemModel.form" :rules="addSysDictItemModel.formRule" ref="addSysDictItemModel.form" hide-required-asterisk>
-                    <el-form-item label="父ID ：" label-width="120px" prop="parCode">
-                    <el-input v-model="addSysDictItemModel.form.parCode" autocomplete="off" maxlength="11"></el-input>
+                    <el-form-item label="父ID ：" label-width="120px" prop="pValue">
+                    <el-input v-model="addSysDictItemModel.form.pValue" autocomplete="off" maxlength="11"></el-input>
                 </el-form-item>
-                <el-form-item label="数据编码 ：" label-width="120px" prop="code">
-                    <el-input v-model="addSysDictItemModel.form.code" autocomplete="off" maxlength="11"></el-input>
+                <el-form-item label="数据编码 ：" label-width="120px" prop="value">
+                    <el-input v-model="addSysDictItemModel.form.value" autocomplete="off" maxlength="11"></el-input>
                 </el-form-item>
                 <el-form-item label="数据名称 ：" label-width="120px" prop="text">
                     <el-input v-model="addSysDictItemModel.form.text" autocomplete="off" maxlength="11"></el-input>
@@ -202,11 +209,11 @@
         <!-- edit dialog -->
         <el-dialog title="修改 sysDictItem 记录" :visible.sync="editSysDictItemModel.dialogVisible" destroy-on-close>
             <el-form :model="editSysDictItemModel.form" :rules="editSysDictItemModel.formRule" ref="editSysDictItemModel.form" hide-required-asterisk>
-                    <el-form-item label="父ID ：" label-width="120px" prop="parCode">
-                    <el-input v-model="editSysDictItemModel.form.parCode" autocomplete="off" maxlength="11"></el-input>
+                    <el-form-item label="父ID ：" label-width="120px" prop="pValue">
+                    <el-input v-model="editSysDictItemModel.form.pValue" autocomplete="off" maxlength="11"></el-input>
                 </el-form-item>
-                <el-form-item label="数据编码 ：" label-width="120px" prop="code">
-                    <el-input v-model="editSysDictItemModel.form.code" autocomplete="off" maxlength="11"></el-input>
+                <el-form-item label="数据编码 ：" label-width="120px" prop="value">
+                    <el-input v-model="editSysDictItemModel.form.value" autocomplete="off" maxlength="11"></el-input>
                 </el-form-item>
                 <el-form-item label="数据名称 ：" label-width="120px" prop="text">
                     <el-input v-model="editSysDictItemModel.form.text" autocomplete="off" maxlength="11"></el-input>

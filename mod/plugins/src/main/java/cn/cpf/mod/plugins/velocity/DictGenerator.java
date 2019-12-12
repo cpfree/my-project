@@ -1,6 +1,11 @@
 package cn.cpf.mod.plugins.velocity;
 
 import cn.cpf.mod.plugins.dbutils.GlobalTool;
+import cn.cpf.mod.plugins.mybatis.MybatisFactory;
+import cn.cpf.web.base.model.bo.SysFieldBo;
+import cn.cpf.web.base.model.bo.SysTableBo;
+import cn.cpf.web.dal.combine.SysDesignCombineMapper;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -22,7 +27,18 @@ public class DictGenerator {
     private static final String HELLO_WORLD_VM_PATH = "mod/plugins/src/main/resources/template/userInfo.vm";
 
     public static void main(String[] args) {
-        test(HELLO_WORLD_VM_PATH);
+        mainTest(HELLO_WORLD_VM_PATH);
+    }
+
+    private static void mainTest(String s) {
+        final SqlSession instance = MybatisFactory.getInstance();
+        final SysDesignCombineMapper designCombineMapper = instance.getMapper(SysDesignCombineMapper.class);
+
+        final List<SysFieldBo> sysFieldBos = designCombineMapper.selectSysFieldBoByTableName("sys_field_extend");
+        final SysTableBo sysTableBo = designCombineMapper.selectSysTableBoByTableName("sys_field_extend");
+        System.out.println(TableDataHandler.builder().sysFieldList(sysFieldBos).sysTable(sysTableBo).build().toString());
+
+
     }
 
     /**
@@ -42,9 +58,7 @@ public class DictGenerator {
 
         defaultParam.put("list0", list);
         System.out.println(generate(fileVM, defaultParam));
-
     }
-
 
 
     /**

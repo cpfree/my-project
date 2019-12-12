@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.cpf.web.dal.base.SysTableMapper">
-  <resultMap id="BaseResultMap" type="cn.cpf.web.base.model.entity.SysTable">
-    <id column="guid" jdbcType="VARCHAR" property="guid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+<mapper namespace="cn.cpf.web.dal.base.SysTableExtendMapper">
+  <resultMap id="BaseResultMap" type="cn.cpf.web.base.model.entity.SysTableExtend">
+    <id column="schema_tag" jdbcType="VARCHAR" property="schemaTag" />
+    <id column="name" jdbcType="VARCHAR" property="name" />
     <result column="simple_name" jdbcType="VARCHAR" property="simpleName" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -66,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    guid, name, simple_name, comment
+    schema_tag, name, simple_name, type, comment
   </sql>
-  <select id="selectByExample" parameterType="cn.cpf.web.base.model.example.SysTableExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.cpf.web.base.model.example.SysTableExtendExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_table
+    from sys_table_extend
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -82,33 +83,35 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysTableExtendKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sys_table
-    where guid = #{guid,jdbcType=VARCHAR}
+    from sys_table_extend
+    where schema_tag = #{schemaTag,jdbcType=VARCHAR}
+      and name = #{name,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from sys_table
-    where guid = #{guid,jdbcType=VARCHAR}
+  <delete id="deleteByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysTableExtendKey">
+    delete from sys_table_extend
+    where schema_tag = #{schemaTag,jdbcType=VARCHAR}
+      and name = #{name,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.cpf.web.base.model.example.SysTableExample">
-    delete from sys_table
+  <delete id="deleteByExample" parameterType="cn.cpf.web.base.model.example.SysTableExtendExample">
+    delete from sys_table_extend
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.cpf.web.base.model.entity.SysTable">
-    insert into sys_table (guid, name, simple_name, 
-      comment)
-    values (#{guid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{simpleName,jdbcType=VARCHAR}, 
-      #{comment,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="cn.cpf.web.base.model.entity.SysTableExtend">
+    insert into sys_table_extend (schema_tag, name, simple_name, 
+      type, comment)
+    values (#{schemaTag,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{simpleName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cpf.web.base.model.entity.SysTable">
-    insert into sys_table
+  <insert id="insertSelective" parameterType="cn.cpf.web.base.model.entity.SysTableExtend">
+    insert into sys_table_extend
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="guid != null">
-        guid,
+      <if test="schemaTag != null">
+        schema_tag,
       </if>
       <if test="name != null">
         name,
@@ -116,13 +119,16 @@
       <if test="simpleName != null">
         simple_name,
       </if>
+      <if test="type != null">
+        type,
+      </if>
       <if test="comment != null">
         comment,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="guid != null">
-        #{guid,jdbcType=VARCHAR},
+      <if test="schemaTag != null">
+        #{schemaTag,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -130,28 +136,34 @@
       <if test="simpleName != null">
         #{simpleName,jdbcType=VARCHAR},
       </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
       <if test="comment != null">
         #{comment,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.cpf.web.base.model.example.SysTableExample" resultType="java.lang.Long">
-    select count(*) from sys_table
+  <select id="countByExample" parameterType="cn.cpf.web.base.model.example.SysTableExtendExample" resultType="java.lang.Long">
+    select count(*) from sys_table_extend
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update sys_table
+    update sys_table_extend
     <set>
-      <if test="record.guid != null">
-        guid = #{record.guid,jdbcType=VARCHAR},
+      <if test="record.schemaTag != null">
+        schema_tag = #{record.schemaTag,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.simpleName != null">
         simple_name = #{record.simpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
       </if>
       <if test="record.comment != null">
         comment = #{record.comment,jdbcType=VARCHAR},
@@ -162,35 +174,38 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update sys_table
-    set guid = #{record.guid,jdbcType=VARCHAR},
+    update sys_table_extend
+    set schema_tag = #{record.schemaTag,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       simple_name = #{record.simpleName,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
       comment = #{record.comment,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.cpf.web.base.model.entity.SysTable">
-    update sys_table
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cpf.web.base.model.entity.SysTableExtend">
+    update sys_table_extend
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
       <if test="simpleName != null">
         simple_name = #{simpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
       </if>
       <if test="comment != null">
         comment = #{comment,jdbcType=VARCHAR},
       </if>
     </set>
-    where guid = #{guid,jdbcType=VARCHAR}
+    where schema_tag = #{schemaTag,jdbcType=VARCHAR}
+      and name = #{name,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysTable">
-    update sys_table
-    set name = #{name,jdbcType=VARCHAR},
-      simple_name = #{simpleName,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="cn.cpf.web.base.model.entity.SysTableExtend">
+    update sys_table_extend
+    set simple_name = #{simpleName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR}
-    where guid = #{guid,jdbcType=VARCHAR}
+    where schema_tag = #{schemaTag,jdbcType=VARCHAR}
+      and name = #{name,jdbcType=VARCHAR}
   </update>
 </mapper>

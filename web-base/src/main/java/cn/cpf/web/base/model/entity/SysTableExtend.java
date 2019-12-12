@@ -1,29 +1,11 @@
 package cn.cpf.web.base.model.entity;
 
-public class SysTable {
-    private String guid;
-
-    private String name;
-
+public class SysTableExtend extends SysTableExtendKey {
     private String simpleName;
 
+    private String type;
+
     private String comment;
-
-    public String getGuid() {
-        return guid;
-    }
-
-    public void setGuid(String guid) {
-        this.guid = guid == null ? null : guid.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
 
     public String getSimpleName() {
         return simpleName;
@@ -31,6 +13,14 @@ public class SysTable {
 
     public void setSimpleName(String simpleName) {
         this.simpleName = simpleName == null ? null : simpleName.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public String getComment() {

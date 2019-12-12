@@ -58,18 +58,19 @@ public class ShiroConfig {
         Map<String, Filter> filters = Maps.newHashMapWithExpectedSize(3);
         filters.put("login", new LoginAuthenticationFilter());
         filters.put("logout", new CpLogoutFilter());
-        filters.put("rememberAuth", new RememberAuthenticationFilter());
+//        filters.put("rememberAuth", new RememberAuthenticationFilter());
         bean.setFilters(filters);
         // setFilterChainDefinitionMap
         Map<String, String> map = Maps.newHashMap();
-        map.put("/account/**", "anon");
-        map.put("/debug/**", "anon");
-        map.put("/static/**", "anon");
-        map.put("/logout", "logout");
-        map.put("/validate", "login");
-        map.put("/login", "login");
-        map.put("/register", "login");
-        map.put("/**", "rememberAuth");
+        map.put("/**", "anon");
+//        map.put("/account/**", "anon");
+//        map.put("/debug/**", "anon");
+//        map.put("/static/**", "anon");
+//        map.put("/logout", "logout");
+//        map.put("/validate", "login");
+//        map.put("/login", "login");
+//        map.put("/register", "login");
+//        map.put("/**", "rememberAuth");
         bean.setFilterChainDefinitionMap(map);
         return bean;
     }

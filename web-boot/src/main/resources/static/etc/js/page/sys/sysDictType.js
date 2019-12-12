@@ -9,6 +9,11 @@ let numberValid=(rule, value,callback)=>{
     }
 };
 
+
+
+
+
+
 let vueContent = new Vue({
     el : '#vue-content',
     //钩子函数,页面加载执行
@@ -17,6 +22,9 @@ let vueContent = new Vue({
     },
     //钩子函数,页面加载完成后执行
     mounted: function () {
+
+
+
     },
     data: {
         sysDictTypeGrid : {

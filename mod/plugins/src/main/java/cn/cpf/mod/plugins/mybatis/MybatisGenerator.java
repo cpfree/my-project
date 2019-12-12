@@ -26,12 +26,13 @@ import java.util.List;
 public class MybatisGenerator {
 
 //    private static String[] tableNameArr = {};
-    private static String[] tableNameArr = {"sys_dict_item"};
+    private static String[] tableNameArr = {"sys_field_extend"};
 
     public static void main(String[] args) throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
         List<String> warnings = new ArrayList<>();
         //指定 逆向工程配置文件
         final InputStream resourceAsStream = MyBatisGenerator.class.getClassLoader().getResourceAsStream("generatorConfig.xml");
+//        final InputStream resourceAsStream = MyBatisGenerator.class.getClassLoader().getResourceAsStream("generatorConfig-test.xml");
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(resourceAsStream);
         config.getContexts().get(0).getTableConfigurations().clear();

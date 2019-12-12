@@ -17,11 +17,28 @@ let vueContent = new Vue({
     },
     //钩子函数,页面加载完成后执行
     mounted: function () {
+        let propertyNames = Object.getOwnPropertyNames(this.dict);
+        let itemArray = $Info.querySysDictItemArray(propertyNames);
+        itemArray.then(data=>{
+            if (data && data.data && data.data.data) {
+                let dictData = data.data.data;
+                let ownPropertyNames = Object.getOwnPropertyNames(dictData);
+                ownPropertyNames.forEach(it=>{
+                    dictData[it].forEach(dictItem=>{
+                        this.dict[it].push(dictItem);
+                    });
+                })
+            }
+        })
     },
     data: {
+        dict:{
+            table_state : []
+        },
         sysDictItemGrid: {
             multipleSelection: [],
             conditions: {
+                dictType:undefined,
                 blurParCode: undefined,
                 blurCode: undefined,
                 blurText: undefined,
@@ -29,9 +46,8 @@ let vueContent = new Vue({
                 blurState: undefined
             },
             cols: [
-                {width: '', prop: 'parCode', label: '父级代码'},
-                {width: '', prop: 'code', label: '代码'},
-                {width: '', prop: 'text', label: '标签'},
+                {width: '', prop: 'value', label: '代码'},
+                {width: '', prop: 'cnLabel', label: '标签'},
                 {width: '', prop: 'sort', label: '排序'},
                 {width: '', prop: 'level', label: '等级'},
                 {width: '', prop: 'addTime', label: '添加时间'},
@@ -40,7 +56,8 @@ let vueContent = new Vue({
                 {width: '', prop: 'id', label: '操作', component: 'cOperate'}
             ],
             pretreatment(row) {
-                // row.addTimeText = new Date(row.addTime).format('yyyy-MM-dd hh:mm:ss');
+                row.addTime = new Date(row.addTime).format('yyyy-MM-dd hh:mm:ss');
+                row.updateTime = new Date(row.updateTime).format('yyyy-MM-dd hh:mm:ss');
             },
             data: [],
             pagination: {
@@ -54,10 +71,10 @@ let vueContent = new Vue({
                 }
                 this.clearTable();
                 if (pageInfo.list) {
-                    pageInfo.list.forEach(item => {
-                        this.pretreatment(item);
-                        this.data.push(item);
-                    });
+                    let list = pageInfo.list;
+                    list.forEach(item => this.pretreatment(item));
+                    list = childConvert(pageInfo.list, 'value', 'pvalue');
+                    list.forEach(item => this.data.push(item));
                 }
                 this.pagination.total = pageInfo.total;
             },
@@ -70,8 +87,8 @@ let vueContent = new Vue({
         addSysDictItemModel: {
             dialogVisible: false,
             form: {
-                parCode: undefined,
-                code: undefined,
+                pvalue: undefined,
+                value: undefined,
                 text: undefined,
                 sort: undefined,
                 level: undefined,
@@ -79,10 +96,10 @@ let vueContent = new Vue({
                 state: undefined
             },
             formRule: {
-                parCode: [
+                pvalue: [
                     {required: true, message: '请输入父级代码', trigger: 'change'}
                 ],
-                code: [
+                value: [
                     {required: true, message: '请输入代码', trigger: 'change'}
                 ],
                 text: [
@@ -103,8 +120,8 @@ let vueContent = new Vue({
             },
             closeAndClear() {
                 this.dialogVisible = false;
-                this.form.parCode = undefined;
-                this.form.code = undefined;
+                this.form.pvalue = undefined;
+                this.form.value = undefined;
                 this.form.text = undefined;
                 this.form.sort = undefined;
                 this.form.level = undefined;
@@ -118,8 +135,8 @@ let vueContent = new Vue({
         editSysDictItemModel: {
             dialogVisible: false,
             form: {
-                parCode: undefined,
-                code: undefined,
+                pvalue: undefined,
+                value: undefined,
                 text: undefined,
                 sort: undefined,
                 level: undefined,
@@ -127,10 +144,10 @@ let vueContent = new Vue({
                 state: undefined
             },
             formRule: {
-                parCode: [
+                pvalue: [
                     {required: true, message: '请输入父级代码', trigger: 'change'}
                 ],
-                code: [
+                value: [
                     {required: true, message: '请输入代码', trigger: 'change'}
                 ],
                 text: [
@@ -151,8 +168,8 @@ let vueContent = new Vue({
             },
             closeAndClear() {
                 this.dialogVisible = false;
-                this.form.parCode = undefined;
-                this.form.code = undefined;
+                this.form.pvalue = undefined;
+                this.form.value = undefined;
                 this.form.text = undefined;
                 this.form.sort = undefined;
                 this.form.level = undefined;
@@ -161,8 +178,8 @@ let vueContent = new Vue({
             },
             preEditStatus(record) {
                 this.form.guid = record.guid;
-                this.form.parCode = record.parCode;
-                this.form.code = record.code;
+                this.form.pvalue = record.pvalue;
+                this.form.value = record.value;
                 this.form.text = record.text;
                 this.form.sort = record.sort;
                 this.form.level = record.level;
@@ -185,9 +202,10 @@ let vueContent = new Vue({
                 delete params.updateTimeRange;
             }
             console.log(params);
-            $.sendPostRequest('sysDictItem/queryPageInfo', params, function (data) {
-                _this.sysDictItemGrid.setTable(data.pageInfo);
-            }, true);
+            let result = $dict.querySysDictItemPageInfo(params);
+            result.then((data)=>{
+                _this.sysDictItemGrid.setTable(data.data.data.pageInfo);
+            });
         },
         // 分页
         handleSizeChange: function (pageSize) {
@@ -217,6 +235,12 @@ let vueContent = new Vue({
                         _this.refresh();
                     }, true);
                 });
+            }
+        },
+        onTreeNodeClick: function (node) {
+            if (node.pvalue && !node.children) {
+                this.sysDictItemGrid.conditions.dictType = node.value;
+                this.refresh();
             }
         },
         addSysDictItem: function () {
@@ -290,57 +314,6 @@ let vueContent = new Vue({
                 },
                 deleteRecord: function () {
                     this.$emit('callmethod', 'delete', this.row.guid);
-                }
-            }
-        },
-        "child-component": {
-            props: ["message"],
-            template: "<div><h1>{{message}}</h1><input  type='text' v-model='message'></input></div>"
-        },
-        "vo-sysdictitem": {
-            template: '<el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick"></el-tree>',
-            mounted: function () {
-                axios.get('/sys/dict/type/structure')
-                    .then(resp => {
-                        let dictItemList = resp.data.data;
-                        // 根节点数组
-                        let rootArr = [];
-                        let map = {};
-                        dictItemList.forEach(it=>{
-                            it.label = it.text;
-                            map[it.code] = it;
-                        });
-                        dictItemList.forEach(it=>{
-                            if (it.parCode) {
-                                let mapElement = map[it.parCode];
-                                if (!mapElement) {
-                                    console.warn("找不到父节点--> code : %s, text : %s, parCode : %s", it.code, it.text, it.parCode);
-                                }
-                                mapElement.children = mapElement.children || [];
-                                mapElement.children.push(it);
-                            } else {
-                                // 加入根节点数组
-                                rootArr.push(it);
-                            }
-                        });
-                        this.treeData = rootArr;
-                    })
-                    .catch(resp => {
-                        console.log(resp);
-                    });
-            },
-            methods: {
-                handleNodeClick: function (data) {
-                    console.log(data);
-                }
-            },
-            data: () => {
-                return {
-                    treeData: [],
-                    defaultProps: {
-                        children: 'children',
-                        label: 'label'
-                    }
                 }
             }
         }

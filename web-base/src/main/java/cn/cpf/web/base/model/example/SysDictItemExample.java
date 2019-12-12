@@ -245,73 +245,143 @@ public class SysDictItemExample {
             return (Criteria) this;
         }
 
-        public Criteria andLabelIsNull() {
-            addCriterion("label is null");
+        public Criteria andEnLabelIsNull() {
+            addCriterion("en_label is null");
             return (Criteria) this;
         }
 
-        public Criteria andLabelIsNotNull() {
-            addCriterion("label is not null");
+        public Criteria andEnLabelIsNotNull() {
+            addCriterion("en_label is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLabelEqualTo(String value) {
-            addCriterion("label =", value, "label");
+        public Criteria andEnLabelEqualTo(String value) {
+            addCriterion("en_label =", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelNotEqualTo(String value) {
-            addCriterion("label <>", value, "label");
+        public Criteria andEnLabelNotEqualTo(String value) {
+            addCriterion("en_label <>", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelGreaterThan(String value) {
-            addCriterion("label >", value, "label");
+        public Criteria andEnLabelGreaterThan(String value) {
+            addCriterion("en_label >", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelGreaterThanOrEqualTo(String value) {
-            addCriterion("label >=", value, "label");
+        public Criteria andEnLabelGreaterThanOrEqualTo(String value) {
+            addCriterion("en_label >=", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelLessThan(String value) {
-            addCriterion("label <", value, "label");
+        public Criteria andEnLabelLessThan(String value) {
+            addCriterion("en_label <", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelLessThanOrEqualTo(String value) {
-            addCriterion("label <=", value, "label");
+        public Criteria andEnLabelLessThanOrEqualTo(String value) {
+            addCriterion("en_label <=", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelLike(String value) {
-            addCriterion("label like", value, "label");
+        public Criteria andEnLabelLike(String value) {
+            addCriterion("en_label like", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelNotLike(String value) {
-            addCriterion("label not like", value, "label");
+        public Criteria andEnLabelNotLike(String value) {
+            addCriterion("en_label not like", value, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelIn(List<String> values) {
-            addCriterion("label in", values, "label");
+        public Criteria andEnLabelIn(List<String> values) {
+            addCriterion("en_label in", values, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelNotIn(List<String> values) {
-            addCriterion("label not in", values, "label");
+        public Criteria andEnLabelNotIn(List<String> values) {
+            addCriterion("en_label not in", values, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelBetween(String value1, String value2) {
-            addCriterion("label between", value1, value2, "label");
+        public Criteria andEnLabelBetween(String value1, String value2) {
+            addCriterion("en_label between", value1, value2, "enLabel");
             return (Criteria) this;
         }
 
-        public Criteria andLabelNotBetween(String value1, String value2) {
-            addCriterion("label not between", value1, value2, "label");
+        public Criteria andEnLabelNotBetween(String value1, String value2) {
+            addCriterion("en_label not between", value1, value2, "enLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelIsNull() {
+            addCriterion("cn_label is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelIsNotNull() {
+            addCriterion("cn_label is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelEqualTo(String value) {
+            addCriterion("cn_label =", value, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelNotEqualTo(String value) {
+            addCriterion("cn_label <>", value, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelGreaterThan(String value) {
+            addCriterion("cn_label >", value, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelGreaterThanOrEqualTo(String value) {
+            addCriterion("cn_label >=", value, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelLessThan(String value) {
+            addCriterion("cn_label <", value, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelLessThanOrEqualTo(String value) {
+            addCriterion("cn_label <=", value, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelLike(String value) {
+            addCriterion("cn_label like", value, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelNotLike(String value) {
+            addCriterion("cn_label not like", value, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelIn(List<String> values) {
+            addCriterion("cn_label in", values, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelNotIn(List<String> values) {
+            addCriterion("cn_label not in", values, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelBetween(String value1, String value2) {
+            addCriterion("cn_label between", value1, value2, "cnLabel");
+            return (Criteria) this;
+        }
+
+        public Criteria andCnLabelNotBetween(String value1, String value2) {
+            addCriterion("cn_label not between", value1, value2, "cnLabel");
             return (Criteria) this;
         }
 
