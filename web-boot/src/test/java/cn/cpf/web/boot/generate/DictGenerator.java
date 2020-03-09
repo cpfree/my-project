@@ -31,8 +31,6 @@ import java.util.stream.Collectors;
 @RunWith(SpringJUnit4ClassRunner.class)
 class DictGenerator {
 
-    private static final String HELLO_WORLD_VM_PATH = "mod/plugins/src/main/resources/vm-template/dict-enum.vm";
-
     @Autowired
     private ISysDictItem iSysDictItem;
     @Resource

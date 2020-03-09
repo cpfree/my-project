@@ -20,24 +20,32 @@ public class DictItemDto  {
 
     private String label;
 
+    private String enLabel;
+
+    private String cnLabel;
+
     private Integer sort;
 
-    public static DictItemDto enOf(SysDictItem sysDictItem) {
+    public static DictItemDto of(SysDictItem sysDictItem) {
         DictItemDto dto = new DictItemDto();
         dto.setParValue(sysDictItem.getParValue());
         dto.setValue(sysDictItem.getValue());
-        dto.setLabel(sysDictItem.getEnLabel());
+        dto.setEnLabel(sysDictItem.getEnLabel());
+        dto.setCnLabel(sysDictItem.getCnLabel());
         dto.setSort(sysDictItem.getOrd());
         return dto;
     }
 
+    public static DictItemDto enOf(SysDictItem sysDictItem) {
+        final DictItemDto of = of(sysDictItem);
+        of.setLabel(sysDictItem.getEnLabel());
+        return of;
+    }
+
     public static DictItemDto cnOf(SysDictItem sysDictItem) {
-        DictItemDto dto = new DictItemDto();
-        dto.setParValue(sysDictItem.getParValue());
-        dto.setValue(sysDictItem.getValue());
-        dto.setLabel(sysDictItem.getCnLabel());
-        dto.setSort(sysDictItem.getOrd());
-        return dto;
+        final DictItemDto of = of(sysDictItem);
+        of.setLabel(sysDictItem.getCnLabel());
+        return of;
     }
 
 }

@@ -32,9 +32,9 @@ public class InformationController {
      * @param type 字典类型
      */
     @GetMapping("/dict-item/{type}")
-    public Map<String, Object> querySysDictItemByDictType (@PathVariable("type") String type) {
+    public Map<String, Object> querySysDictItemByDictType(@PathVariable("type") String type) {
         SysDictItemExample example = new SysDictItemExample();
-        example.createCriteria().andTypeEqualTo(type).andStateEqualTo(DicCommon.State.enable.getCode());
+        example.createCriteria().andTypeEqualTo(type).andStateEqualTo(DicCommon.State.enable.value());
         final List<SysDictItem> sysDictItems = iSysDictItem.selectByExample(example);
         final List<DictItemDto> collect = sysDictItems.stream().map(DictItemDto::cnOf).collect(Collectors.toList());
         return PostBean.geneSimpleDataPostMap(collect);
@@ -44,15 +44,13 @@ public class InformationController {
      * @param dictTypeList 字典类型
      */
     @GetMapping("/dict-item")
-    public Map<String, Object> querySysDictItemArray (@RequestParam("type") List<String> dictTypeList) {
+    public Map<String, Object> querySysDictItemArray(@RequestParam("type") List<String> dictTypeList) {
         SysDictItemExample example = new SysDictItemExample();
-        example.createCriteria().andTypeIn(dictTypeList).andStateEqualTo(DicCommon.State.enable.getCode());
+        example.createCriteria().andTypeIn(dictTypeList).andStateEqualTo(DicCommon.State.enable.value());
         final List<SysDictItem> sysDictItems = iSysDictItem.selectByExample(example);
-        final Map<String, List<DictItemDto>> collect = sysDictItems.stream().collect(Collectors.groupingBy(SysDictItem::getType,
-                Collectors.mapping(DictItemDto::cnOf, Collectors.toList())));
+        final Map<String, List<DictItemDto>> collect = sysDictItems.stream().collect(Collectors.groupingBy(SysDictItem::getType, Collectors.mapping(DictItemDto::cnOf, Collectors.toList())));
         return PostBean.geneSimpleDataPostMap(collect);
     }
-
 
 
 }

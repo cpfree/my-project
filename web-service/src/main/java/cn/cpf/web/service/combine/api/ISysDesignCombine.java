@@ -1,10 +1,12 @@
 package cn.cpf.web.service.combine.api;
 
+import cn.cpf.web.base.lang.dict.DictTypeBean;
 import cn.cpf.web.base.model.bo.SysFieldBo;
 import cn.cpf.web.base.model.bo.SysTableBo;
 import cn.cpf.web.base.model.dto.DictItemDto;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <b>Description : </b>
@@ -34,4 +36,10 @@ public interface ISysDesignCombine {
      * @return
      */
     List<DictItemDto> queryDictItemStructure();
+
+    /**
+     * @return
+     */
+    Map<String, DictTypeBean> queryDictItem(String... fieldTag);
+
 }

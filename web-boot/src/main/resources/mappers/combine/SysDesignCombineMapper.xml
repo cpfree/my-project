@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cpf.web.dal.combine.SysDesignCombineMapper">
 
-
     <resultMap id="SysTableBoMap" type="cn.cpf.web.base.model.bo.SysTableBo">
         <id column="schema_tag" jdbcType="VARCHAR" property="schemaTag" />
         <id column="name" jdbcType="VARCHAR" property="name" />
@@ -34,6 +33,31 @@
         <result column="column_comment" jdbcType="VARCHAR" property="columnComment" />
     </resultMap>
 
+    <resultMap id="SysDictItemMap" type="cn.cpf.web.base.model.entity.SysDictItem">
+        <id column="type" jdbcType="VARCHAR" property="type" />
+        <id column="name" jdbcType="VARCHAR" property="name" />
+        <result column="value" jdbcType="VARCHAR" property="value" />
+        <result column="cn_label" jdbcType="VARCHAR" property="cnLabel" />
+        <result column="en_label" jdbcType="VARCHAR" property="enLabel" />
+        <result column="par_value" jdbcType="VARCHAR" property="parValue" />
+        <result column="level" jdbcType="INTEGER" property="level" />
+        <result column="ord" jdbcType="INTEGER" property="ord" />
+        <result column="comment" jdbcType="VARCHAR" property="comment" />
+        <result column="permission" jdbcType="CHAR" property="permission" />
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="state" jdbcType="CHAR" property="state" />
+    </resultMap>
+
+    <resultMap id="DictItemBeanMap" type="cn.cpf.web.base.lang.dict.DictItemBean">
+        <result column="value" jdbcType="VARCHAR" property="value" />
+        <result column="cn_label" jdbcType="VARCHAR" property="label" />
+        <result column="cn_label" jdbcType="VARCHAR" property="cnLabel" />
+        <result column="en_label" jdbcType="VARCHAR" property="enLabel" />
+        <result column="par_value" jdbcType="VARCHAR" property="parValue" />
+        <result column="ord" jdbcType="INTEGER" property="ord" />
+    </resultMap>
+
     <select id="selectSysTableBoByTableName"  resultMap="SysTableBoMap">
         SELECT it.table_comment comment, it.TABLE_SCHEMA schema_tag, it.TABLE_NAME name, st.simple_name, st.type
         from information_schema.TABLES it LEFT JOIN sys_table_extend st
@@ -63,6 +87,21 @@
         ORDER BY
             ic.TABLE_NAME,
             ic.ORDINAL_POSITION;
+    </select>
+
+
+    <select id="queryDictItem"  resultMap="SysDictItemMap">
+        select CONCAT(f.table_name, '#', f.name) type, t.name, t.value, t.cn_label, t.en_label, t.par_value, t.level, t.ord
+        from sys_field_extend f LEFT JOIN sys_dict_item t on f.dict_type = t.type
+        where
+            <if test="ids != null and ids.size() > 0">
+                (f.schema_tag, f.table_name, f.name) in
+                <foreach collection="ids" item="it" separator="," open="(" close=")">
+                    ('my-project', #{it.table}, #{it.name})
+                </foreach>
+                and
+            </if>
+            t.state = 'y'
     </select>
 
 

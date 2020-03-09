@@ -1,7 +1,7 @@
 package cn.cpf.web.base.constant.dic;
 
-import cn.cpf.web.base.lang.base.CodeItemPool;
-import cn.cpf.web.base.lang.base.ICodeItem;
+import cn.cpf.web.base.lang.dict.IDictItem;
+import cn.cpf.web.base.lang.dict.StaticDictPool;
 
 /**
  * <b>Description : </b> 通知表
@@ -17,12 +17,17 @@ public interface DicItyNotes {
      * @author CPF
      * @date 2019/10/20 15:50
      **/
-    enum NotesType implements ICodeItem {
+    enum NotesType implements IDictItem {
 
-        SYSTEM("S", "系统通知"), BIND("B", "绑定通知"), ACTIVE("A", "激活通知"), GROUP("G", "小市场通知"), FANS("F", "互粉和准入通知"), BOND("O", "债券通知");
+        SYSTEM("S", "系统通知"),
+        BIND("B", "绑定通知"),
+        ACTIVE("A", "激活通知"),
+        GROUP("G", "小市场通知"),
+        FANS("F", "互粉和准入通知"),
+        BOND("O", "债券通知");
 
         NotesType(String code, String text) {
-            CodeItemPool.putCodeItem(this, code, text);
+            StaticDictPool.putCodeItem(this, code, text);
         }
     }
 

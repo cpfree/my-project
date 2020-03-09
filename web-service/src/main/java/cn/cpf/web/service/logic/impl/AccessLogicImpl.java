@@ -4,7 +4,7 @@ import cn.cpf.web.base.constant.dic.DicCommon;
 import cn.cpf.web.base.model.entity.AccLinkRolePerm;
 import cn.cpf.web.service.combine.api.IAccessCombine;
 import cn.cpf.web.service.logic.api.IAccessLogic;
-import cn.cpf.web.service.mod.shiro.AccessBean;
+import cn.cpf.web.service.mod.system.shiro.AccessBean;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Maps;

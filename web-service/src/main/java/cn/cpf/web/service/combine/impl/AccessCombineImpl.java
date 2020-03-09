@@ -58,7 +58,7 @@ public class AccessCombineImpl implements IAccessCombine {
         AccLinkUserRoleExample example = new AccLinkUserRoleExample();
         final AccLinkUserRoleExample.Criteria criteria = example.createCriteria();
         if (state != null) {
-            criteria.andStateEqualTo(state.getCode());
+            criteria.andStateEqualTo(state.value());
         }
         if (StringUtils.isNotBlank(userGuid)) {
             criteria.andUserGuidEqualTo(userGuid);
@@ -77,7 +77,7 @@ public class AccessCombineImpl implements IAccessCombine {
         AccLinkRolePermExample example = new AccLinkRolePermExample();
         final AccLinkRolePermExample.Criteria criteria = example.createCriteria();
         if (state != null) {
-            criteria.andStateEqualTo(state.getCode());
+            criteria.andStateEqualTo(state.value());
         }
         if (StringUtils.isNotBlank(roleKey)) {
             criteria.andRoleKeyEqualTo(roleKey);

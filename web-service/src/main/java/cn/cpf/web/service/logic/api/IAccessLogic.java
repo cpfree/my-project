@@ -1,6 +1,6 @@
 package cn.cpf.web.service.logic.api;
 
-import cn.cpf.web.service.mod.shiro.AccessBean;
+import cn.cpf.web.service.mod.system.shiro.AccessBean;
 import lombok.NonNull;
 
 import java.util.Set;

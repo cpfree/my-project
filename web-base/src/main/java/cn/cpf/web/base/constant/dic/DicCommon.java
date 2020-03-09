@@ -1,8 +1,8 @@
 package cn.cpf.web.base.constant.dic;
 
 
-import cn.cpf.web.base.lang.base.CodeItemPool;
-import cn.cpf.web.base.lang.base.ICodeItem;
+import cn.cpf.web.base.lang.dict.IDictItem;
+import cn.cpf.web.base.lang.dict.StaticDictPool;
 
 /**
  * <b>Description : </b>
@@ -12,12 +12,12 @@ import cn.cpf.web.base.lang.base.ICodeItem;
  **/
 public interface DicCommon {
 
-    enum State implements ICodeItem {
+    enum State implements IDictItem {
         enable("y", "启用"),
         disable("n", "禁用");
 
         State(String code, String text) {
-            CodeItemPool.putCodeItem(this, code, text);
+            StaticDictPool.putCodeItem(this, code, text);
         }
     }
 

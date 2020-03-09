@@ -5,7 +5,7 @@ import cn.cpf.web.base.util.validate.RegexValidateUtils;
 import cn.cpf.web.boot.util.CpSessionUtils;
 import cn.cpf.web.service.base.api.IAccUser;
 import cn.cpf.web.service.logic.api.IAccessLogic;
-import cn.cpf.web.service.mod.shiro.AccessBean;
+import cn.cpf.web.service.mod.system.shiro.AccessBean;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;

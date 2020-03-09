@@ -6,7 +6,6 @@ import cn.cpf.mod.plugins.velocity.VelocityUtils;
 import cn.cpf.web.base.lang.base.Record;
 import cn.cpf.web.base.model.bo.SysTableBo;
 import cn.cpf.web.base.model.entity.SysDictItem;
-import cn.cpf.web.base.util.cast.JsonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import lombok.Data;
@@ -42,17 +41,28 @@ public class DictGenerator {
 
     public static void geneVm(TableDataHandler instance) {
         final DictGeneBean dictGeneBean = new DictGeneBean(instance);
-        System.out.println(new Gson().toJson(dictGeneBean));
         if (CollectionUtils.isEmpty(dictGeneBean.getList())) {
             return;
         }
+
+        final String json = new Gson().toJson(dictGeneBean);
+        System.out.println(json);
         Record record = new Record();
-        record.put("dataBean", dictGeneBean);
+
+        final Record dataBean = new Gson().fromJson(json, Record.class);
+        record.put("dataBean", dataBean);
         final VelocityGeneInfoBean build = VelocityGeneInfoBean.builder().savePath(SAVE_PATH).vmPath(HELLO_WORLD_VM_PATH).build();
         VelocityUtils.generate(build, record);
     }
 
 
+
+    /**
+     * <b>Description : </b>
+     *
+     * @author CPF
+     * @date 2019/12/13 9:33
+     **/
     @Data
     static class DictGeneBean {
 
@@ -89,15 +99,9 @@ public class DictGenerator {
 
         String tableName;
 
-        String Comment;
+        String comment;
 
         List<VmFiledBean> list;
-
-        public String getTest() {
-            return "fdfd";
-        }
-
-        public String str = "enewe";
 
     }
 
@@ -126,7 +130,5 @@ public class DictGenerator {
         String comment;
 
     }
-
-
 
 }

@@ -1,0 +1,12 @@
+
+# redis
+redis:
+  hostName: 172.16.10.113
+  port: 6379
+  database: 0
+  password: itysit
+  maxToTal: 10
+  maxIdle: 5
+  minIdle: 2
+  maxWaitMillis: 10000
+  testOnBorrow: true

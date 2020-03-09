@@ -84,6 +84,32 @@ public interface StrUtils {
     }
 
     /**
+     * 返回待处理字符串的小写下滑线形式
+     * @param string 待处理的字符串
+     * @return 待处理字符串的小写下滑线形式, 以'_'为分隔符
+     */
+    static String lowerDownLineize(@NonNull String string){
+        string = string.trim();
+        int len = string.length();
+        if (len == 0) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            final char ch = string.charAt(i);
+            if (Character.isUpperCase(ch)) {
+                if (i > 0) {
+                    sb.append('_');
+                }
+                sb.append(Character.toLowerCase(ch));
+            } else {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
      * 返回待处理字符串的驼峰格式
      * @param string 待处理的字符串
      * @return 返回驼峰式字符串, 以'_'为分隔符

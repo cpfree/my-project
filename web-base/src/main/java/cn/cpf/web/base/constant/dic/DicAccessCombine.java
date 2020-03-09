@@ -1,7 +1,7 @@
 package cn.cpf.web.base.constant.dic;
 
-import cn.cpf.web.base.lang.base.CodeItemPool;
-import cn.cpf.web.base.lang.base.ICodeItem;
+import cn.cpf.web.base.lang.dict.IDictItem;
+import cn.cpf.web.base.lang.dict.StaticDictPool;
 
 /**
  * <b>Description : </b>
@@ -11,7 +11,7 @@ import cn.cpf.web.base.lang.base.ICodeItem;
  **/
 public interface DicAccessCombine {
 
-    enum RolePermState implements ICodeItem {
+    enum RolePermState implements IDictItem {
         /**
          * 授予权限
          */
@@ -26,7 +26,7 @@ public interface DicAccessCombine {
         disable("n", "禁用");
 
         RolePermState(String code, String text) {
-            CodeItemPool.putCodeItem(this, code, text);
+            StaticDictPool.putCodeItem(this, code, text);
         }
     }
 

@@ -4,6 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 
 /**
  * <b>Description : </b>
@@ -13,7 +14,11 @@ import org.springframework.context.annotation.ComponentScan;
  **/
 @SpringBootApplication
 @MapperScan("cn.cpf.web.dal")
-@ComponentScan(basePackages = {"cn.cpf.web.boot", "cn.cpf.web.service"})
+@ComponentScan(
+        basePackages = {"cn.cpf.web.boot", "cn.cpf.web.service"},
+        excludeFilters = {
+//                @ComponentScan.Filter(type = FilterType.REGEX, pattern = "cn.cpf.web.service.mod.redis.*")
+        })
 public class WebBootApplication {
 
     public static void main(String[] args) {
