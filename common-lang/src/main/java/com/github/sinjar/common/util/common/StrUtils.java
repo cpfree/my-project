@@ -1,7 +1,6 @@
-package cn.cpf.web.base.util.common;
+package com.github.sinjar.common.util.common;
 
 import lombok.NonNull;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -16,7 +15,9 @@ import java.util.regex.Pattern;
 public interface StrUtils {
 
     /**
-     * 正则替换
+     * 正则替换, 按照 regex 对 content 进行查询指定字符串, 并在字符串前后增加 prefix 前缀和 suffix 后缀
+     * eg: replaceJoinAll("\\d+", "sing34hj32kh423jk", "<", ">");
+     * return sing<34>hj<32>kh<42322>jk
      *
      * @param regex 正则表达式
      * @param content 文本
@@ -31,7 +32,8 @@ public interface StrUtils {
         final StringBuffer sb = new StringBuffer();
         while(m.find()){
             final String group = m.group();
-            m.appendReplacement(sb, prefix + group + suffix);
+            m.appendReplacement(sb, "");
+            sb.append(prefix).append(group).append(suffix);
         }
         m.appendTail(sb);
         return sb.toString();
@@ -65,7 +67,7 @@ public interface StrUtils {
      * @param string 待处理的字符串
      * @return 返回驼峰式字符串, 以'_'为分隔符
      */
-    static String lowerCamelize(@NonNull String string){
+    static String lowerCamel(@NonNull String string){
         StringTokenizer tokenizer = new StringTokenizer(string);
         StringBuilder sb = null;
         while (tokenizer.hasMoreElements()) {
@@ -88,7 +90,7 @@ public interface StrUtils {
      * @param string 待处理的字符串
      * @return 待处理字符串的小写下滑线形式, 以'_'为分隔符
      */
-    static String lowerDownLineize(@NonNull String string){
+    static String lowerDownLine(@NonNull String string){
         string = string.trim();
         int len = string.length();
         if (len == 0) {
@@ -114,8 +116,8 @@ public interface StrUtils {
      * @param string 待处理的字符串
      * @return 返回驼峰式字符串, 以'_'为分隔符
      */
-    static String upperCamelize(@NonNull String string){
-        return firstCharToUpperCase(lowerCamelize(string));
+    static String upperCamel(@NonNull String string){
+        return firstCharToUpperCase(lowerCamel(string));
     }
 
 }

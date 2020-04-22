@@ -1,6 +1,6 @@
 package cn.cpf.mod.plugins.mybatis;
 
-import cn.cpf.web.base.util.common.StrUtils;
+import com.github.sinjar.common.util.common.StrUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
@@ -52,7 +52,7 @@ public class MybatisGenerator {
         Arrays.stream(tableNameArr).forEach(t->{
             TableConfiguration configuration = new TableConfiguration(context);
             configuration.setTableName(t);
-            configuration.setDomainObjectName(StrUtils.firstCharToUpperCase(StrUtils.lowerCamelize(t)));
+            configuration.setDomainObjectName(StrUtils.firstCharToUpperCase(StrUtils.lowerCamel(t)));
             configuration.setCountByExampleStatementEnabled(true);
             configuration.setUpdateByExampleStatementEnabled(true);
             configuration.setUpdateByPrimaryKeyStatementEnabled(true);

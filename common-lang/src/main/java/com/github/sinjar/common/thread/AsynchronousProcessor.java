@@ -1,7 +1,6 @@
-package cn.cpf.web.base.util.thread;
+package com.github.sinjar.common.thread;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
@@ -13,9 +12,8 @@ import java.util.function.Predicate;
  * @author CPF
  * @date 2019/9/19 16:48
  **/
+@Slf4j
 public class AsynchronousProcessor<T>{
-
-    private static Logger logger = LoggerFactory.getLogger(AsynchronousProcessor.class);
 
     /**
      * 有消息的消息函数处理接口
@@ -69,11 +67,11 @@ public class AsynchronousProcessor<T>{
                         errFun.accept(t);
                     }
                 } catch (InterruptedException e) {
-                    logger.error("线程发生错误", e);
+                    log.error("线程发生错误", e);
                     Thread.currentThread().interrupt();
                 } catch (RuntimeException e) {
                     // 添加运行时异常, 防止发生运行时异常县城停止
-                    logger.error("异步处理器发生处理异常", e);
+                    log.error("异步处理器发生处理异常", e);
                 }
             }
         }
@@ -92,7 +90,7 @@ public class AsynchronousProcessor<T>{
             }
             return;
         }
-        logger.warn("线程已启动, 请勿重复调用");
+        log.warn("线程已启动, 请勿重复调用");
     }
 
     public void add(T t) {
@@ -104,11 +102,11 @@ public class AsynchronousProcessor<T>{
 
     public void closeThread() {
         if (thread == null || thread.isInterrupted()) {
-            logger.warn("线程不存在或已经调用线程关闭方法, 请勿重复调用");
+            log.warn("线程不存在或已经调用线程关闭方法, 请勿重复调用");
             return;
         }
         thread.interrupt();
-        logger.info("AsynchronousProcessor Thread 已经手动停止!!!");
+        log.info("AsynchronousProcessor Thread 已经手动停止!!!");
     }
 
 }

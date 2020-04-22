@@ -1,8 +1,6 @@
 package cn.cpf.web.base.util.io;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,13 +9,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-
 /**
  *
  */
+@Slf4j
 public final class PropsUtil {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PropsUtil.class);
 
     /**
      * 加载文件
@@ -37,13 +33,13 @@ public final class PropsUtil {
                 props.load(inputStreamReader);
             }
         } catch (IOException e) {
-            LOGGER.error(filename + " file load failure", e);
+            log.error(filename + " file load failure", e);
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    LOGGER.error("close input stream failure! ## relational filename : " + filename, e);
+                    log.error("close input stream failure! ## relational filename : " + filename, e);
                 }
             }
         }

@@ -1,6 +1,6 @@
 package cn.cpf.web.base.lang.dict;
 
-import cn.cpf.web.base.util.common.StrUtils;
+import com.github.sinjar.common.util.common.StrUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public interface IDictItem {
@@ -95,7 +95,7 @@ public interface IDictItem {
      */
     default String fieldKey() {
         final String name = this.getClass().getName();
-        return StrUtils.lowerDownLineize(name.substring(name.lastIndexOf(".Dic", name.lastIndexOf('#')) + 4));
+        return StrUtils.lowerDownLine(name.substring(name.lastIndexOf(".Dic", name.lastIndexOf('#')) + 4));
     }
 
     default String value() {

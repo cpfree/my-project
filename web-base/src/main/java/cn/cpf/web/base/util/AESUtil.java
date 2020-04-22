@@ -1,5 +1,7 @@
 package cn.cpf.web.base.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -12,6 +14,7 @@ import java.util.Base64;
  * *
  * AES128 算法，加密模式为ECB，填充模式为 pkcs7（实际就是pkcs5）
  */
+@Slf4j
 public class AESUtil {
 
     private static int bit = 128;
@@ -41,16 +44,8 @@ public class AESUtil {
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] result = cipher.doFinal(byteContent);
             return result; // 加密
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            log.error("加密失败", e);
         }
         return null;
     }
@@ -76,16 +71,8 @@ public class AESUtil {
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);// 初始化
             byte[] result = cipher.doFinal(content);
             return result; // 加密
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
+        } catch (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException e) {
+            log.error("解密失败", e);
         }
         return null;
     }

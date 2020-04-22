@@ -1,4 +1,4 @@
-package cn.cpf.web.base.util.thread;
+package cn.cpf.web.base.util.other;
 
 import cn.cpf.web.base.lang.base.IWarningCode;
 

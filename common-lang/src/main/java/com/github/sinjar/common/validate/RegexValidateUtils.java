@@ -1,4 +1,4 @@
-package cn.cpf.web.base.util.validate;
+package com.github.sinjar.common.validate;
 
 import java.util.regex.Pattern;
 
@@ -15,6 +15,7 @@ public interface RegexValidateUtils {
      */
     String REGEX_DATE = "^\\d{4}-(0?[1-9]|1[0-2])-((0?[1-9])|((1|2)[0-9])|30|31)$";
 
+
     /**
      * hh:mm:ss
      */
@@ -29,7 +30,7 @@ public interface RegexValidateUtils {
 
     String REGEX_PHONE = "^1([345789])\\d{9}$";
 
-    static boolean isEamil(String email){
+    static boolean isEmail(String email){
         return Pattern.matches(REGEX_EMAIL, email);
     }
 

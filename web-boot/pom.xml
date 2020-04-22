@@ -101,7 +101,7 @@
 
         <!--验证码-->
         <dependency>
-            <groupId>com.google.code</groupId>
+            <groupId>com.github.penggle</groupId>
             <artifactId>kaptcha</artifactId>
         </dependency>
         <dependency>

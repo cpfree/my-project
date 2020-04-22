@@ -2,16 +2,12 @@ package cn.cpf.web.base.util.common;
 
 import cn.cpf.web.base.lang.base.CamelRecord;
 import cn.cpf.web.base.lang.base.Record;
-import cn.cpf.web.base.util.validate.ValidateUtil;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class RecordUtil {
 
@@ -65,7 +61,7 @@ public class RecordUtil {
                 deletes.add(map);
             }
         }
-        if (ValidateUtil.isNotEmpty(deletes)) {
+        if (CollectionUtils.isNotEmpty(deletes)) {
             list.removeAll(deletes);
             return deletes.size();
         }

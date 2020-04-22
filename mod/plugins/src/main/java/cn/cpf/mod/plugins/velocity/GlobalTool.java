@@ -1,6 +1,6 @@
 package cn.cpf.mod.plugins.velocity;
 
-import cn.cpf.web.base.util.common.StrUtils;
+import com.github.sinjar.common.util.common.StrUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
@@ -81,11 +81,11 @@ public class GlobalTool {
     }
 
     public static String lowerCamelize(String field) {
-        return StrUtils.lowerCamelize(field);
+        return StrUtils.lowerCamel(field);
     }
 
     public static String upperCamelize(String field) {
-        return StrUtils.upperCamelize(field);
+        return StrUtils.upperCamel(field);
     }
 
 

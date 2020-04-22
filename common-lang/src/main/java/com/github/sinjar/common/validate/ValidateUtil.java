@@ -1,4 +1,4 @@
-package cn.cpf.web.base.util.validate;
+package com.github.sinjar.common.validate;
 
 import java.util.Arrays;
 import java.util.Collection;

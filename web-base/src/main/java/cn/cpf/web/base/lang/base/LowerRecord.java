@@ -16,7 +16,6 @@ public class LowerRecord extends HashMap<String, Object> implements IGetter {
             return "";
         }
         return super.put(key.toLowerCase(), value);
-
     }
 
     @Override

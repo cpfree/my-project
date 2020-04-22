@@ -1,6 +1,6 @@
 package cn.cpf.test.base;
 
-import cn.cpf.web.base.constant.dic.DicCommon;
+import static com.github.sinjar.common.util.common.StrUtils.replaceJoinAll;
 
 /**
  * <b>Description : </b>
@@ -11,7 +11,7 @@ import cn.cpf.web.base.constant.dic.DicCommon;
 public class MainTest {
 
     public static void main(String[] args) {
-        System.out.println(DicCommon.State.enable.value());
+        System.out.println(replaceJoinAll("\\d+", "sing34hj32kh42322jk", "$", ">"));
     }
 
 }

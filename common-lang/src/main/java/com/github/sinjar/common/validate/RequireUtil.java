@@ -1,9 +1,8 @@
-package cn.cpf.web.base.util.validate;
+package com.github.sinjar.common.validate;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
+import com.github.sinjar.common.lang.RequireCheckException;
+
+import java.util.*;
 
 public class RequireUtil {
 
@@ -14,7 +13,7 @@ public class RequireUtil {
      */
     public static void requireStringNonBlank(String str) {
         if (str == null || str.length() == 0) {
-            ExceptionUtil.throwRuntimeException("字符串为空!");
+            throw new RequireCheckException("字符串为空!");
         }
     }
 
@@ -35,7 +34,7 @@ public class RequireUtil {
     public static <T> void requireCollectNonBlank(Collection<T> collection) {
         Objects.requireNonNull(collection);
         if (collection.isEmpty()) {
-            ExceptionUtil.throwRuntimeException("集合为空!");
+            throw new RequireCheckException("集合为空!");
         }
     }
 
@@ -45,7 +44,7 @@ public class RequireUtil {
     public static void requireMapNonBlank(Map<?, ?> map) {
         Objects.requireNonNull(map);
         if (map.isEmpty()) {
-            ExceptionUtil.throwRuntimeException("map为空!");
+            throw new RequireCheckException("map为空!");
         }
     }
 
@@ -56,7 +55,7 @@ public class RequireUtil {
      */
     public static void requireBooleanTrue(boolean flag) {
         if (!flag) {
-            ExceptionUtil.throwRuntimeException();
+            throw new RequireCheckException("boolean 为false");
         }
     }
 
@@ -66,9 +65,9 @@ public class RequireUtil {
      * @param target 目标
      * @param arrs   数组
      */
-    public static void requireContainsTargetInArrs(Object target, Object... arrs) {
+    public static void requireContainsTargetInArrays(Object target, Object... arrs) {
         if (!Arrays.asList(arrs).contains(target)) {
-            ExceptionUtil.throwRuntimeException();
+            throw new RequireCheckException("array 中不包含 target");
         }
     }
 
