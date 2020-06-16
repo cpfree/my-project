@@ -74,7 +74,7 @@ public class CpAuthorizingRealm extends AuthorizingRealm {
         if (RegexValidateUtils.isPhone(username)) {
             // 如果是手机号码
             user = iAccUser.findByPhone(username);
-        } else if (RegexValidateUtils.isEamil(username)) {
+        } else if (RegexValidateUtils.isEmail(username)) {
             // 如果是电子邮箱
             user = iAccUser.findByEmail(username);
         } else {

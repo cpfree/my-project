@@ -143,12 +143,8 @@ public class AESUtil {
         return sb.toString();
     }
 
-
-    static String ide = "2019040220225713666653630_#_amp_#_b864c374-4e81-4136-8be9-e7a7b64829f8";
-
-
     public static void main(String[] args) {
-        String content = ide;
+        String content = "2019040220225713666653630_#_amp_#_b864c374-4e81-4136-8be9-e7a7b64829f8";
         String key = "weChatShare";
         try {
             //加密

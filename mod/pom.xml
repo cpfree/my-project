@@ -14,7 +14,6 @@
     <artifactId>mod</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>dict</module>
         <module>plugins</module>
     </modules>
 

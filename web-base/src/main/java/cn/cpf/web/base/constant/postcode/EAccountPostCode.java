@@ -13,7 +13,9 @@ public enum EAccountPostCode implements IPostCode {
     /**
      * 未发现有效账户
      */
-    notFoundActiveAccount("3011", "未发现有效账户, 请检查相关信息是否正确");
+    notFoundActiveAccount("3011", "未发现有效账户, 请检查相关信息是否正确"),
+    registerFailure("3012", "注册失败"),
+    registerSuccess("0012", "注册成功");
 
     private String code;
 

@@ -1,7 +1,7 @@
 package cn.cpf.web.base.constant.dic;
 
-import cn.cpf.web.base.lang.dict.IDictItem;
-import cn.cpf.web.base.lang.dict.StaticDictPool;
+
+import com.github.codedict.core.IDictItem;
 
 /**
  * <b>Description : </b>
@@ -25,8 +25,8 @@ public interface DicCommonOrganization {
         Goldloan("Goldloan", "贵金属租借"),
         Visitor("Visitor", "游客");
 
-        Role(String code, String text) {
-            StaticDictPool.putCodeItem(this, code, text);
+        Role(String value, String label) {
+            putItemBean(value, label);
         }
     }
 

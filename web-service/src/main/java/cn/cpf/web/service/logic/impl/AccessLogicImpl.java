@@ -69,7 +69,7 @@ public class AccessLogicImpl implements IAccessLogic {
         public PermInfo(@NonNull AccLinkRolePerm perm) {
             this.priority = perm.getPriority();
             this.permKey = perm.getPermKey();
-            this.use = DicCommon.State.enable.isCode(perm.getType());
+            this.use = DicCommon.State.enable.isValue(perm.getType());
         }
 
     }

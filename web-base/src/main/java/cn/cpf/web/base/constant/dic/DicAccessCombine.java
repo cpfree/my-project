@@ -1,7 +1,6 @@
 package cn.cpf.web.base.constant.dic;
 
-import cn.cpf.web.base.lang.dict.IDictItem;
-import cn.cpf.web.base.lang.dict.StaticDictPool;
+import com.github.codedict.core.IDictItem;
 
 /**
  * <b>Description : </b>
@@ -25,8 +24,8 @@ public interface DicAccessCombine {
          */
         disable("n", "禁用");
 
-        RolePermState(String code, String text) {
-            StaticDictPool.putCodeItem(this, code, text);
+        RolePermState(String value, String label) {
+            putItemBean(value, label);
         }
     }
 

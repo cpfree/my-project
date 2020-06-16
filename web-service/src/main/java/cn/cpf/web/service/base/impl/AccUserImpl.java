@@ -51,8 +51,8 @@ public class AccUserImpl implements IAccUser {
      */
     @Override
     public AccUser insert(AccUser accUser) {
-        accUserMapper.insert(accUser);
-        return accUser;
+        int insert = accUserMapper.insert(accUser);
+        return insert > 0 ? accUser : null;
     }
 
     /**

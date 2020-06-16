@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 public class RedisUtils {
 
     /**
-     * 将list按照指定规则转为Map
+     * 将 list 按照指定规则转为 Map
      *
      * @param getHKey 从对象中寻求 hash key 的方法
      * @param dbList 待转换的list

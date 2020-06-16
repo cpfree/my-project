@@ -1,7 +1,7 @@
 package cn.cpf.web.base.constant.dic;
 
-import cn.cpf.web.base.lang.dict.IDictItem;
-import cn.cpf.web.base.lang.dict.StaticDictPool;
+
+import com.github.codedict.core.IDictItem;
 
 /**
  * <b>Description : </b> 通知表
@@ -26,8 +26,8 @@ public interface DicItyNotes {
         FANS("F", "互粉和准入通知"),
         BOND("O", "债券通知");
 
-        NotesType(String code, String text) {
-            StaticDictPool.putCodeItem(this, code, text);
+        NotesType(String value, String label) {
+            putItemBean(value, label);
         }
     }
 

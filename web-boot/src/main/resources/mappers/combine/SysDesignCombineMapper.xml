@@ -49,15 +49,6 @@
         <result column="state" jdbcType="CHAR" property="state" />
     </resultMap>
 
-    <resultMap id="DictItemBeanMap" type="cn.cpf.web.base.lang.dict.DictItemBean">
-        <result column="value" jdbcType="VARCHAR" property="value" />
-        <result column="cn_label" jdbcType="VARCHAR" property="label" />
-        <result column="cn_label" jdbcType="VARCHAR" property="cnLabel" />
-        <result column="en_label" jdbcType="VARCHAR" property="enLabel" />
-        <result column="par_value" jdbcType="VARCHAR" property="parValue" />
-        <result column="ord" jdbcType="INTEGER" property="ord" />
-    </resultMap>
-
     <select id="selectSysTableBoByTableName"  resultMap="SysTableBoMap">
         SELECT it.table_comment comment, it.TABLE_SCHEMA schema_tag, it.TABLE_NAME name, st.simple_name, st.type
         from information_schema.TABLES it LEFT JOIN sys_table_extend st
@@ -97,7 +88,7 @@
             <if test="ids != null and ids.size() > 0">
                 (f.schema_tag, f.table_name, f.name) in
                 <foreach collection="ids" item="it" separator="," open="(" close=")">
-                    ('my-project', #{it.table}, #{it.name})
+                    (#{it.schema_tag}, #{it.table}, #{it.name})
                 </foreach>
                 and
             </if>

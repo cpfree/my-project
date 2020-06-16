@@ -1,16 +1,15 @@
 package cn.cpf.web.service.mod.system.dict;
 
-import cn.cpf.web.base.lang.dict.DictDbIoHandle;
-import cn.cpf.web.base.lang.dict.DictHandler;
-import cn.cpf.web.base.lang.dict.DictTypeBean;
 import cn.cpf.web.service.combine.api.ISysDesignCombine;
+import com.github.codedict.dynamic.DictDbIoHandle;
+import com.github.codedict.dynamic.DictHandler;
+import com.github.codedict.dynamic.DictTypeBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * <b>Description : </b>
@@ -31,13 +30,17 @@ public class DictIoHandleImpl extends DictDbIoHandle {
 
     @Override
     public Map<String, DictTypeBean> queryAllDataFromDb() {
-        return iSysDesignCombine.queryDictItem();
+        return iSysDesignCombine.queryAllDictItem();
+    }
+
+    @Override
+    public Map<String, DictTypeBean> queryPartDataFromDb(List<String> fieldKeyList) {
+        return iSysDesignCombine.queryDictItemByDictType(fieldKeyList);
     }
 
     @Override
     public DictTypeBean queryOneDataFromDb(String fieldKey) {
-        final Map<String, DictTypeBean> map = iSysDesignCombine.queryDictItem(fieldKey);
-        return Optional.ofNullable(map).orElse(new HashMap<>(1)).get(fieldKey);
+        return iSysDesignCombine.queryOneDictTypeBean(fieldKey);
     }
 
 }

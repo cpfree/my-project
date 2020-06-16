@@ -28,4 +28,5 @@ public interface SysFieldExtendMapper {
     int updateByPrimaryKeySelective(SysFieldExtend record);
 
     int updateByPrimaryKey(SysFieldExtend record);
+
 }

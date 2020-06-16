@@ -1,11 +1,14 @@
 package cn.cpf.web.boot.controller;
 
+import cn.cpf.web.base.constant.postcode.EAccountPostCode;
 import cn.cpf.web.base.constant.postcode.ECommonPostCode;
 import cn.cpf.web.base.constant.postcode.ELoginPostCode;
 import cn.cpf.web.base.constant.postcode.ESmsPostCode;
 import cn.cpf.web.base.lang.base.IPostCode;
 import cn.cpf.web.base.lang.base.PostBean;
 import cn.cpf.web.base.model.entity.AccUser;
+import cn.cpf.web.base.util.exception.PostException;
+import cn.cpf.web.boot.util.AccountUtil;
 import cn.cpf.web.boot.util.PluginUtils;
 import cn.cpf.web.service.base.api.IAccUser;
 import cn.cpf.web.service.mod.sms.ISms;
@@ -57,7 +60,6 @@ public class AccountController {
         if (postCode.isNotSuccess()) {
             return PostBean.genePostMap(postCode);
         }
-        PostBean postBean = new PostBean();
         // 检查手机号码是否已经存在
         final AccUser accUser = iAccUser.findByPhone(phone);
         if (accUser != null) {
@@ -81,20 +83,25 @@ public class AccountController {
         user.setProvince("");
         user.setCity("");
         user.setAddress("");
-        user.setPassword("");
+        user.setPassword(AccountUtil.passwordEncode(pwd1));
         user.setLoginErrorNum(0);
         user.setLockType("");
         user.setAddTime(now);
         user.setUpdateTime(now);
         user.setRemark("");
         user.setState("");
-        iAccUser.insert(user);
-        if (postCode.isNotSuccess()) {
-            return new PostBean(postCode).toResultMap();
+
+        try {
+            AccUser insert = iAccUser.insert(user);
+        } catch (Exception e) {
+            log.error("注册失败", e);
+            throw new PostException(EAccountPostCode.registerFailure);
         }
-        postBean.setReturnCode(postCode);
-        return postBean.toResultMap();
+
+        return PostBean.genePostMap(EAccountPostCode.registerSuccess);
     }
+
+
 
 
     /**
@@ -135,6 +142,9 @@ public class AccountController {
         return PostBean.genePostMap(ECommonPostCode.SUCCESS);
     }
 
+    /**
+     * 检查图片验证码, 短信验证码, 两次密码是否相同
+     */
     private IPostCode doRegisterBefore(HttpServletRequest request, String phone, String pwd1, String pwd2, String smsVerifyKey, String captcha, String verifyCode) {
         // 检查图片验证码
         IPostCode postCode = PluginUtils.checkKaptchaCode(request, captcha, phone);
@@ -147,7 +157,7 @@ public class AccountController {
             return smsPostCode;
         }
         // 验证两次密码是否相同
-        if (!pwd1.equals(pwd2)) {
+        if (pwd1 == null || !pwd1.equals(pwd2)) {
             return ELoginPostCode.doublePwdIsNotEquals;
         }
         return ECommonPostCode.NO_EXCEPTION;

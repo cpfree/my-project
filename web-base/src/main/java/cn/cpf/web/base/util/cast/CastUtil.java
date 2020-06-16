@@ -1,5 +1,6 @@
 package cn.cpf.web.base.util.cast;
 
+import com.github.sinjar.common.util.common.StrUtils;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -76,26 +77,6 @@ public class CastUtil {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
-    /**
-     * 首字母转小写
-     */
-    public static String initialLetterToLowerCase(String s) {
-        if (Character.isLowerCase(s.charAt(0))) {
-            return s;
-        }
-        return Character.toLowerCase(s.charAt(0)) + s.substring(1);
-    }
-
-    /**
-     * 首字母转小写
-     */
-    public static String initialLetterToUppercase(String s) {
-        if (Character.isUpperCase(s.charAt(0))) {
-            return s;
-        }
-        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
-    }
-
     public static <T> Object valueOf(String string, @NonNull Class<T> tClass){
         try {
             Method valueOf = tClass.getMethod("valueOf");
@@ -104,6 +85,5 @@ public class CastUtil {
             throw new ClassCastException(e.getMessage());
         }
     }
-
 
 }

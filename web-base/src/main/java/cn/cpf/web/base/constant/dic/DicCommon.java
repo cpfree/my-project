@@ -1,8 +1,7 @@
 package cn.cpf.web.base.constant.dic;
 
 
-import cn.cpf.web.base.lang.dict.IDictItem;
-import cn.cpf.web.base.lang.dict.StaticDictPool;
+import com.github.codedict.core.IDictItem;
 
 /**
  * <b>Description : </b>
@@ -16,8 +15,8 @@ public interface DicCommon {
         enable("y", "启用"),
         disable("n", "禁用");
 
-        State(String code, String text) {
-            StaticDictPool.putCodeItem(this, code, text);
+        State(String value, String label) {
+            putItemBean(value, label);
         }
     }
 

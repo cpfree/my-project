@@ -8,9 +8,8 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2019/3/14 15:16
  **/
 @Service
+@Slf4j
 public class SmsImpl implements ISms {
 
     @Autowired
@@ -45,14 +45,10 @@ public class SmsImpl implements ISms {
      */
     private Cache<String, String> validateCodeCache;
 
-    private static final Logger logger = LoggerFactory.getLogger(ISms.class);
-
     @PostConstruct
     public void init() {
         validateCodeCache = CacheBuilder.newBuilder().expireAfterWrite(expireTime, TimeUnit.SECONDS).build();
     }
-
-
 
     @Override
     public PostBean sendSmsVerificationCode(String verifyKey, AbstractSmsTemplate smsTemplate, String phone) {
@@ -68,7 +64,7 @@ public class SmsImpl implements ISms {
         if (StringUtils.isBlank(phone)) {
             return new PostBean(ESmsPostCode.PHONE_NUMBER_IS_BLANK);
         }
-        logger.debug("调用了发送短信的服务, 发送了 {} 的短信模板; phone : {}", smsTemplate.getTemplateName(), phone);
+        log.debug("调用了发送短信的服务, 发送了 {} 的短信模板; phone : {}", smsTemplate.getTemplateName(), phone);
         // 生成 checkCodeLength 位验证码
         try {
             SendSmsResponse smsResponse = smsSendService.sendSms(smsTemplate.getTemplateCode(), phone, smsTemplate.getTemplateParams());
@@ -86,7 +82,7 @@ public class SmsImpl implements ISms {
             postBean.put("smsMsg", smsResponse.getMessage());
             return postBean;
         } catch (ClientException e) {
-            logger.error("sendForgetSmsCode error: ", e);
+            log.error("sendForgetSmsCode error: ", e);
             return new PostBean(ESmsPostCode.CLIENT_EXCEPTION);
         }
     }
@@ -96,10 +92,10 @@ public class SmsImpl implements ISms {
     public PostBean sendSmsVerificationCode(String verifyKey, String templateCode, String phone, Map<String, String> map) {
         // 判断 SMS 服务是否启动
         if (!"Y".equalsIgnoreCase(needSms)) {
-            logger.debug("SMS 短信服务未启动");
+            log.debug("SMS 短信服务未启动");
             return new PostBean(ESmsPostCode.SMS_IS_CLOSE);
         }
-        logger.debug("调用了发送短信的服务, phone : {}, templateCode : {}, map : {}", phone, templateCode, map);
+        log.debug("调用了发送短信的服务, phone : {}, templateCode : {}, map : {}", phone, templateCode, map);
         // 生成 checkCodeLength 位验证码
         String code = GeneUtils.getRandomCode(checkCodeLength);
         return doSendSmsWork(verifyKey, templateCode, phone, map, code);
@@ -153,7 +149,7 @@ public class SmsImpl implements ISms {
             postBean.put("smsMsg", smsResponse.getMessage());
             return postBean;
         } catch (ClientException e) {
-            logger.error("sendForgetSmsCode error: ", e);
+            log.error("sendForgetSmsCode error: ", e);
             return new PostBean(ESmsPostCode.CLIENT_EXCEPTION);
         }
     }

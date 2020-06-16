@@ -17,6 +17,4 @@ public interface DbDaoMapper {
     @Select("select column_name, data_type, column_comment from information_schema.COLUMNS WHERE TABLE_SCHEMA = 'my-project' and TABLE_NAME = #{tableName}")
     List<Record> selectDbInfo(@Param("tableName") String tableName);
 
-
-
 }

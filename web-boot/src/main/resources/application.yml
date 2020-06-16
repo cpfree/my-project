@@ -6,8 +6,7 @@ spring:
     #url: jdbc:mysql://cpf.cn:3306/my-project?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Hongkong
     url: jdbc:mysql://127.0.0.1:3306/my-project?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Hongkong
     username: root
-    #password: Cpf@4823
-    password: itysit
+    password: CPF@4823
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     # 初始化时建立物理连接连接的个数
@@ -43,7 +42,13 @@ spring:
     cache: false
   mvc:
     # 配置静态资源映射路径，/public、/resources路径失效
+    # 这个配置项是告诉springboot，应该以什么样的方式去寻找资源。默认配置为 /* 。换句话说，只有静态资源满足什么样的匹配条件，Spring Boot才会处理静态资源请求
     static-path-pattern: /static/**
+  resources:
+    # 用于告诉Spring Boot应该在何处查找静态资源文件, 优先级从前至后
+    # 默认值 : spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+    static-locations: classpath:/templates/,classpath:/static/
+
   devtools:
     restart:
       #热部署生效

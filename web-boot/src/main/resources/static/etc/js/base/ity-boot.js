@@ -50,8 +50,8 @@ function loadJs(url, success) {
 
 
 // 加载base.js
-loadJs('/etc/js/plugins/layer/layer.js');
-loadJs('/etc/js/plugins/bootstrap/bootstrap.js');
-loadJs('/etc/js/base/base.js');
-loadJs('/etc/js/base/ity-common-utils.js');
+loadJs('static/etc/js/plugins/layer/layer.js');
+loadJs('static/etc/js/plugins/bootstrap/bootstrap.js');
+loadJs('static/etc/js/base/base.js');
+loadJs('static/etc/js/base/ity-common-utils.js');
 

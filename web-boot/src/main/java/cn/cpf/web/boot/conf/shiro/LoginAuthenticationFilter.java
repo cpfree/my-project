@@ -169,7 +169,7 @@ public class LoginAuthenticationFilter extends FormAuthenticationFilter {
         }
         // 2. 检查用户状态
         // 当前账户已禁用
-        if (DicCommon.State.disable.isCode(user.getState())) {
+        if (DicCommon.State.disable.isValue(user.getState())) {
             return ELoginPostCode.ACCOUNT_IS_DISABLED;
         }
         return ECommonPostCode.NO_EXCEPTION;

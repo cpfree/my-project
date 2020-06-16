@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -14,6 +15,9 @@ import java.util.Properties;
  */
 @Slf4j
 public final class PropsUtil {
+
+    public static Map<String, Object> cfgMap;
+
 
     /**
      * 加载文件
