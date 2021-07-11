@@ -11,7 +11,7 @@ import cn.cpf.web.dal.base.SysFieldExtendMapper;
 import cn.cpf.web.dal.combine.SysDesignCombineMapper;
 import cn.cpf.web.service.combine.api.ISysDesignCombine;
 import cn.cpf.web.service.mod.system.dict.FieldDictUtils;
-import com.github.codedict.dynamic.DictTypeBean;
+import com.github.cosycode.codedict.dynamic.DictTypeBean;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

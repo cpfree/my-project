@@ -10,18 +10,21 @@ public interface IWarningCode {
 
     /**
      * 获取代码
+     *
      * @return 代码
      */
     String getCode();
 
     /**
      * 获取展示信息
+     *
      * @return 展示信息
      */
     String getText();
 
     /**
      * 获取解释信息
+     *
      * @return 解释
      */
     String getDesc();

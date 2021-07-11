@@ -1,6 +1,5 @@
 package cn.cpf.web.base.util.cast;
 
-import com.github.sinjar.common.util.common.StrUtils;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -77,7 +76,7 @@ public class CastUtil {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
-    public static <T> Object valueOf(String string, @NonNull Class<T> tClass){
+    public static <T> Object valueOf(String string, @NonNull Class<T> tClass) {
         try {
             Method valueOf = tClass.getMethod("valueOf");
             return valueOf.invoke(null, string);

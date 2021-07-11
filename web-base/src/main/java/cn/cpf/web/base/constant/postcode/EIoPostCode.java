@@ -20,11 +20,11 @@ public enum EIoPostCode implements IPostCode {
     notFoundFileTag("0634", "未发现下载的文件标记， 参数异常!"),
     filePathOrFileNameIsNull("0635", "下载失败！请联系管理员！", "所下载的文件路径或文件名为空");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     @Override
     public String getCode() {

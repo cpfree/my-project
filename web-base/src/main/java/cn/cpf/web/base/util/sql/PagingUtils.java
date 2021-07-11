@@ -14,13 +14,13 @@ import java.util.function.Supplier;
  **/
 public class PagingUtils {
 
-    public static <T> PageInfo<T> selectStartPagingInfo(Supplier<List<T>> iSelectList, int pageNumber, int pageSize){
+    public static <T> PageInfo<T> selectStartPagingInfo(Supplier<List<T>> iSelectList, int pageNumber, int pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
         List<T> list = iSelectList.get();
         return new PageInfo<>(list);
     }
 
-    public static <T> PageInfo<T> selectOffsetPagingInfo(Supplier<List<T>> iSelectList, int offset, int limit){
+    public static <T> PageInfo<T> selectOffsetPagingInfo(Supplier<List<T>> iSelectList, int offset, int limit) {
         PageHelper.offsetPage(offset, limit);
         List<T> list = iSelectList.get();
         return new PageInfo<>(list);

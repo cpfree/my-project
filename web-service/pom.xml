@@ -4,24 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cn.cpf</groupId>
+        <groupId>cn.cpfree.myproject</groupId>
         <artifactId>web-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>cn.cpf</groupId>
     <artifactId>web-service</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
-            <groupId>cn.cpf</groupId>
+            <groupId>cn.cpfree.myproject</groupId>
             <artifactId>web-base</artifactId>
             <version>1.0-SNAPSHOT</version>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>cn.cpf</groupId>
+            <groupId>cn.cpfree.myproject</groupId>
             <artifactId>web-dal</artifactId>
             <version>1.0-SNAPSHOT</version>
             <!--依赖不传递-->
@@ -76,49 +75,5 @@
         </dependency>
     </dependencies>
 
-
-    <build>
-        <finalName>web-dal</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.*</include>
-                </includes>
-                <targetPath>.</targetPath>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <fork>true</fork>
-                    <verbose>false</verbose>
-                    <executable>javac</executable>
-                    <compilerVersion>1.8</compilerVersion>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-compiler-javac</artifactId>
-                        <version>1.8.1</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

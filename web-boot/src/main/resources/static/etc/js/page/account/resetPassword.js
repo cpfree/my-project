@@ -20,7 +20,6 @@ let validConfirmPwd=(rule, value, callback)=>{
     }
 };
 
-
 function isValidPhone(str) {
     const reg = /^1[3|4|5|7|8|9][0-9]\d{8}$/;
     return reg.test(str)
@@ -69,7 +68,7 @@ let accountModal = new Vue({
                 { required: true, message: '请输入短信验证码', trigger: 'change' }
             ]
         },
-        captchaUrl : "yanzhengma.jpg?_=" + Math.random()
+        captchaUrl : "kaptcha?_=" + Math.random()
     },
     methods: {
         //获取username和password的值，对password值进行MD5加密，然后生成表单提交
@@ -139,7 +138,7 @@ let accountModal = new Vue({
             }
             let _this = this;
             let params = {phone : form.phone, captcha: form.captcha};
-            $.sendPostRequest("singleAgencyHallOpen/sendOpenHallResetPwdSmsCode", params, function (data) {
+            $.sendPostRequest("singleAgencyHallOpen/sendResetPwdSmsCode", params, function (data) {
                 _this.$message({showClose: true, type: 'warning', message: '验证码发送成功!'});
                 disableValForAWhile(_this.btnGetVerifyCode, '重新发送');
             }, function (data, status) {
@@ -148,7 +147,7 @@ let accountModal = new Vue({
             });
         },
         changeCaptcha () {
-            this.captchaUrl = "yanzhengma.jpg?_=" + Math.random();
+            this.captchaUrl = "kaptcha?_=" + Math.random();
         }
     },
     computed: {},

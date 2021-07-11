@@ -13,11 +13,11 @@ public enum ERpcPostCode implements IPostCode {
     rpcKeyIdErr("5678", "远程调用标记错误"),
     rpcInnerErr("5679", "远程调用服务器内部发生错误");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     ERpcPostCode(String code, String text, String desc) {
         this.code = code;

@@ -146,6 +146,11 @@
                                 <template slot="prepend"><div class="fa fa-fw fa-2x fa-phone"></div></template>
                             </el-input>
                         </el-form-item>
+                        <el-form-item prop="userName">
+                            <el-input placeholder="请输入昵称" v-model="registerForm.nickname" maxlength="20">
+                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-user-o"></div></template>
+                            </el-input>
+                        </el-form-item>
                         <el-form-item prop="pwd1">
                             <el-input placeholder="请输入6-20位密码" v-model="registerForm.pwd1" type="password" show-password maxlength="20">
                                 <template slot="prepend"><div class="fa fa-fw fa-2x fa-lock"></div></template>
@@ -169,45 +174,6 @@
                                 <template slot="prepend"><div class="fa fa-fw fa-2x fa-shield"></div></template>
                                 <el-button slot="append" @click="getVerificationCode"
                                            :disabled="btnGetVerifyCode.disabled"><span>{{btnGetVerifyCode.text}}</span></el-button>
-                            </el-input>
-                        </el-form-item>
-                        <el-form-item prop="instName">
-
-                            <!--<el-input placeholder="请输入所属机构全称" v-model="registerForm.instName" maxlength="40">-->
-                                <!--<template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>-->
-                            <!--</el-input>-->
-                            <el-autocomplete placeholder="请输入所属机构全称" v-model="registerForm.instName" :maxlength="40"
-                                             @select="handleSelect" :fetch-suggestions="querySearchAsync" autocomplete>
-                                <template slot-scope="{ item }">
-                                    <div style="float: left;">{{ item.name }}</div>
-                                    <span style="color: #999; float: left; padding-left: 5px;">({{ item.statusText }})</span>
-                                </template>
-                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>
-                            </el-autocomplete>
-
-                            <!--<el-select v-model="registerForm.instName" filterable allow-create placeholder="请输入所属机构全称" maxlength="40">-->
-                                <!--<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>-->
-                                <!--<template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>-->
-                            <!--</el-select>-->
-                        </el-form-item>
-                        <el-form-item prop="userName">
-                            <el-input placeholder="请输入真实姓名" v-model="registerForm.userName" maxlength="20">
-                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-user-o"></div></template>
-                            </el-input>
-                        </el-form-item>
-                        <el-form-item prop="departmentName">
-                            <el-input placeholder="请输入部门" v-model="registerForm.departmentName" maxlength="40">
-                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-sitemap"></div></template>
-                            </el-input>
-                        </el-form-item>
-                        <el-form-item prop="position">
-                            <el-input placeholder="请输入职位" v-model="registerForm.position" maxlength="50">
-                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-address-card-o"></div></template>
-                            </el-input>
-                        </el-form-item>
-                        <el-form-item prop="email">
-                            <el-input placeholder="请输入工作邮箱" v-model="registerForm.email" maxlength="40">
-                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-envelope-o"></div></template>
                             </el-input>
                         </el-form-item>
                         <div style="width: 100%; padding-bottom: 15px;margin: 0 auto;text-align: center;">

@@ -12,11 +12,11 @@ public enum ECheckPostCode implements IPostCode {
 
     instNameIsExist("0501", "机构名称已经存在!");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     ECheckPostCode(String code, String text, String desc) {
         this.code = code;

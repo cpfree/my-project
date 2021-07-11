@@ -1,9 +1,9 @@
 package cn.cpf.web.service.mod.system.dict;
 
 import cn.cpf.web.service.combine.api.ISysDesignCombine;
-import com.github.codedict.dynamic.DictDbIoHandle;
-import com.github.codedict.dynamic.DictHandler;
-import com.github.codedict.dynamic.DictTypeBean;
+import com.github.cosycode.codedict.dynamic.DictDbIoHandle;
+import com.github.cosycode.codedict.dynamic.DictHandler;
+import com.github.cosycode.codedict.dynamic.DictTypeBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

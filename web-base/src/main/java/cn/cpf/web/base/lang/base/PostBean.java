@@ -1,7 +1,8 @@
 package cn.cpf.web.base.lang.base;
 
 import cn.cpf.web.base.constant.postcode.ECommonPostCode;
-import com.google.common.collect.Maps;
+import com.github.cosycode.common.ext.bean.RecordMap;
+import com.github.cosycode.common.util.common.Maps;
 
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class PostBean extends RecordMap {
     }
 
     public PostBean() {
+
     }
 
     public IPostCode getReturnCode() {

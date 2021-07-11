@@ -17,7 +17,7 @@ import java.util.List;
  **/
 public interface DalUtils {
 
-    public static <T> T singleObject(@NonNull List<T> list){
+    static <T> T singleObject(@NonNull List<T> list) {
         if (list.isEmpty()) {
             return null;
         }
@@ -28,21 +28,21 @@ public interface DalUtils {
         return list.get(0);
     }
 
-    public static String likeStrize(String val) {
+    static String likeStrize(String val) {
         if (val == null) {
             return "%%";
         }
         return "%" + val.trim() + "%";
     }
 
-    public static String likeStrizeIfNotNull(String val) {
+    static String likeStrizeIfNotNull(String val) {
         if (StringUtils.isBlank(val)) {
             return null;
         }
         return "%" + val.trim() + "%";
     }
 
-    static <T> T getAncCheckOne(Collection<T> collections){
+    static <T> T getAncCheckOne(Collection<T> collections) {
         if (CollectionUtils.isEmpty(collections)) {
             return null;
         }

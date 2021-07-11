@@ -3,8 +3,8 @@ package cn.cpf.web.service.mod.system.dict;
 import cn.cpf.web.base.model.entity.SysDictItem;
 import cn.cpf.web.base.model.entity.SysDictItemKey;
 import cn.cpf.web.base.model.entity.SysFieldExtendKey;
-import com.github.codedict.dynamic.DictItemBean;
-import com.github.codedict.dynamic.DictTypeBean;
+import com.github.cosycode.codedict.core.DictItemBean;
+import com.github.cosycode.codedict.dynamic.DictTypeBean;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Collections;
@@ -49,11 +49,8 @@ public class FieldDictUtils {
 
     public static DictItemBean convertItemFromSysItem(SysDictItem sysDictItem) {
         DictItemBean dictItemBean = new DictItemBean();
-        dictItemBean.setParValue(sysDictItem.getParValue());
         dictItemBean.setLabel(sysDictItem.getCnLabel());
         dictItemBean.setValue(sysDictItem.getValue());
-        dictItemBean.setEnable(sysDictItem.getState().endsWith("1"));
-        dictItemBean.setOrd(sysDictItem.getOrd());
         return dictItemBean;
     }
 

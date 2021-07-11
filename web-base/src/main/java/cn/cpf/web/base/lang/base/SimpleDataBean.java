@@ -25,11 +25,11 @@ public class SimpleDataBean<T extends Serializable> implements Serializable {
 
     }
 
-    public static <D extends Serializable> String packageToJsonMessage(String tag, D data){
+    public static <D extends Serializable> String packageToJsonMessage(String tag, D data) {
         return new SimpleDataBean<>(tag, data).toJson();
     }
 
-    public static SimpleDataBean fromJson(String jsonMessage){
+    public static SimpleDataBean fromJson(String jsonMessage) {
         return JsonUtils.convertJson2Object(jsonMessage, SimpleDataBean.class, "SimpleDataBean->convertFromJson : error!");
     }
 

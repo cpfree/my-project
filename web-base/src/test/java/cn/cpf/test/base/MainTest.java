@@ -1,6 +1,6 @@
 package cn.cpf.test.base;
 
-import static com.github.sinjar.common.util.common.StrUtils.replaceJoinAll;
+import static com.github.cosycode.common.util.common.StrUtils.replaceJoinAll;
 
 /**
  * <b>Description : </b>

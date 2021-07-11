@@ -26,11 +26,11 @@ public enum ELoginPostCode implements IPostCode {
     // 开发大厅
     youAccountIsWaitingInstManagerVerify("1417", "当前手机号已注册, 现在在审核中, 请等待机构管理员审核!");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     @Override
     public String getCode() {

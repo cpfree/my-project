@@ -1,7 +1,7 @@
 package cn.cpf.mod.plugins.mybatis;
 
 import cn.cpf.mod.plugins.dao.DbDaoMapper;
-import cn.cpf.web.base.lang.base.Record;
+import com.github.cpfniliu.common.ext.bean.Record;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;

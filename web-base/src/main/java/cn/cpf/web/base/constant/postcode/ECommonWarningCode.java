@@ -1,8 +1,6 @@
 package cn.cpf.web.base.constant.postcode;
 
-import cn.cpf.web.base.lang.base.IPostCode;
 import cn.cpf.web.base.lang.base.IWarningCode;
-import lombok.ToString;
 
 /**
  * <b>Description : </b>
@@ -17,11 +15,11 @@ public enum ECommonWarningCode implements IWarningCode {
      */
     atMostOneButFoundMore("0909", "查询异常", "最多应该查询出一个但是发现多个数据");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     @Override
     public String getCode() {

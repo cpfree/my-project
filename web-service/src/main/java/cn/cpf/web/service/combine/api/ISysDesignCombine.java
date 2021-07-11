@@ -4,7 +4,7 @@ import cn.cpf.web.base.model.bo.SysFieldBo;
 import cn.cpf.web.base.model.bo.SysTableBo;
 import cn.cpf.web.base.model.dto.DictItemDto;
 import cn.cpf.web.service.mod.system.dict.FieldDictUtils;
-import com.github.codedict.dynamic.DictTypeBean;
+import com.github.cosycode.codedict.dynamic.DictTypeBean;
 
 import java.util.List;
 import java.util.Map;

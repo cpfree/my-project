@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
  **/
 @Data
 @NoArgsConstructor
-public class DictItemDto  {
+public class DictItemDto {
 
     private String parValue;
 

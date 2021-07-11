@@ -24,7 +24,7 @@ public class StringToDateConverter implements Converter<String, Date> {
             return null;
         }
         if (NumberUtils.isDigits(string)) {
-            return new Date(Long.valueOf(string));
+            return new Date(Long.parseLong(string));
         }
         try {
             return DateUtils.parseDate(string, parsePatterns);

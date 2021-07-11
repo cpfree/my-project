@@ -12,11 +12,11 @@ public enum EExceptionPostCode implements IPostCode {
 
     notFoundInstGuidFromSession("5901", "未发现您的机构或会话过期", "未从session中发现您的机构信息");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     @Override
     public String getCode() {

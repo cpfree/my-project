@@ -1,7 +1,7 @@
 package cn.cpf.web.base.constant.dic;
 
 
-import com.github.codedict.core.IDictItem;
+import com.github.cosycode.codedict.core.IDictItem;
 
 /**
  * <b>Description : </b> 通知表

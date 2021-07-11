@@ -24,11 +24,11 @@ public enum ECommonPostCode implements IPostCode {
     EXEC_FAILURE("1009", "执行失败."),
     PostMessageException("1099", "PostMessageException!");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     ECommonPostCode(String code, String text, String desc) {
         this.code = code;

@@ -1,7 +1,7 @@
 package cn.cpf.web.boot.conf.shiro;
 
 import cn.cpf.web.base.model.entity.AccUser;
-import com.github.sinjar.common.validate.RegexValidateUtils;
+import com.github.cpfniliu.common.validate.RegexValidateUtils;
 import cn.cpf.web.boot.util.CpSessionUtils;
 import cn.cpf.web.service.base.api.IAccUser;
 import cn.cpf.web.service.logic.api.IAccessLogic;

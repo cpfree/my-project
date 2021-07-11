@@ -10,7 +10,7 @@ import cn.cpf.web.base.lang.base.IWarningCode;
  **/
 public class LocalThreadHolder {
 
-    private static ThreadLocal<IWarningCode> codeThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<IWarningCode> codeThreadLocal = new ThreadLocal<>();
 
     public static void putWarning(IWarningCode warningCode) {
         codeThreadLocal.set(warningCode);

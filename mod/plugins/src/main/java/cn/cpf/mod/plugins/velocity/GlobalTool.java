@@ -1,6 +1,6 @@
 package cn.cpf.mod.plugins.velocity;
 
-import com.github.sinjar.common.util.common.StrUtils;
+import com.github.cpfniliu.common.util.common.StrUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
@@ -87,12 +87,6 @@ public class GlobalTool {
     public static String upperCamelize(String field) {
         return StrUtils.upperCamel(field);
     }
-
-
-    public static String Upperize(String field) {
-        return "5555";
-    }
-
 
     /**
      * 无返回执行，用于消除返回值

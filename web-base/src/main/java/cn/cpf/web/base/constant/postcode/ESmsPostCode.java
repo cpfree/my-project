@@ -22,11 +22,11 @@ public enum ESmsPostCode implements IPostCode {
     TEMPLATE_CODE_IS_BLANK("5403", "手机号码为空", "未发现短信模板编号"),
     VERIFICATION_CODE_EXPIRED("5404", "短信验证码错误或已过期");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     ESmsPostCode(String code, String text, String desc) {
         this.code = code;

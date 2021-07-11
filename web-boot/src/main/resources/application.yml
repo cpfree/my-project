@@ -93,8 +93,8 @@ pagehelper:
   returnPageInfo: check
 
 sms:
-  # 控制是否需要短信验证 Y：需要短信验证，N：不需要短信验证
-  needSms: Y
+  # 短信验证模式 => enabled: SMS服务可用, disabled(默认): SMS不可用, 如果调用接口则抛出异常, console: SMS不可用, 但会将验证码返回, 打印到控制台
+  mode: console
   accessKey: XXXXXXX
   secret: XXXXXXX
   # 短信发送服务器所在区域

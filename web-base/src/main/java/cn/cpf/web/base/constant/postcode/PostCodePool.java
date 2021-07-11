@@ -23,7 +23,7 @@ public class PostCodePool {
     /**
      * 往 map 中添加代码项
      *
-     * @param code code
+     * @param code     code
      * @param postCode postCode 对象
      */
     public static void putPostCode(String code, IPostCode postCode) {

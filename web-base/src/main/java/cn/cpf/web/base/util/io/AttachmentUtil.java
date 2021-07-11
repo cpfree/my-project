@@ -1,6 +1,6 @@
 package cn.cpf.web.base.util.io;
 
-import com.github.sinjar.common.util.io.IoUtils;
+import com.github.cosycode.common.util.io.IoUtils;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import java.net.URLEncoder;
 @Log4j2
 public class AttachmentUtil {
 
-    private static Logger logger = LoggerFactory.getLogger(AttachmentUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(AttachmentUtil.class);
 
 
     public static void writeResponse(@NonNull File file, String downLoadFileName, HttpServletRequest request, HttpServletResponse response) throws IOException {

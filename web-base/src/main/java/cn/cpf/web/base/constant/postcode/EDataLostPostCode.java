@@ -14,11 +14,11 @@ public enum EDataLostPostCode implements IPostCode {
     fileUploadIoException("5007", "文件上传失败", "文件上传IO异常"),
     notFoundUploadFileSource("5008", "未找到上传的文件源", "未发现上传的文件");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     @Override
     public String getCode() {

@@ -17,7 +17,7 @@ import java.util.Base64;
 @Slf4j
 public class AESUtil {
 
-    private static int bit = 128;
+    private static final int bit = 128;
 
     /**
      * 加密

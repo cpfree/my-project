@@ -17,11 +17,11 @@ public enum EAccountPostCode implements IPostCode {
     registerFailure("3012", "注册失败"),
     registerSuccess("0012", "注册成功");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     EAccountPostCode(String code, String text, String desc) {
         this.code = code;

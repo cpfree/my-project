@@ -8,11 +8,11 @@ package cn.cpf.web.base.constant.postcode;
  **/
 public class PostCodeBean {
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     public PostCodeBean(String code, String text, String desc) {
         this.code = code;

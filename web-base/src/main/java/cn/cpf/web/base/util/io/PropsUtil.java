@@ -33,7 +33,7 @@ public final class PropsUtil {
                 throw new FileNotFoundException(filename + " file is not found");
             }
             props = new Properties();
-            try (final InputStreamReader inputStreamReader = new InputStreamReader(is, StandardCharsets.UTF_8)){
+            try (final InputStreamReader inputStreamReader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
                 props.load(inputStreamReader);
             }
         } catch (IOException e) {

@@ -1,19 +1,14 @@
 package cn.cpf.web.dal.combine;
 
-import cn.cpf.web.base.lang.base.Record;
 import cn.cpf.web.base.model.bo.SysFieldBo;
 import cn.cpf.web.base.model.bo.SysTableBo;
 import cn.cpf.web.base.model.dto.DictItemDto;
 import cn.cpf.web.base.model.entity.SysDictItem;
 import cn.cpf.web.base.model.entity.SysFieldExtendKey;
-import com.github.codedict.bean.FieldDictMapping;
-import org.apache.ibatis.annotations.MapKey;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
-import java.util.Map;
 
 public interface SysDesignCombineMapper {
 

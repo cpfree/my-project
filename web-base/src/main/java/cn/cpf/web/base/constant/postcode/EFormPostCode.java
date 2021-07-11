@@ -18,11 +18,11 @@ public enum EFormPostCode implements IPostCode {
     updateFailure("5103", "修改失败"),
     ;
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     @Override
     public String getCode() {

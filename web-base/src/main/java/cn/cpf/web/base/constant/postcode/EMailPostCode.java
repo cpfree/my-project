@@ -19,13 +19,14 @@ public enum EMailPostCode implements IPostCode {
     VERIFICATION_NOT_MATCH("7006", "验证失败"),
     VERIFICATION_EXPIRED("7007", "邮箱验证过期"),
     VERIFICATION_FAILURE("7008", "验证失败"),
-    EMAIL_REGEX_ERROR("7009", "邮箱格式错误!"),;
+    EMAIL_REGEX_ERROR("7009", "邮箱格式错误!"),
+    ;
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     EMailPostCode(String code, String text, String desc) {
         this.code = code;

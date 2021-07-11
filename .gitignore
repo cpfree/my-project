@@ -1,37 +1,18 @@
-### custom
-*.lst
 
-/target/
-
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**
-!**/src/test/**
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+**/target/
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+*.jar
+*.war
+*.lst
 out/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+HELP.md
+.gradle
 
 ### VS Code ###
 .vscode/

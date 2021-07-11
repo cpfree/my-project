@@ -12,11 +12,11 @@ public enum ESysConfigPostCode implements IPostCode {
 
     sysConfigFailure("3032", "系统配置异常");
 
-    private String code;
+    private final String code;
 
-    private String text;
+    private final String text;
 
-    private String desc;
+    private final String desc;
 
     ESysConfigPostCode(String code, String text, String desc) {
         this.code = code;

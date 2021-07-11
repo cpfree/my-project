@@ -9,21 +9,19 @@
     <base href="/">
     <title>I同业用户登陆/注册</title>
 
-    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
     <link rel="stylesheet" href="static/etc/frame/element-ui/element.css"/>
-    <!--<link rel="stylesheet" href="static/etc/frame/element-ui/element-ity.css"/>-->
     <link rel="stylesheet" href="static/etc/frame/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="static/etc/css/base/color.css"/>
 
     <script type="text/javascript" src="static/etc/frame/jquery/jquery-current.min.js"></script>
-    <script type="text/javascript" src="static/etc/js/base/base.js"></script>
-    <script type="text/javascript" src="static/etc/js/plugins/layer/layer.js"></script>
-    <script type="text/javascript" src="static/etc/js/plugins/bootstrap/bootstrap.js"></script>
-    <script type="text/javascript" src="static/etc/js/base/ity-common-utils.js"></script>
-    <script type="text/javascript" src="static/etc/js/vue.js"></script>
+    <script type="text/javascript" src="static/etc/frame/layer/layer.js"></script>
+    <script type="text/javascript" src="static/etc/frame/vue/vue.js"></script>
     <script type="text/javascript" src="static/etc/frame/element-ui/element.js"></script>
-    <script type="text/javascript" src="static/etc/js/plugins/forge/forge.min.js"></script>
-    <script type="text/javascript" src="static/etc/js/constant/dic-base.js"></script>
+    <script type="text/javascript" src="static/etc/js/plugins/forge.min.js"></script>
+    <script type="text/javascript" src="static/etc/js/plugins/axios.min.js"></script>
+    <script type="text/javascript" src="static/etc/js/const/dic-base.js"></script>
+    <script type="text/javascript" src="static/etc/js/base/base.js"></script>
+    <script type="text/javascript" src="static/etc/js/base/ity-common-utils.js"></script>
     <style type="text/css">
         /*对话框*/
         .el-dialog__body {
@@ -171,38 +169,9 @@
                                            :disabled="btnGetVerifyCode.disabled"><span>{{btnGetVerifyCode.text}}</span></el-button>
                             </el-input>
                         </el-form-item>
-                        <el-form-item prop="instName">
-
-                            <!--<el-input placeholder="请输入所属机构全称" v-model="registerForm.instName" maxlength="40">-->
-                                <!--<template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>-->
-                            <!--</el-input>-->
-                            <el-autocomplete placeholder="请输入所属机构全称" v-model="registerForm.instName" :maxlength="40"
-                                             @select="handleSelect" :fetch-suggestions="querySearchAsync" autocomplete>
-                                <template slot-scope="{ item }">
-                                    <div style="float: left;">{{ item.name }}</div>
-                                    <span style="color: #999; float: left; padding-left: 5px;">({{ item.statusText }})</span>
-                                </template>
-                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>
-                            </el-autocomplete>
-
-                            <!--<el-select v-model="registerForm.instName" filterable allow-create placeholder="请输入所属机构全称" maxlength="40">-->
-                                <!--<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>-->
-                                <!--<template slot="prepend"><div class="fa fa-fw fa-2x fa-institution"></div></template>-->
-                            <!--</el-select>-->
-                        </el-form-item>
                         <el-form-item prop="userName">
                             <el-input placeholder="请输入真实姓名" v-model="registerForm.userName" maxlength="20">
                                 <template slot="prepend"><div class="fa fa-fw fa-2x fa-user-o"></div></template>
-                            </el-input>
-                        </el-form-item>
-                        <el-form-item prop="departmentName">
-                            <el-input placeholder="请输入部门" v-model="registerForm.departmentName" maxlength="40">
-                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-sitemap"></div></template>
-                            </el-input>
-                        </el-form-item>
-                        <el-form-item prop="position">
-                            <el-input placeholder="请输入职位" v-model="registerForm.position" maxlength="50">
-                                <template slot="prepend"><div class="fa fa-fw fa-2x fa-address-card-o"></div></template>
                             </el-input>
                         </el-form-item>
                         <el-form-item prop="email">
@@ -220,7 +189,7 @@
     </template>
 </div>
 
-<script type="text/javascript" src="static/etc/page/singleAgencyQuotationHall/accountModal.js"></script>
+<script type="text/javascript" src="static/etc/js/page/account/accountModal.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 package cn.cpf.mod.plugins.mybatis;
 
-import com.github.sinjar.common.util.common.StrUtils;
+import com.github.cpfniliu.common.util.common.StrUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;

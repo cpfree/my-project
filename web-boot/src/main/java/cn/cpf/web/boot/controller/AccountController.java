@@ -9,7 +9,7 @@ import cn.cpf.web.base.lang.base.PostBean;
 import cn.cpf.web.base.model.entity.AccUser;
 import cn.cpf.web.base.util.exception.PostException;
 import cn.cpf.web.boot.util.AccountUtil;
-import cn.cpf.web.boot.util.PluginUtils;
+import cn.cpf.web.boot.util.CaptchaUtils;
 import cn.cpf.web.service.base.api.IAccUser;
 import cn.cpf.web.service.mod.sms.ISms;
 import cn.cpf.web.service.mod.sms.template.LoginConfirmSmsTemplate;
@@ -54,9 +54,9 @@ public class AccountController {
     @PostMapping("/registerAccount")
     @ResponseBody
     @Transactional
-    public Map<String, Object> registerAccount(HttpServletRequest request, @RequestParam("phone") String phone, @RequestParam("pwd1") String pwd1, @RequestParam("pwd2") String pwd2, @RequestParam("captcha") String captcha, @RequestParam("verifyCode") String verifyCode, @RequestParam("userName") String userName, @RequestParam("instName") String instName, @RequestParam("departmentName") String departmentName, @RequestParam("position") String position, @RequestParam("email") String email) {
+    public Map<String, Object> registerAccount(HttpServletRequest request, @RequestParam("phone") String phone, @RequestParam("pwd1") String pwd1, @RequestParam("pwd2") String pwd2, @RequestParam("captcha") String captcha, @RequestParam("verifyCode") String verifyCode, @RequestParam("userName") String userName, @RequestParam("email") String email) {
         // check
-        IPostCode postCode = doRegisterBefore(request, phone, pwd1, pwd2, SEND_OPEN_HALL_REGISTER_SMS_CODE, captcha, verifyCode);
+        IPostCode postCode = doRegisterBefore(request, phone, pwd1, pwd2, REGISTER_SMS_CODE, captcha, verifyCode);
         if (postCode.isNotSuccess()) {
             return PostBean.genePostMap(postCode);
         }
@@ -101,9 +101,6 @@ public class AccountController {
         return PostBean.genePostMap(EAccountPostCode.registerSuccess);
     }
 
-
-
-
     /**
      * 查询相关手机号是否存在
      *
@@ -127,7 +124,7 @@ public class AccountController {
     @ResponseBody
     public Map<String, Object> resetPassword(HttpServletRequest request, @RequestParam("phone") String phone, @RequestParam("pwd1") String pwd1, @RequestParam("pwd2") String pwd2, @RequestParam("captcha") String captcha, @RequestParam("verifyCode") String verifyCode) {
         // check
-        IPostCode postCode = doRegisterBefore(request, phone, pwd1, pwd2, SEND_OPEN_HALL_RESET_PWD_SMS_CODE, captcha, verifyCode);
+        IPostCode postCode = doRegisterBefore(request, phone, pwd1, pwd2, RESET_PWD_SMS_CODE, captcha, verifyCode);
         if (postCode.isNotSuccess()) {
             return PostBean.genePostMap(postCode);
         }
@@ -147,7 +144,7 @@ public class AccountController {
      */
     private IPostCode doRegisterBefore(HttpServletRequest request, String phone, String pwd1, String pwd2, String smsVerifyKey, String captcha, String verifyCode) {
         // 检查图片验证码
-        IPostCode postCode = PluginUtils.checkKaptchaCode(request, captcha, phone);
+        IPostCode postCode = CaptchaUtils.checkKaptchaCode(request, captcha, phone);
         if (postCode.isNotSuccess()) {
             return postCode;
         }
@@ -163,30 +160,45 @@ public class AccountController {
         return ECommonPostCode.NO_EXCEPTION;
     }
 
-    private static final String SEND_OPEN_HALL_REGISTER_SMS_CODE = "sendOpenHallRegisterSmsCode";
-    private static final String SEND_OPEN_HALL_RESET_PWD_SMS_CODE = "sendOpenHallResetPwdSmsCode";
+    /**
+     * 注册验证码
+     */
+    private static final String REGISTER_SMS_CODE = "sendRegisterSmsCode";
+    /**
+     * 重置密码验证码
+     */
+    private static final String RESET_PWD_SMS_CODE = "sendResetPwdSmsCode";
 
-    @PostMapping("/sendOpenHallResetPwdSmsCode")
+    /**
+     * 首先验证图片验证码, 通过后, 向指定手机号发送短信验证码
+     *
+     * @param captcha 用户输入的验证码
+     * @param phone 电话号码
+     */
+    @PostMapping("/sendResetPwdSmsCode")
     @ResponseBody
     public Map<String, Object> sendOpenHallResetPasswordSmsCode(HttpServletRequest request, @RequestParam("captcha") String captcha, @RequestParam("phone") String phone) {
         // 检查图片验证码
-        IPostCode postCode = PluginUtils.checkKaptchaCode(request, captcha, phone);
+        IPostCode postCode = CaptchaUtils.checkKaptchaCode(request, captcha, phone);
         if (postCode.isNotSuccess()) {
             return PostBean.genePostMap(postCode);
         }
-        PostBean postBean = iSms.sendSmsVerificationCode(SEND_OPEN_HALL_RESET_PWD_SMS_CODE, new ModifyPasswordSmsTemplate("i同业"), phone);
+        PostBean postBean = iSms.sendSmsVerificationCode(RESET_PWD_SMS_CODE, new ModifyPasswordSmsTemplate("i同业"), phone);
         return postBean.toResultMap();
     }
 
-    @PostMapping("/sendOpenHallRegisterSmsCode")
+    /**
+     * 首先验证图片验证码, 通过后, 向指定手机号发送短信验证码
+     */
+    @PostMapping("/sendRegisterSmsCode")
     @ResponseBody
-    public Map<String, Object> sendOpenHallRegisterSmsCode(HttpServletRequest request, @RequestParam("captcha") String captcha, @RequestParam("phone") String phone) {
+    public Map<String, Object> sendRegisterSmsCode(HttpServletRequest request, @RequestParam("captcha") String captcha, @RequestParam("phone") String phone) {
         // 检查图片验证码
-        IPostCode postCode = PluginUtils.checkKaptchaCode(request, captcha, phone);
+        IPostCode postCode = CaptchaUtils.checkKaptchaCode(request, captcha, phone);
         if (postCode.isNotSuccess()) {
             return PostBean.genePostMap(postCode);
         }
-        PostBean postBean = iSms.sendSmsVerificationCode(SEND_OPEN_HALL_REGISTER_SMS_CODE, new LoginConfirmSmsTemplate("i同业"), phone);
+        PostBean postBean = iSms.sendSmsVerificationCode(REGISTER_SMS_CODE, new LoginConfirmSmsTemplate("i同业"), phone);
         return postBean.toResultMap();
     }
 

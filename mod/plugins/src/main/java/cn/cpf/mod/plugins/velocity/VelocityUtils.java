@@ -1,7 +1,7 @@
 package cn.cpf.mod.plugins.velocity;
 
-import cn.cpf.web.base.lang.base.Record;
-import com.github.sinjar.common.util.io.IoUtils;
+import com.github.cpfniliu.common.ext.bean.Record;
+import com.github.cpfniliu.common.util.io.IoUtils;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
