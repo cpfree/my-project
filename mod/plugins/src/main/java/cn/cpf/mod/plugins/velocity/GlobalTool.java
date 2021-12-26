@@ -1,7 +1,7 @@
 package cn.cpf.mod.plugins.velocity;
 
-import com.github.cpfniliu.common.util.common.StrUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.cosycode.common.util.common.StrUtils;
 
 import java.util.*;
 

@@ -6,7 +6,7 @@ import cn.cpf.mod.plugins.velocity.VelocityUtils;
 import cn.cpf.web.base.model.bo.SysTableBo;
 import cn.cpf.web.base.model.entity.SysDictItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.cpfniliu.common.ext.bean.Record;
+import com.github.cosycode.common.ext.bean.Record;
 import com.google.gson.Gson;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
@@ -39,7 +39,7 @@ public class DictGenerator {
         geneVm(getInstance());
     }
 
-    public static void geneVm(TableDataHandler instance) {
+    public static void geneVm(TableDataHandler instance) throws IOException {
         final DictGeneBean dictGeneBean = new DictGeneBean(instance);
         if (CollectionUtils.isEmpty(dictGeneBean.getList())) {
             return;

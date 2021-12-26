@@ -1,7 +1,7 @@
 package cn.cpf.mod.plugins.velocity;
 
-import com.github.cpfniliu.common.ext.bean.Record;
-import com.github.cpfniliu.common.util.io.IoUtils;
+import com.github.cosycode.common.ext.bean.Record;
+import com.github.cosycode.common.util.io.IoUtils;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
@@ -9,7 +9,9 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +28,11 @@ public class VelocityUtils {
     private static final String HELLO_WORLD_VM_PATH = "P:\\git\\my-project\\mod\\plugins\\src\\main\\resources\\template\\userInfo.vm";
     private static final String SAVE_PATH = "P:\\git\\my-project\\mod\\plugins\\src\\main\\resources\\templateSave\\test.java";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         test();
     }
 
-    public static void test() {
+    public static void test() throws IOException {
         final Record record = new Record();
         record.put("hello", "Hello world!!");
         List<String> list = new ArrayList<>();
@@ -68,13 +70,13 @@ public class VelocityUtils {
     }
 
 
-    public static void generate(@NonNull VelocityGeneInfoBean bean, @NonNull Map<String, Object> map) {
+    public static void generate(@NonNull VelocityGeneInfoBean bean, @NonNull Map<String, Object> map) throws IOException {
         final String tools = "tool";
         Validate.isTrue(!map.containsKey(tools), "map中不能包含 tools");
         final String templateString = IoUtils.readFile((bean.getVmPath()));
         map.put(tools, GlobalTool.class);
         final String content = generate(templateString, map);
-        IoUtils.writeFile(bean.getSavePath(), content);
+        IoUtils.writeFile(bean.getSavePath(), content.getBytes());
     }
 
 

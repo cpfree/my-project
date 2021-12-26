@@ -1,6 +1,6 @@
 package cn.cpf.mod.plugins.dao;
 
-import com.github.cpfniliu.common.ext.bean.Record;
+import com.github.cosycode.common.ext.bean.Record;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
