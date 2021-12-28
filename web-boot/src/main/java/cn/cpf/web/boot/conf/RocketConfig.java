@@ -6,10 +6,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * <b>Description : </b>
+ * <b>Description : </b> Rocket 的配置类
+ * <p>
+ * <b>created in </b> 2019/8/15 10:56
+ * </p>
  *
  * @author CPF
- * @date 2019/8/15 10:56
  **/
 @PropertySource("classpath:application.yml")
 @ConfigurationProperties(prefix = "rocketmq")

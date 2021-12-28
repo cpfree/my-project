@@ -1,11 +1,11 @@
 package cn.cpf.web.boot.conf.shiro;
 
 import cn.cpf.web.base.model.entity.AccUser;
-import com.github.cpfniliu.common.validate.RegexValidateUtils;
 import cn.cpf.web.boot.util.CpSessionUtils;
 import cn.cpf.web.service.base.api.IAccUser;
 import cn.cpf.web.service.logic.api.IAccessLogic;
 import cn.cpf.web.service.mod.system.shiro.AccessBean;
+import com.github.cosycode.common.validate.RegexValidateUtils;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
@@ -18,9 +18,11 @@ import org.springframework.stereotype.Component;
 
 /**
  * <b>Description : </b>
+ * <p>
+ * <b>created in </b> 2019/10/29 23:43
+ * </p>
  *
  * @author CPF
- * @date 2019/10/29 23:43
  **/
 @Slf4j
 @Component

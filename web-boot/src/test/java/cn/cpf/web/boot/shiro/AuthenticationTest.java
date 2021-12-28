@@ -12,12 +12,13 @@ import java.util.Arrays;
 
 /**
  * <b>Description : </b>
+ * <p>
+ * <b>created in </b> 2019/10/26 10:57
+ * </p>
  *
  * @author CPF
- * @date 2019/10/26 10:57
  **/
 public class AuthenticationTest {
-
 
     @Test
     public void authenticationTest(){
@@ -75,6 +76,7 @@ public class AuthenticationTest {
         boolean isAuthenticated = subject.isAuthenticated();
 
         //是否认证通过
+        System.out.println("&信息&信&息& : " + isAuthenticated);
         System.out.println("isAuthenticated : " + isAuthenticated);
         System.out.println("再次执行 subject.isAuthenticated() : " + subject.isAuthenticated());
         /*===================退出操作之后，测试是否验证通过======================*/
