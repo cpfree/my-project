@@ -2,11 +2,14 @@ server:
   port: 8080
 
 spring:
+
+  runner:
+    openIndex: true
+
   datasource:
-    #url: jdbc:mysql://cpf.cn:3306/my-project?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Hongkong
-    url: jdbc:mysql://127.0.0.1:3306/my-project?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Hongkong
-    username: root
-    password: CPF@4823
+    url: jdbc:mysql://ip:3306/my-project?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Hongkong
+    username: XXXX
+    password: XXXX
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     # 初始化时建立物理连接连接的个数
@@ -53,8 +56,10 @@ spring:
     restart:
       #热部署生效
       enabled: true
-      additional-paths: src/main/java
-      exclude: classpath:mappers/**
+#      additional-paths: src/main/java
+#      exclude: classpath:mappers/**
+
+
 debug: true
 logging.level.org.springframework.boot.autoconfigure: ERROR
 
@@ -68,21 +73,8 @@ mybatis:
 rocketmq:
   useMq: true
   nameSrvAddr: 172.16.10.118:9876
-  producerGroup: ItyProducerGroup
-  consumerGroup: ItyConsumerGroup
-
-
-# redis
-redis:
-  hostName: 172.16.10.113
-  port: 6379
-  database: 0
-  password: itysit
-  maxToTal: 10
-  maxIdle: 5
-  minIdle: 2
-  maxWaitMillis: 10000
-  testOnBorrow: true
+  producerGroup: XXX
+  consumerGroup: XXX
 
 #pagehelper
 pagehelper:

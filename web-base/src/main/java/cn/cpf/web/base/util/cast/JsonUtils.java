@@ -2,6 +2,7 @@ package cn.cpf.web.base.util.cast;
 
 import cn.cpf.web.base.lang.base.PostDto;
 import cn.cpf.web.base.util.exception.PostException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NoArgsConstructor;
@@ -69,6 +70,30 @@ public class JsonUtils {
         } catch (Exception e) {
             log.error("convertObject2Json 异常", e);
             throw new PostException(throwMsg);
+        }
+    }
+
+    public static String toJson(Object obj) {
+        if (obj == null) {
+            return "{}";
+        }
+        try {
+            return mapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            log.error("writeValueAsString 异常", e);
+        }
+        return "{}";
+    }
+
+    public static <T> T fromJson(String json, Class<T> clazz) {
+        if (json == null) {
+            return null;
+        }
+        try {
+            return mapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            log.error("fromJson 异常", e);
+            return null;
         }
     }
 

@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 @SpringBootTest(classes = WebBootApplication.class)
-@RunWith(SpringJUnit4ClassRunner.class)
 class WebBootApplicationTests {
 
     @Autowired
