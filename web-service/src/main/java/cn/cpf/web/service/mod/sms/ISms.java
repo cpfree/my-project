@@ -26,6 +26,7 @@ public interface ISms {
     /**
      * 发送短信验证模板
      *
+     * @param verifyKey   验证标记, 区分各种不同的短信
      * @param templateCode 短信模板编号
      * @param phone        手机号码
      * @param map          模板字段

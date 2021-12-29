@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * <b>Description : </b>
+ * <b>Description : </b> shiro 的 Realm 实现
  * <p>
  * <b>created in </b> 2019/10/29 23:43
  * </p>
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  **/
 @Slf4j
 @Component
-public class CpAuthorizingRealm extends AuthorizingRealm {
+public class ScAuthorizingRealm extends AuthorizingRealm {
 
     @Autowired
     private IAccUser iAccUser;
@@ -45,6 +45,7 @@ public class CpAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        log.debug("doGetAuthorizationInfo");
         String name = (String) principals.getPrimaryPrincipal();
         // TODO 优化, 直接通过用户名获取
         @NonNull final AccUser user = iAccUser.findByUserName(name);
@@ -68,6 +69,7 @@ public class CpAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        log.debug("doGetAuthenticationInfo");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 
         final String username = token.getUsername();

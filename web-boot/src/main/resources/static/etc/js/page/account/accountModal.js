@@ -1,4 +1,35 @@
 
+//     $('#app').click(function() {
+//       $.ajax({
+//           url: 'http://api.yourdomain.com/getlist/',
+//           type:'get',
+//           dataType :"json"
+//       }).done(function (data,status,xhr) {
+//           console.log(data,null,2)
+//       })
+//   })
+//   //定义mock数据
+//   var obj ={ aa : '11',bb:'22',cc:'33',dd:'44'}
+//   //对数据进行拦截
+//   Mock.mock('http://api/yourdomain.com/getlist/',{
+//       //定义模板语法
+//       "user|1-3":[
+//           {
+//               "id|+1":1,
+//              name:"@cname",
+//               "age|18-28":0,
+//               birthday:'@data("yyyy-MM-dd")',
+//               city:"@city",
+//               "fromobj|2":obj
+//           }
+//       ]
+//   })
+
+let apiUrl = {
+   login: '/static/page/account/accountModal.html',
+   resetPassword: 'static/page/account/resetPassword.html'
+}
+
 let loginValidPhone=(rule, value,callback)=>{
     if (!value){
         callback(new Error('请输入电话号码'))
@@ -50,9 +81,8 @@ let accountModal = new Vue({
     data: {
         activeName : 'login',
         loginFormRules : {
-            phone: [
-                { required: true, message: '请输入手机号', trigger: 'change' },
-                { trigger: 'blur', validator: loginValidPhone }
+            userName: [
+                { required: true, message: '请输入账户名', trigger: 'change' },
             ],
             pwd: [
                 { required: true, message: '请输入密码', trigger: 'change' },
@@ -63,7 +93,7 @@ let accountModal = new Vue({
             ]
         },
         loginForm: {
-            phone : '',
+            userName : '',
             pwd : '',
             captcha : ''
         },
@@ -74,19 +104,16 @@ let accountModal = new Vue({
             disabled : false
         },
         registerForm : {
-            phone : '',
+            userName : '',
             pwd1 : '',
             pwd2 : '',
             captcha : '',
-            verifyCode : '',
-            userName : '',
-            instName : '',
             email : ''
         },
         registerFormRules : {
-            phone: [
-                { required: true, message: '请输入手机号', trigger: 'blur' },
-                { trigger: 'blur', validator: registerValidPhone }
+            userName: [
+               { required: true, message: '请输入账户名', trigger: 'change' },
+               { min: 2, max: 20, message: '长度需在2至20位', trigger: 'blur' }
             ],
             pwd1: [
                 { required: true, message: '请输入密码', trigger: 'change' },
@@ -100,13 +127,6 @@ let accountModal = new Vue({
             ],
             captcha: [
                 { required: true, message: '请输入图片验证码', trigger: 'change' }
-            ],
-            verifyCode: [
-                { required: true, message: '请输入短信验证码', trigger: 'change' }
-            ],
-            userName: [
-                { required: true, message: '请输入用户名', trigger: 'change' },
-                { min: 2, max: 20, message: '长度需在2至20位', trigger: 'blur' }
             ],
             email: [
                 { required: true, message: '请输入邮箱', trigger: 'change' },
@@ -135,7 +155,7 @@ let accountModal = new Vue({
                         return ;
                     }
                     let formParams = {
-                        username : form.phone,
+                        userName : form.userName,
                         password : passwordMD5,
                         captcha : form.captcha,
                         rememberMe : false
@@ -143,7 +163,7 @@ let accountModal = new Vue({
 
                     let _this = this;
                     $.sendPostRequest('account/loginVerification', formParams, function (data) {
-                        $.sendFormRequest('validate', formParams, top.document);
+                        console.log('登录成功');
                     },  function (data, status) {
                         if (data.needCaptcha) {
                             _this.needLoginCaptcha = data.needCaptcha;
@@ -171,47 +191,20 @@ let accountModal = new Vue({
         doRegister : function(){
             let _this = this;
             $.sendPostRequest('account/registerAccount', this.registerForm, function (data) {
-                const url = 'static/html/singleAgencyQuotationHall/registerProcess.html?process=3';
-                // _this.$alert('审核结果将在2个工作日内发送至您的邮箱, 请注意查收!', '已注册!等待审核', {
-                //     confirmButtonText: '确定',
-                //     type: 'success',
-                //     callback: action => {}
-                // });
+                _this.$alert('注册成功', {
+                    confirmButtonText: '确定',
+                    type: 'success',
+                    callback: action => {
+                       window.location = apiUrl.login + '?process=2';
+                    }
+                });
             },  function (data, status) {
                 _this.$message({showClose: true, type: 'warning', message: status.text});
                 _this.changeCaptcha();
             });
         },
         toSetPwd() {
-            window.location = 'static/html/singleAgencyQuotationHall/resetPassword.html';
-        },
-        getVerificationCode() {
-            let form = this.registerForm;
-            if (!form.phone) {
-                this.$message({
-                    showClose: true,
-                    message: '请先填写手机号码',
-                    type: 'warning'
-                });
-                return;
-            }
-            if (!form.captcha) {
-                this.$message({
-                    showClose: true,
-                    message: '请先填写图片验证码',
-                    type: 'warning'
-                });
-                return;
-            }
-            let _this = this;
-            let params = {phone : form.phone, captcha: form.captcha};
-            $.sendPostRequest("account/sendRegisterSmsCode", params, function (data) {
-                _this.$message({showClose: true, type: 'warning', message: '验证码发送成功!'});
-                disableValForAWhile(_this.btnGetVerifyCode, '重新发送');
-            }, function (data, status) {
-                _this.$message({showClose: true, type: 'warning', message: status.text});
-                _this.changeCaptcha();
-            });
+            window.location = apiUrl.resetPassword;
         },
         changeCaptcha () {
             this.captchaUrl = "kaptcha?_=" + Math.random();

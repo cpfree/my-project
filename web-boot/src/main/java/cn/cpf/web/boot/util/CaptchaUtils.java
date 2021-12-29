@@ -35,17 +35,17 @@ public class CaptchaUtils {
         String kaptchaValue = (String) request.getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         if (StringUtils.isBlank(kaptchaValue)) {
             if (messageTag != null) {
-                log.warn("tag {} : kaptcha code is invalid.", messageTag);
+                log.warn("[kaptcha] code is invalid. => {}", messageTag);
             }
             return ELoginPostCode.VERIFICATION_CODE_INVALIDATION;
         } else if (StringUtils.isBlank(checkCode)) {
             if (messageTag != null) {
-                log.warn("tag {} : kaptcha code is null.", messageTag);
+                log.warn("[kaptcha] code is null. => {}", messageTag);
             }
             return ELoginPostCode.VERIFICATION_CODE_NOT_FOUND;
         } else if (!kaptchaValue.equalsIgnoreCase(checkCode)) {
             if (messageTag != null) {
-                log.warn("tag {} : kaptcha code doesn't match.", messageTag);
+                log.warn("[kaptcha] code doesn't match. => {}", messageTag);
             }
             return ELoginPostCode.VERIFICATION_CODE_ERROR;
         }

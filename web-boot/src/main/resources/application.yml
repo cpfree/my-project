@@ -4,7 +4,7 @@ server:
 spring:
 
   runner:
-    openIndex: true
+    openIndex: false
 
   datasource:
     url: jdbc:mysql://ip:3306/my-project?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Hongkong
@@ -13,11 +13,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     # 初始化时建立物理连接连接的个数
-    initialSize: 5
+    initialSize: 1
     # 最小连接池数量
-    minIdle: 5
+    minIdle: 1
     # 最大连接池数量
-    maxActive: 20
+    maxActive: 5
     # 获取连接时最大等待时间(ms)，即60s
     maxWait: 60000
     # 1.Destroy线程会检测连接的间隔时间；2.testWhileIdle的判断依据
@@ -38,30 +38,63 @@ spring:
     poolPreparedStatements: false
     # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
     filters: stat,wall,log4j
+
   freemarker:
     suffix: .html
     charset: utf-8
     #"关闭缓存, 即时刷新"
     cache: false
+    settings:
+      classic_compatible: true #处理空值
+
   mvc:
     # 配置静态资源映射路径，/public、/resources路径失效
     # 这个配置项是告诉springboot，应该以什么样的方式去寻找资源。默认配置为 /* 。换句话说，只有静态资源满足什么样的匹配条件，Spring Boot才会处理静态资源请求
     static-path-pattern: /static/**
+
   resources:
     # 用于告诉Spring Boot应该在何处查找静态资源文件, 优先级从前至后
     # 默认值 : spring.resources.static-locations=classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
     static-locations: classpath:/templates/,classpath:/static/
+  aop:
+    proxy-target-class: true
 
   devtools:
     restart:
       #热部署生效
       enabled: true
 #      additional-paths: src/main/java
-#      exclude: classpath:mappers/**
+      exclude: classpath:mappers/**
+
+
+  # redis
+  redis:
+    hostName: cpfree.cn
+    port: 6379
+    database: 6
+    password: CPF@4823
+    maxToTal: 10
+    maxIdle: 5
+    minIdle: 2
+    maxWaitMillis: 10000
+    testOnBorrow: true
+
+  kafka:
+    bootstrap-servers: cpfree.cn:9092
+    # 该字段见 Kafka 安装包中的 consumer.proerties，可自行修改, 修改完毕后需要重启 Kafka
+    consumer:
+      group-id: test-consumer-group
+      enable-auto-commit: true
+      auto-commit-interval: 3000
 
 
 debug: true
-logging.level.org.springframework.boot.autoconfigure: ERROR
+logging:
+  level:
+    org.springframework.boot.autoconfigure: ERROR
+    org.springframework.web: INFO
+    org.hibernate: ERROR
+
 
 mybatis:
   #注意：一定要对应mapper映射xml文件的所在路径

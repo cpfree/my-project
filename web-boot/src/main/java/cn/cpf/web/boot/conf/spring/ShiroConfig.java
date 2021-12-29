@@ -1,90 +1,94 @@
 package cn.cpf.web.boot.conf.spring;
 
-import cn.cpf.web.boot.conf.shiro.CpAuthorizingRealm;
-import cn.cpf.web.boot.conf.shiro.CpLogoutFilter;
-import cn.cpf.web.boot.conf.shiro.LoginAuthenticationFilter;
-import cn.cpf.web.boot.conf.shiro.RememberAuthenticationFilter;
-import com.google.common.collect.Maps;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import cn.cpf.web.boot.conf.shiro.ScAuthorizingRealm;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
-import java.util.Map;
-
 /**
- * <b>Description : </b>
+ * <b>Description : </b> shiro 的配置文件
+ * <p>
+ * <br> 最终就是创建出 {@link org.apache.shiro.spring.config.web.autoconfigure.ShiroWebFilterConfiguration} 里面的三个 Bean
+ * </p>
+ *
+ * <p>
+ * <b>created in </b> 2019/10/26 17:05
+ * </p>
  *
  * @author CPF
- * @date 2019/10/26 17:05
  **/
 @Configuration
+@Slf4j
 public class ShiroConfig {
 
+    /**
+     * @return 自定义Realm
+     */
+    @Bean
+    public Realm realm() {
+        return new ScAuthorizingRealm();
+    }
+
+    /**
+     * 若没有 @Bean("shiroFilterFactoryBean") 则当前 Bean 生效
+     * 配置安全管理器
+     */
     @Bean("securityManager")
     public DefaultWebSecurityManager securityManager(){
-        // realm
-        final CpAuthorizingRealm realm = new CpAuthorizingRealm();
-        // ehCache
-        final EhCacheManager ehCacheManager = new EhCacheManager();
-        ehCacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
-        // manager
+        log.info("创建 securityManager ");
         final DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
-        manager.setRealm(realm);
-        manager.setCacheManager(ehCacheManager);
+        manager.setRealm(realm());
+//        manager.setCacheManager(cacheManager());
         return manager;
     }
 
-
     /**
+     * shiro 权限过滤器
      *
-     * authc:所有url都必须认证通过才可以访问;
-     * anon:所有url都都可以匿名访问;
-     * user:remember me的可以访问
+     * 若没有 @Bean("shiroFilterFactoryBean") 则当前 Bean 生效
      *
-     * @return
+     * authc: 所有url都必须认证通过才可以访问;
+     * anon: 所有url都都可以匿名访问;
+     * user: remember me的可以访问
+     *
+     * @return 过滤器
      */
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(){
-        ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-        bean.setSecurityManager(securityManager());
-        bean.setLoginUrl("/login");
-        bean.setSuccessUrl("/index");
-        // 未授权界面
-        bean.setUnauthorizedUrl("/403");
-        // filter
-        Map<String, Filter> filters = Maps.newHashMapWithExpectedSize(3);
-        filters.put("login", new LoginAuthenticationFilter());
-        filters.put("logout", new CpLogoutFilter());
-//        filters.put("rememberAuth", new RememberAuthenticationFilter());
-        bean.setFilters(filters);
-        // setFilterChainDefinitionMap
-        Map<String, String> map = Maps.newHashMap();
-        map.put("/**", "anon");
-//        map.put("/account/**", "anon");
-//        map.put("/debug/**", "anon");
-//        map.put("/static/**", "anon");
-//        map.put("/logout", "logout");
-//        map.put("/validate", "login");
-//        map.put("/login", "login");
-//        map.put("/register", "login");
-//        map.put("/**", "rememberAuth");
-        bean.setFilterChainDefinitionMap(map);
-        return bean;
+    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
+        // DefaultShiroFilterChainDefinition 里面维护了一个 LinkedMap, 是一个顺序 Map, 在查看权限的时候, 前面的优先级比后面的高.
+        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
+
+        // 可以匿名访问
+        chainDefinition.addPathDefinition("/", "anon");
+        chainDefinition.addPathDefinition("/static/**", "anon");
+//        // 匹配 filterMap 里面的过滤器类
+//        chainDefinition.addPathDefinition("/logout", "logout");
+//        // 可以匿名访问
+//        chainDefinition.addPathDefinition("/account/loginVerification", "scLogin");
+//        chainDefinition.addPathDefinition("/validate", "scLogin");
+
+//        // 要求认证, 且需要 admin 的角色
+//        chainDefinition.addPathDefinition("/admin/**", "authc, roles[admin]");
+//
+//        // 要求认证, 且有 document:read 的权限
+//        chainDefinition.addPathDefinition("/docs/**", "authc, perms[document:read]");
+
+
+        // 要求用户权限
+        chainDefinition.addPathDefinition("/**", "authc");
+        return chainDefinition;
     }
 
+    /**
+     * 启动缓存 (仅仅需要 创建一个 CacheManager)
+     */
 //    @Bean
-//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
-//        return new LifecycleBeanPostProcessor();
-//    }
-//
-//
-//    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(){
-//        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-//        advisor.setSecurityManager(securityManager());
-//        return advisor;
+//    protected CacheManager cacheManager() {
+//        return new MemoryConstrainedCacheManager();
 //    }
 
 }

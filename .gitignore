@@ -1,10 +1,4 @@
 
-/web-boot/src/main/resources/application-backup.yml
-/web-boot/src/main/resources/application-echo.properties
-/web-boot/src/test/java/cn/cpf/se/Test.java
-/.doc
-
-
 **/target/
 
 ### IntelliJ IDEA ###

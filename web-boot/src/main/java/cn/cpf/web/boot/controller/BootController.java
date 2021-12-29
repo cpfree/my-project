@@ -1,8 +1,8 @@
 package cn.cpf.web.boot.controller;
 
-import cn.cpf.web.boot.conf.RocketConfig;
+import cn.cpf.web.boot.constant.PageTree;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -22,17 +22,13 @@ import java.io.IOException;
 @Controller
 public class BootController {
 
-    @Autowired
-    private RocketConfig rocketConfig;
-
     @PostConstruct
     public void start() throws IOException {
     }
 
     @GetMapping({"/", "/index"})
     public String index() {
-        return "/static/page/account/accountModal.html";
-//        return "/static/page/base/index.html";
+        return PageTree.Base.INDEX;
     }
 
 }
