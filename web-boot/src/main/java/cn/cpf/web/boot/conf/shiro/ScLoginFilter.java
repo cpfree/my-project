@@ -6,6 +6,7 @@ import cn.cpf.web.base.constant.postcode.ELoginPostCode;
 import cn.cpf.web.base.lang.base.IPostCode;
 import cn.cpf.web.base.model.entity.AccUser;
 import cn.cpf.web.boot.conf.GlobalConfig;
+import cn.cpf.web.boot.util.CaptchaUtils;
 import cn.cpf.web.boot.util.CpSessionUtils;
 import cn.cpf.web.service.base.api.IAccUser;
 import lombok.NonNull;
@@ -17,6 +18,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,8 +36,8 @@ import java.util.Optional;
  * @author CPF
  **/
 @Slf4j
-@Component
-public class LoginAuthenticationFilter extends FormAuthenticationFilter {
+@Component("scLogin")
+public class ScLoginFilter extends FormAuthenticationFilter {
 
     @Autowired
     private IAccUser iAccUser;
@@ -49,6 +51,7 @@ public class LoginAuthenticationFilter extends FormAuthenticationFilter {
      */
     @Override
     public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+        log.debug("onPreHandle");
         // 判断当前请求是否已被认证 --> 1. 判断请求权限是否已验证 或者 当前请求不是登录请求, 2. 检查参数是否合法
         boolean isAllowed = isAccessAllowed(request, response, mappedValue);
         // 如果当前请求被允许, 同时是登录请求, 则直接跳转至登录成功页面
@@ -61,16 +64,25 @@ public class LoginAuthenticationFilter extends FormAuthenticationFilter {
     }
 
 
+    public ServletRequest getHttpServletRequest(ServletRequest request) {
+        if (request instanceof ShiroHttpServletRequest) {
+            return ((ShiroHttpServletRequest)request).getRequest();
+        }
+        return request;
+    }
+
     /**
      * 请求未认证时的处理方法, 一般情况下, 请求未认证跳转至登录页面的逻辑就只在此处执行.
      */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+        log.debug("onAccessDenied");
         // 注意此方法为父类方法, 并没有改动
         // 首先判断当前请求是否是登录请求 --> 默认判断请求的Url是否是登录的URL
         if (this.isLoginRequest(request, response)) {
             // 相当于是对请求方法进行限制 --> 默认判断当前方法是否是 HTTP 请求, 以及判断请求方法是否是POST方法
-            if (this.isLoginSubmission(request, response)) {
+            final ServletRequest httpServletRequest = getHttpServletRequest(request);
+            if (this.isLoginSubmission(httpServletRequest, response)) {
                 if (log.isTraceEnabled()) {
                     log.trace("Login submission detected.  Attempting to execute login.");
                 }
@@ -98,6 +110,7 @@ public class LoginAuthenticationFilter extends FormAuthenticationFilter {
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) {
+        log.debug("executeLogin");
         // 获取登录请求的用户名和密码
         UsernamePasswordToken token = (UsernamePasswordToken) createToken(request, response);
         if (token == null) {
@@ -127,6 +140,7 @@ public class LoginAuthenticationFilter extends FormAuthenticationFilter {
      */
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
+        log.debug("onLoginFailure");
         // 1. 记录登录错误次数 + 1
         final AccUser user = CpSessionUtils.getUser();
         user.setLoginErrorNum(Optional.of(user.getLoginErrorNum()).orElse(0) + 1);
@@ -142,6 +156,7 @@ public class LoginAuthenticationFilter extends FormAuthenticationFilter {
      */
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) {
+        log.debug("onLoginSuccess");
         try {
             // 1. 重置登录次数
             final AccUser user = CpSessionUtils.getUser();
@@ -159,12 +174,13 @@ public class LoginAuthenticationFilter extends FormAuthenticationFilter {
      * 额外进行验证
      */
     private IPostCode extraCheck(ServletRequest request) {
+        log.debug("extraCheck");
         // 获取用户对象, 用户对象在subject.login()调用 doGetAuthenticationInfo() 方法时被存在session里
         @NonNull final AccUser user = CpSessionUtils.getUser();
         // 1. 如果错误次数过多, 则需要验证码
         if (Optional.ofNullable(user.getLoginErrorNum()).orElse(0) >= GlobalConfig.getMaxLoginWithNoCaptchaCode()) {
             String checkCode = request.getParameter("captcha");
-            final IPostCode iPostCode = checkKaptchaCode((HttpServletRequest) request, checkCode, user);
+            final IPostCode iPostCode = CaptchaUtils.checkKaptchaCode((HttpServletRequest) request, checkCode, user);
             if (iPostCode.isNotSuccess()) {
                 return iPostCode;
             }
@@ -177,23 +193,5 @@ public class LoginAuthenticationFilter extends FormAuthenticationFilter {
         return ECommonPostCode.NO_EXCEPTION;
     }
 
-
-    /**
-     * 检查 Kaptcha 验证码
-     */
-    public static IPostCode checkKaptchaCode(HttpServletRequest request, String checkCode, AccUser user) {
-        String kaptchaValue = (String) request.getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
-        if (StringUtils.isBlank(kaptchaValue)) {
-            log.warn(String.format("User {%s} kaptcha code is invalid.", user.getName()));
-            return ELoginPostCode.VERIFICATION_CODE_INVALIDATION;
-        } else if (StringUtils.isBlank(checkCode)) {
-            log.warn(String.format("User {%s} code is blank.", user.getName()));
-            return ELoginPostCode.VERIFICATION_CODE_NOT_FOUND;
-        } else if (!kaptchaValue.equalsIgnoreCase(checkCode)) {
-            log.warn(String.format("User {%s} code doesn't match.", user.getName()));
-            return ELoginPostCode.VERIFICATION_CODE_ERROR;
-        }
-        return ECommonPostCode.NO_EXCEPTION;
-    }
 
 }

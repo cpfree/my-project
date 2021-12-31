@@ -5,7 +5,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 
 /**
  * <b>Description : </b> 项目启动类
@@ -18,7 +17,7 @@ import org.springframework.context.annotation.FilterType;
 @SpringBootApplication
 @MapperScan("cn.cpf.web.dal")
 @ComponentScan(
-        basePackages = {"cn.cpf.web.boot", "cn.cpf.web.service"})
+        basePackages = {"cn.cpf.web.boot.conf", "cn.cpf.web.boot.controller", "cn.cpf.web.service"})
 @Slf4j
 public class WebBootApplication {
 

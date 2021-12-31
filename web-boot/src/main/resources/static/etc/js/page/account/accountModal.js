@@ -26,8 +26,13 @@
 //   })
 
 let apiUrl = {
-   login: '/static/page/account/accountModal.html',
-   resetPassword: 'static/page/account/resetPassword.html'
+   loginPage: '/static/page/account/accountModal.html',
+   resetPasswordPage: 'static/page/account/resetPassword.html',
+   request: {
+      isExistPhone: 'noAccount/isExistPhone',
+      loginVerification: 'noAccount/loginVerification',
+      registerAccount: 'noAccount/registerAccount'
+   }
 }
 
 let loginValidPhone=(rule, value,callback)=>{
@@ -46,7 +51,7 @@ let registerValidPhone=(rule, value,callback)=>{
     }else  if (!isValidPhone(value)){
         callback(new Error('请输入正确的11位手机号码'))
     }else {
-        $.sendPostRequest('account/isExistPhone', {phone: value}, function (data, status) {
+        $.sendPostRequest(apiUrl.request.isExistPhone, {phone: value}, function (data, status) {
             callback();
         }, function (data, status) {
             callback(new Error(status.desc));
@@ -162,7 +167,7 @@ let accountModal = new Vue({
                     };
 
                     let _this = this;
-                    $.sendPostRequest('account/loginVerification', formParams, function (data) {
+                    $.sendPostRequest(apiUrl.request.loginVerification, formParams, function (data) {
                         console.log('登录成功');
                     },  function (data, status) {
                         if (data.needCaptcha) {
@@ -190,12 +195,12 @@ let accountModal = new Vue({
         },
         doRegister : function(){
             let _this = this;
-            $.sendPostRequest('account/registerAccount', this.registerForm, function (data) {
+            $.sendPostRequest(apiUrl.request.registerAccount, this.registerForm, function (data) {
                 _this.$alert('注册成功', {
                     confirmButtonText: '确定',
                     type: 'success',
                     callback: action => {
-                       window.location = apiUrl.login + '?process=2';
+                       window.location = apiUrl.loginPage + '?process=2';
                     }
                 });
             },  function (data, status) {
@@ -204,7 +209,7 @@ let accountModal = new Vue({
             });
         },
         toSetPwd() {
-            window.location = apiUrl.resetPassword;
+            window.location = apiUrl.resetPasswordPage;
         },
         changeCaptcha () {
             this.captchaUrl = "kaptcha?_=" + Math.random();
