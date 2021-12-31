@@ -26,12 +26,12 @@
 //   })
 
 let apiUrl = {
-   loginPage: '/static/page/account/accountModal.html',
+   loginPage: '/login',
    resetPasswordPage: 'static/page/account/resetPassword.html',
    request: {
-      isExistPhone: 'noAccount/isExistPhone',
-      loginVerification: 'noAccount/loginVerification',
-      registerAccount: 'noAccount/registerAccount'
+      isExistPhone: '/noAccount/isExistPhone',
+      loginVerification: '/login',
+      registerAccount: '/sign/up'
    }
 }
 
@@ -66,7 +66,6 @@ let validConfirmPwd=(rule, value, callback)=>{
         callback(new Error('两次密码输入不一致'));
     } else {
         callback();
-        // accountModal.$refs['registerForm'].validate(["pwd1", "pwd2"]);
     }
 };
 
@@ -86,10 +85,10 @@ let accountModal = new Vue({
     data: {
         activeName : 'login',
         loginFormRules : {
-            userName: [
+            username: [
                 { required: true, message: '请输入账户名', trigger: 'change' },
             ],
-            pwd: [
+            password: [
                 { required: true, message: '请输入密码', trigger: 'change' },
                 { min: 6, max: 20, message: '长度需在6至20位', trigger: 'blur' }
             ],
@@ -98,8 +97,8 @@ let accountModal = new Vue({
             ]
         },
         loginForm: {
-            userName : '',
-            pwd : '',
+            username : '',
+            password : '',
             captcha : ''
         },
         loginDialogVisible: false,
@@ -109,14 +108,14 @@ let accountModal = new Vue({
             disabled : false
         },
         registerForm : {
-            userName : '',
+            username : '',
             pwd1 : '',
             pwd2 : '',
             captcha : '',
             email : ''
         },
         registerFormRules : {
-            userName: [
+            username: [
                { required: true, message: '请输入账户名', trigger: 'change' },
                { min: 2, max: 20, message: '长度需在2至20位', trigger: 'blur' }
             ],
@@ -148,9 +147,9 @@ let accountModal = new Vue({
             this.$refs['loginForm'].validate((valid) => {
                 if (valid) {
                     let form = this.loginForm;
-                    let pwd = form.pwd;
+                    let password = form.password;
                     let md = forge.md.md5.create();
-                    md.update(pwd);
+                    md.update(password);
                     let passwordMD5 = md.digest().toHex();
                     let nullMd = forge.md.md5.create();
                     nullMd = nullMd.update("");
@@ -160,7 +159,7 @@ let accountModal = new Vue({
                         return ;
                     }
                     let formParams = {
-                        userName : form.userName,
+                        username : form.username,
                         password : passwordMD5,
                         captcha : form.captcha,
                         rememberMe : false
@@ -195,7 +194,25 @@ let accountModal = new Vue({
         },
         doRegister : function(){
             let _this = this;
-            $.sendPostRequest(apiUrl.request.registerAccount, this.registerForm, function (data) {
+            let form = this.registerForm;
+            let password = form.pwd1;
+            let md = forge.md.md5.create();
+            md.update(password);
+            let passwordMD5 = md.digest().toHex();
+            let nullMd = forge.md.md5.create();
+            nullMd = nullMd.update("");
+            let nullPassword = nullMd.digest().toHex();
+            if (passwordMD5 === nullPassword) {
+                layer.msg("密码为空");
+                return ;
+            }
+            let formParams = {
+                username : form.username,
+                password : passwordMD5,
+                captcha : form.captcha,
+                email : form.email
+            };
+            $.sendPostRequest(apiUrl.request.registerAccount, formParams, function (data) {
                 _this.$alert('注册成功', {
                     confirmButtonText: '确定',
                     type: 'success',

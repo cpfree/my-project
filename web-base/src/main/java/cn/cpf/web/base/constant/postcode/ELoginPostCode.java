@@ -21,7 +21,6 @@ public enum ELoginPostCode implements IPostCode {
     USER_INSTITUTION_IS_NOT_FOUND("1413", "未发现用户所属机构"),
     USER_INSTITUTION_IS_NOT_UNIQUE("1414", "用户机构不唯一"),
     INSTITUTIONAL_ABNORMAL_STATE("1415", "机构非正常状态"),
-    doublePwdIsNotEquals("1416", "两个密码不一致"),
 
     // 开发大厅
     youAccountIsWaitingInstManagerVerify("1417", "当前手机号已注册, 现在在审核中, 请等待机构管理员审核!");

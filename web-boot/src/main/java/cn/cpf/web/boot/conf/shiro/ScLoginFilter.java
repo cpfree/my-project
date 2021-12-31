@@ -81,14 +81,15 @@ public class ScLoginFilter extends FormAuthenticationFilter {
         // 首先判断当前请求是否是登录请求 --> 默认判断请求的Url是否是登录的URL
         if (this.isLoginRequest(request, response)) {
             // 相当于是对请求方法进行限制 --> 默认判断当前方法是否是 HTTP 请求, 以及判断请求方法是否是POST方法
-            final ServletRequest httpServletRequest = getHttpServletRequest(request);
-            if (this.isLoginSubmission(httpServletRequest, response)) {
+            if (this.isLoginSubmission(request, response)) {
+                // 到此, 应是访问的 `/login`, 应该是 POST 方法, 是已经打开了 `/login` 页面, 执行了登录请求.
                 if (log.isTraceEnabled()) {
                     log.trace("Login submission detected.  Attempting to execute login.");
                 }
                 // 执行登录方法
                 return this.executeLogin(request, response);
             } else {
+                // 到此, 应是访问的 `/login`, 但只是 GET 方法, 应该是在请求打开 login 页面
                 if (log.isTraceEnabled()) {
                     log.trace("Login page view.");
                 }
@@ -117,6 +118,7 @@ public class ScLoginFilter extends FormAuthenticationFilter {
             String msg = "请求用户名密码获取错误";
             throw new IllegalStateException(msg);
         }
+        log.info("创建 UsernamePasswordToken {} : " + token, token.hashCode());
         Subject subject = this.getSubject(request, response);
         try {
             // 账户密码验证

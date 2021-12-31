@@ -33,7 +33,12 @@ public class PageTree {
         /**
          * 登录页面
          **/
-        public static final String LOGIN = "/static/page/base/login.html";
+        public static final String LOGIN = "/static/page/base/sign.html";
+
+        /**
+         * 登录页面
+         **/
+        public static final String P503 = "/static/error/503.html";
 
     }
 

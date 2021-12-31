@@ -26,7 +26,8 @@ public class FieldDictUtils {
         }
         Map<String, Map<String, DictItemBean>> collect = dictItemList.stream().collect(Collectors.groupingBy(SysDictItemKey::getType, Collectors.toMap(SysDictItemKey::getName, FieldDictUtils::convertItemFromSysItem)));
 
-        return collect.entrySet().stream().map(it -> new DictTypeBean(it.getKey(), it.getValue())).collect(Collectors.toList());
+//        return collect.entrySet().stream().map(it -> new DictTypeBean(it.getKey(), it.getValue())).collect(Collectors.toList());
+        return null;
     }
 
     public static Map<String, DictTypeBean> convertTypeMapFromItem(List<SysDictItem> dictItemList) {
@@ -35,7 +36,8 @@ public class FieldDictUtils {
         }
         Map<String, Map<String, DictItemBean>> collect = dictItemList.stream().collect(Collectors.groupingBy(SysDictItemKey::getType, Collectors.toMap(SysDictItemKey::getName, FieldDictUtils::convertItemFromSysItem)));
 
-        return collect.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, it -> new DictTypeBean(it.getKey(), it.getValue())));
+//        return collect.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, it -> new DictTypeBean(it.getKey(), it.getValue())));
+        return null;
     }
 
     public static DictTypeBean convertTypeFromItem(List<SysDictItem> dictItemList) {
@@ -44,7 +46,8 @@ public class FieldDictUtils {
         }
         String type = dictItemList.get(0).getType();
         Map<String, DictItemBean> collect = dictItemList.stream().collect(Collectors.toMap(SysDictItemKey::getName, FieldDictUtils::convertItemFromSysItem));
-        return new DictTypeBean(type, collect);
+//        return new DictTypeBean(type, collect);
+        return null;
     }
 
     public static DictItemBean convertItemFromSysItem(SysDictItem sysDictItem) {

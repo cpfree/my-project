@@ -130,15 +130,15 @@
                   <el-tab-pane label="账号登陆" name="login">
                      <div style="background-color: #262c38; padding: 20px">
                         <el-form label-width="0" :model="loginForm" :rules="loginFormRules" ref="loginForm">
-                           <el-form-item prop="userName">
-                              <el-input placeholder="请输入名称" v-model="loginForm.userName" maxlength="13">
+                           <el-form-item prop="username">
+                              <el-input placeholder="请输入用户名或邮箱账户" v-model="loginForm.username" maxlength="13">
                                  <template slot="prepend">
                                     <div class="fa fa-fw fa-2x fa-user-o"></div>
                                  </template>
                               </el-input>
                            </el-form-item>
-                           <el-form-item prop="pwd">
-                              <el-input placeholder="请输入密码" v-model="loginForm.pwd" type="password" maxlength="20"
+                           <el-form-item prop="password">
+                              <el-input placeholder="请输入密码" v-model="loginForm.password" type="password" maxlength="20"
                                  show-password>
                                  <template slot="prepend">
                                     <div class="fa fa-fw fa-2x fa-lock"></div>
@@ -169,8 +169,8 @@
                      <div style="background-color: #262c38; padding: 20px">
                         <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm"
                            hide-required-asterisk>
-                           <el-form-item prop="userName">
-                              <el-input placeholder="请输入名称" v-model="registerForm.userName" maxlength="20">
+                           <el-form-item prop="username">
+                              <el-input placeholder="请输入名称" v-model="registerForm.username" maxlength="20">
                                  <template slot="prepend">
                                     <div class="fa fa-fw fa-2x fa-user-o"></div>
                                  </template>
@@ -221,7 +221,7 @@
       </el-row>
    </div>
 
-   <script type="text/javascript" src="/static/etc/js/page/account/accountModal.js"></script>
+   <script type="text/javascript" src="/static/etc/js/page/base/sign.js"></script>
 
 </body>
 

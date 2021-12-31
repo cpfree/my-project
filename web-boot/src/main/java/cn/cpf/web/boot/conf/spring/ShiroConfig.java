@@ -75,11 +75,11 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/static/**", "anon");
         chainDefinition.addPathDefinition("/kaptcha", "anon");
         // 注册,验证账号,找回密码等
-//        chainDefinition.addPathDefinition("/noacc/**", "anon");
+        chainDefinition.addPathDefinition("/sign/**", "anon");
         // 匹配 filterMap 里面的过滤器类
         chainDefinition.addPathDefinition("/logout", "scLogout");
         // 可以匿名访问
-        chainDefinition.addPathDefinition("/account/loginVerification", "scLogin");
+        chainDefinition.addPathDefinition("/login", "scLogin");
         chainDefinition.addPathDefinition("/validate", "scLogin");
 
         // 要求认证, 且需要 admin 的角色

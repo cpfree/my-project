@@ -40,6 +40,10 @@ public class LogAspectConfiguration {
      */
     @Around("execution(* cn.cpf.web.boot.controller.*.*(..)) ")
     public Object handleControllerMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        final boolean debugEnabled = log.isDebugEnabled();
+        if (!debugEnabled) {
+            return proceedingJoinPoint.proceed();
+        }
 
         //原始的HTTP请求和响应的信息
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -50,7 +54,6 @@ public class LogAspectConfiguration {
         MethodSignature methodSignature = (MethodSignature) signature;
         //获取当前执行的方法
         Method targetMethod = methodSignature.getMethod();
-
         //获取参数
         Object[] objects = proceedingJoinPoint.getArgs();
         //获取参数
@@ -63,18 +66,15 @@ public class LogAspectConfiguration {
             arguments[i] = objects[i];
         }
 
+        final String name = Thread.currentThread().getName();
+        log.debug("\n [{} call start] ==> {} : {}" +
+                        "\n[DEBUG] Controller: {} ==> {}" +
+                        "\n[DEBUG] Params    : {}",
+                name, request.getRequestURL(), targetMethod.getDeclaringClass().getName()
+                , targetMethod.getName(), request.getMethod(), JsonUtils.toJson(arguments));
         //获取返回对象
         Object object = proceedingJoinPoint.proceed();
-
-        log.debug("\n-------------------------------------------------------------" +
-                        "\n[DEBUG] URL       : {}" +
-                        "\n[DEBUG] Controller: {} ==> {}" +
-                        "\n[DEBUG] Method    : {}" +
-                        "\n[DEBUG] Params    : {}" +
-                        "\n[DEBUG] Return    : {}" +
-                        "\n-------------------------------------------------------------", request.getRequestURL(),
-                targetMethod.getDeclaringClass().getName(), targetMethod.getName(), request.getMethod(), JsonUtils.toJson(arguments), object);
-
+        log.debug("\n [{} call end] ==> {}", name, object);
         return object;
     }
 

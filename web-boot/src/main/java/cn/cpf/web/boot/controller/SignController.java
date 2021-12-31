@@ -38,14 +38,14 @@ import java.util.UUID;
  * @since 1.0
  **/
 @Log4j2
-@RequestMapping("/noacc")
+@RequestMapping("/sign")
 @Controller
-public class NoAccountController {
+public class SignController {
 
     private final IAccUser iAccUser;
 
     @Autowired
-    public NoAccountController(IAccUser iAccUser) {
+    public SignController(IAccUser iAccUser) {
         this.iAccUser = iAccUser;
     }
 
@@ -64,33 +64,30 @@ public class NoAccountController {
 
     /**
      * 注册账号
+     *
      * @param request    请求
      * @param userName 用户名 (必填)
-     * @param pwd1 密码1
-     * @param pwd2 确认密码
+     * @param password 密码
      * @param captcha 验证码
      * @param email 必填 (必填)
      */
-    @PostMapping("/registerAccount")
+    @PostMapping("/up")
     @ResponseBody
-    public Map<String, Object> registerAccount(HttpServletRequest request, @RequestParam("userName") String userName,
-                                               @RequestParam("pwd1") String pwd1, @RequestParam("pwd2") String pwd2,
+    public Map<String, Object> registerAccount(HttpServletRequest request, @RequestParam("username") String userName,
+                                               @RequestParam("password") String password,
                                                @RequestParam("captcha") String captcha, @RequestParam("email") String email) {
-        // check
         // 检查图片验证码
         IPostCode postCode = CaptchaUtils.checkKaptchaCode(request, captcha, userName);
         if (postCode.isNotSuccess()) {
             return PostBean.genePostMap(postCode);
-        }
-        // 验证两次密码是否相同
-        if (pwd1 == null || !pwd1.equals(pwd2)) {
-            return PostBean.genePostMap(ELoginPostCode.doublePwdIsNotEquals);
         }
         // 检查"用户名"是否已经存在
         final AccUser accUser = iAccUser.findByUserName(userName);
         if (accUser != null) {
             return PostBean.genePostMap(ELoginPostCode.ACCOUNT_IS_EXIST);
         }
+        String salt = UUID.randomUUID().toString().substring(24);
+
         // 执行注册
         Date now = new Date();
         String userGuid = UUID.randomUUID().toString();
@@ -109,7 +106,8 @@ public class NoAccountController {
         user.setProvince("");
         user.setCity("");
         user.setAddress("");
-        user.setPassword(AccountUtil.passwordEncode(pwd1));
+
+        user.setPassword(AccountUtil.passwordEncode(password, salt));
         user.setLoginErrorNum(0);
         user.setLockType("");
         user.setAddTime(now);
@@ -134,7 +132,7 @@ public class NoAccountController {
     /**
      * 登陆时如果验证不成功, 则返回 json 数据
      */
-    @PostMapping("/loginVerification")
+    @PostMapping("/in")
     @ResponseBody
     public Map<String, Object> loginVerification(HttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("password") String password,
                                                  @RequestParam("rememberMe") boolean rememberMe) throws InvocationTargetException, IllegalAccessException {

@@ -1,7 +1,10 @@
 package cn.cpf.web.boot.util;
 
 import cn.cpf.web.base.model.entity.AccUser;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.apache.shiro.SecurityUtils;
 
 /**
  * <b>Description : </b>
@@ -9,6 +12,7 @@ import lombok.NonNull;
  * @author CPF
  * @date 2019/10/31 16:24
  **/
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CpSessionUtils {
 
     /**
@@ -28,15 +32,14 @@ public class CpSessionUtils {
      * 设置用户对象
      */
     public static void setUser(@NonNull AccUser accUser) {
-//        SecurityUtils.getSubject().getSession().setAttribute(USER_INFO_KEY, accUser);
+        SecurityUtils.getSubject().getSession().setAttribute(USER_INFO_KEY, accUser);
     }
 
     /**
      * 获取用户对象
      */
     public static AccUser getUser() {
-//        return (AccUser) SecurityUtils.getSubject().getSession().getAttribute(USER_INFO_KEY);
-        return null;
+        return (AccUser) SecurityUtils.getSubject().getSession().getAttribute(USER_INFO_KEY);
     }
 
     /**
@@ -46,8 +49,8 @@ public class CpSessionUtils {
         return getUser().getGuid();
     }
 
-//    public static boolean hasRole(String roles) {
-//        return SecurityUtils.getSubject().hasRole(roles);
-//    }
+    public static boolean hasRole(String roles) {
+        return SecurityUtils.getSubject().hasRole(roles);
+    }
 
 }

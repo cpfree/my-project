@@ -44,6 +44,16 @@ public class BootController {
         return PageTree.Base.INDEX;
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return PageTree.Base.LOGIN;
+    }
+
+    @GetMapping("/503")
+    public String p503() {
+        return PageTree.Base.P503;
+    }
+
     @RequestMapping("/kaptcha")
     public void getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
