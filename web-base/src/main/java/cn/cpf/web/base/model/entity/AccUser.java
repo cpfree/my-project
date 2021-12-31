@@ -1,8 +1,9 @@
 package cn.cpf.web.base.model.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AccUser {
+public class AccUser implements Serializable {
     private String guid;
 
     private String name;
@@ -33,6 +34,8 @@ public class AccUser {
 
     private String password;
 
+    private String salt;
+
     private Integer loginErrorNum;
 
     private String lockType;
@@ -44,6 +47,8 @@ public class AccUser {
     private String remark;
 
     private String state;
+
+    private static final long serialVersionUID = 1L;
 
     public String getGuid() {
         return guid;
@@ -165,6 +170,14 @@ public class AccUser {
         this.password = password == null ? null : password.trim();
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
+
     public Integer getLoginErrorNum() {
         return loginErrorNum;
     }
@@ -211,5 +224,38 @@ public class AccUser {
 
     public void setState(String state) {
         this.state = state == null ? null : state.trim();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", guid=").append(guid);
+        sb.append(", name=").append(name);
+        sb.append(", nickname=").append(nickname);
+        sb.append(", phone=").append(phone);
+        sb.append(", email=").append(email);
+        sb.append(", qqNo=").append(qqNo);
+        sb.append(", avatar=").append(avatar);
+        sb.append(", avatarPath=").append(avatarPath);
+        sb.append(", gender=").append(gender);
+        sb.append(", birthday=").append(birthday);
+        sb.append(", job=").append(job);
+        sb.append(", province=").append(province);
+        sb.append(", city=").append(city);
+        sb.append(", address=").append(address);
+        sb.append(", password=").append(password);
+        sb.append(", salt=").append(salt);
+        sb.append(", loginErrorNum=").append(loginErrorNum);
+        sb.append(", lockType=").append(lockType);
+        sb.append(", addTime=").append(addTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", remark=").append(remark);
+        sb.append(", state=").append(state);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

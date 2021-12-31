@@ -4,9 +4,9 @@
 <configuration>
     <properties>
         <property name="driver" value="com.mysql.cj.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/my-project?serverTimezone=Hongkong&amp;allowMultiQueries=true" />
-        <property name="username" value="root" />
-        <property name="password" value="itysit" />
+        <property name="url" value="jdbc:mysql://IP:PORT/my-project?serverTimezone=Hongkong&amp;allowMultiQueries=true" />
+        <property name="username" value="XXXX" />
+        <property name="password" value="XXXXXX" />
     </properties>
 
     <!-- 环境，可以配置多个，default：指定采用哪个环境 -->

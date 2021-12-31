@@ -16,7 +16,8 @@
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="salt" jdbcType="CHAR" property="salt" />
     <result column="login_error_num" jdbcType="INTEGER" property="loginErrorNum" />
     <result column="lock_type" jdbcType="CHAR" property="lockType" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
@@ -84,8 +85,8 @@
   </sql>
   <sql id="Base_Column_List">
     guid, name, nickname, phone, email, qq_no, avatar, avatar_path, gender, birthday, 
-    job, province, city, address, password, login_error_num, lock_type, add_time, update_time, 
-    remark, state
+    job, province, city, address, password, salt, login_error_num, lock_type, add_time, 
+    update_time, remark, state
   </sql>
   <select id="selectByExample" parameterType="cn.cpf.web.base.model.example.AccUserExample" resultMap="BaseResultMap">
     select
@@ -123,17 +124,17 @@
       avatar, avatar_path, gender, 
       birthday, job, province, 
       city, address, password, 
-      login_error_num, lock_type, add_time, 
-      update_time, remark, state
-      )
+      salt, login_error_num, lock_type, 
+      add_time, update_time, remark, 
+      state)
     values (#{guid,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{qqNo,jdbcType=VARCHAR}, 
       #{avatar,jdbcType=VARCHAR}, #{avatarPath,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
       #{birthday,jdbcType=DATE}, #{job,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{loginErrorNum,jdbcType=INTEGER}, #{lockType,jdbcType=CHAR}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}
-      )
+      #{city,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, 
+      #{salt,jdbcType=CHAR}, #{loginErrorNum,jdbcType=INTEGER}, #{lockType,jdbcType=CHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{state,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.cpf.web.base.model.entity.AccUser">
     insert into acc_user
@@ -182,6 +183,9 @@
       </if>
       <if test="password != null">
         password,
+      </if>
+      <if test="salt != null">
+        salt,
       </if>
       <if test="loginErrorNum != null">
         login_error_num,
@@ -246,7 +250,10 @@
         #{address,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=CHAR},
       </if>
       <if test="loginErrorNum != null">
         #{loginErrorNum,jdbcType=INTEGER},
@@ -320,7 +327,10 @@
         address = #{record.address,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
-        password = #{record.password,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=CHAR},
+      </if>
+      <if test="record.salt != null">
+        salt = #{record.salt,jdbcType=CHAR},
       </if>
       <if test="record.loginErrorNum != null">
         login_error_num = #{record.loginErrorNum,jdbcType=INTEGER},
@@ -361,7 +371,8 @@
       province = #{record.province,jdbcType=VARCHAR},
       city = #{record.city,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=CHAR},
+      salt = #{record.salt,jdbcType=CHAR},
       login_error_num = #{record.loginErrorNum,jdbcType=INTEGER},
       lock_type = #{record.lockType,jdbcType=CHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -415,7 +426,10 @@
         address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+        password = #{password,jdbcType=CHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=CHAR},
       </if>
       <if test="loginErrorNum != null">
         login_error_num = #{loginErrorNum,jdbcType=INTEGER},
@@ -453,7 +467,8 @@
       province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      salt = #{salt,jdbcType=CHAR},
       login_error_num = #{loginErrorNum,jdbcType=INTEGER},
       lock_type = #{lockType,jdbcType=CHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
