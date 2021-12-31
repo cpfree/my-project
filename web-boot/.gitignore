@@ -32,3 +32,4 @@ build/
 /src/main/resources/application-backup.yml
 /src/main/resources/application-echo.properties
 /src/main/resources/config/application.yml
+/src/test/java/cn/cpf/se/

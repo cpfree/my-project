@@ -12,7 +12,10 @@
         <Console name="console_out_appender" target="SYSTEM_OUT">
             <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
             <!-- 输出日志的格式 -->
-            <PatternLayout pattern="[%p] [web-boot] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n" />
+<!--            <PatternLayout pattern="[%p] %d{HH:mm:ss} (%F:%L) %m%n" />-->
+            <!-- 实现可以在 IDEA 里面 点击 跳转至 行号 -->
+<!--            <PatternLayout pattern="[%p] %d{HH:mm:ss} %blue(%logger{36}\(%class{0}.java:%L\)) %m%n" />-->
+            <PatternLayout pattern="[%p] %d{HH:mm:ss} %blue(%logger{50}\(%class{0}.java:%L\)) %m%n" />
         </Console>
 
         <RollingFile name="FILE_DEBUG" fileName="${log.dir}/debug-${APP_Name}.log"

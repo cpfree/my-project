@@ -7,7 +7,6 @@ import cn.cpf.web.base.model.entity.SysDictItem;
 import cn.cpf.web.base.model.example.SysDictItemExample;
 import cn.cpf.web.service.base.api.ISysDictItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
  * @author CPF
  * @date 2019/12/5 16:00
  **/
-@Controller
 @RequestMapping("/info")
 @RestController
 public class InformationController {

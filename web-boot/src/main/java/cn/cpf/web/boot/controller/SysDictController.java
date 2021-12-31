@@ -37,7 +37,6 @@ import java.util.Map;
  * @author CPF
  * @date 2019/12/03 08:30
  **/
-@Controller
 @RequestMapping("/sys/dict")
 @RestController
 public class SysDictController {

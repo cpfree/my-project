@@ -17,7 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @MapperScan("cn.cpf.web.dal")
 @ComponentScan(
-        basePackages = {"cn.cpf.web.boot.conf", "cn.cpf.web.boot.controller", "cn.cpf.web.service"})
+        basePackages = {"cn.cpf.web.boot", "cn.cpf.web.service"})
 @Slf4j
 public class WebBootApplication {
 

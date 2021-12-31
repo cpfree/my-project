@@ -6,6 +6,7 @@ import cn.cpf.web.boot.conf.shiro.ScLogoutFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -30,6 +31,14 @@ import org.springframework.context.annotation.Configuration;
 public class ShiroConfig {
 
     /**
+     * @return 自定义Realm
+     */
+    @Bean
+    public Realm realm() {
+        return new ScAuthorizingRealm();
+    }
+
+    /**
      * 若没有 @Bean("shiroFilterFactoryBean") 则当前 Bean 生效
      * 配置安全管理器
      */
@@ -37,7 +46,7 @@ public class ShiroConfig {
     public DefaultWebSecurityManager securityManager(){
         log.info("创建 securityManager ");
         final DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
-        manager.setRealm(new ScAuthorizingRealm());
+        manager.setRealm(realm());
         manager.setCacheManager(cacheManager());
         return manager;
     }
@@ -66,7 +75,7 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/static/**", "anon");
         chainDefinition.addPathDefinition("/kaptcha", "anon");
         // 注册,验证账号,找回密码等
-        chainDefinition.addPathDefinition("/noAccount/**", "anon");
+//        chainDefinition.addPathDefinition("/noacc/**", "anon");
         // 匹配 filterMap 里面的过滤器类
         chainDefinition.addPathDefinition("/logout", "scLogout");
         // 可以匿名访问
@@ -82,6 +91,8 @@ public class ShiroConfig {
 
         // 要求用户权限 尽量不要设置：("/**", "authc"): 这种如果页面访问不到,则会导致返回登陆页面,而不是跳转到404页面.
         chainDefinition.addPathDefinition("/authc/**", "authc");
+
+        chainDefinition.addPathDefinition("/**", "anon");
         return chainDefinition;
     }
 
