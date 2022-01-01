@@ -16,6 +16,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 /**
  * <b>Description : </b> shiro 的 Realm 实现
  * <p>
@@ -34,6 +36,14 @@ public class ScAuthorizingRealm extends AuthorizingRealm {
     private IAccessLogic iAccessLogic;
 
     /**
+     * 自定义密码匹配器
+     */
+    @PostConstruct
+    public void initCredentialsMatcher() {
+        setCredentialsMatcher(new MySaltCredentialsMatcher());
+    }
+
+    /**
      * doGetAuthorizationInfo方法是在我们调用SecurityUtils.getSubject().isPermitted（）这个方法时会调用
      * 在某个方法上加上@RequiresPermissions这个，那么我们访问这个方法的时候，
      * 就会自动调用SecurityUtils.getSubject().isPermitted（），从而区调用doGetAuthorizationInfo 匹配
@@ -45,7 +55,6 @@ public class ScAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        log.debug("doGetAuthorizationInfo");
         String name = (String) principals.getPrimaryPrincipal();
         // TODO 优化, 直接通过用户名获取
         @NonNull final AccUser user = iAccUser.findByUserName(name);
@@ -59,17 +68,14 @@ public class ScAuthorizingRealm extends AuthorizingRealm {
     }
 
     /**
-     * 在用户登录的时候调用的也就是执行SecurityUtils.getSubject().login（）的时候调用；(即:登录验证)
+     * 在用户登录的时候调用的也就是执行 SecurityUtils.getSubject().login（）的时候调用；(即:登录验证)
      *
-     * // TODO 仅仅获取信息, 不验证
+     * 该步骤用于获取数据库中存放的用户数据信息, 之后封装为 AuthenticationInfo, 真正的验证密码操作是在 CredentialsMatcher 里验证的.
      *
-     * @param authenticationToken
-     * @return
-     * @throws AuthenticationException
+     * @param authenticationToken 前台传入的账户请求数据封装而成的 Token
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        log.debug("doGetAuthenticationInfo");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 
         final String username = token.getUsername();
@@ -88,7 +94,7 @@ public class ScAuthorizingRealm extends AuthorizingRealm {
         if (user != null) {
             // 存储 session
             CpSessionUtils.setUser(user);
-            return new SimpleAuthenticationInfo(user.getName(), user.getPassword(), getName());
+            return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
         }
         return null;
     }

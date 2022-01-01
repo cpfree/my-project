@@ -8,7 +8,7 @@ import cn.cpf.web.base.lang.base.PostBean;
 import cn.cpf.web.base.model.entity.AccUser;
 import cn.cpf.web.base.util.exception.PostException;
 import cn.cpf.web.base.util.exception.ServerExecuteErrorException;
-import cn.cpf.web.boot.util.AccountUtil;
+import cn.cpf.web.boot.conf.shiro.MySaltCredentialsMatcher;
 import cn.cpf.web.boot.util.CaptchaUtils;
 import cn.cpf.web.boot.util.CpSessionUtils;
 import cn.cpf.web.service.base.api.IAccUser;
@@ -86,8 +86,7 @@ public class SignController {
         if (accUser != null) {
             return PostBean.genePostMap(ELoginPostCode.ACCOUNT_IS_EXIST);
         }
-        String salt = UUID.randomUUID().toString().substring(24);
-
+        final String salt = UUID.randomUUID().toString().substring(28);
         // 执行注册
         Date now = new Date();
         String userGuid = UUID.randomUUID().toString();
@@ -106,8 +105,8 @@ public class SignController {
         user.setProvince("");
         user.setCity("");
         user.setAddress("");
-
-        user.setPassword(AccountUtil.passwordEncode(password, salt));
+        user.setSalt(salt);
+        user.setPassword(MySaltCredentialsMatcher.passwordEncode(password, salt));
         user.setLoginErrorNum(0);
         user.setLockType("");
         user.setAddTime(now);

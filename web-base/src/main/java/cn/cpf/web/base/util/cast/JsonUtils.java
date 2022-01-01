@@ -1,7 +1,7 @@
 package cn.cpf.web.base.util.cast;
 
 import cn.cpf.web.base.lang.base.PostDto;
-import cn.cpf.web.base.util.exception.PostException;
+import cn.cpf.web.base.util.exception.PostMessageException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,7 +40,7 @@ public class JsonUtils {
             return convertJson2Object(json, clazz);
         } catch (Exception e) {
             log.error(throwMsg, e);
-            throw new PostException(throwMsg);
+            throw new PostMessageException(throwMsg);
         }
     }
 
@@ -52,7 +52,7 @@ public class JsonUtils {
         } catch (IOException e) {
             String throwMsg = "convertJsonToPostDto 转换异常!, json : " + json + ", beanClass : " + beanClass.getName();
             log.error(throwMsg, e);
-            throw new PostException("PostDto转换异常");
+            throw new PostMessageException("PostDto转换异常");
         }
         return postDto;
     }
@@ -69,7 +69,7 @@ public class JsonUtils {
             return convertObject2Json(obj);
         } catch (Exception e) {
             log.error("convertObject2Json 异常", e);
-            throw new PostException(throwMsg);
+            throw new PostMessageException(throwMsg);
         }
     }
 

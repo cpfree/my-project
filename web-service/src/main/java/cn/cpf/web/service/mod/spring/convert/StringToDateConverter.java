@@ -1,6 +1,6 @@
 package cn.cpf.web.service.mod.spring.convert;
 
-import cn.cpf.web.base.lang.exception.PostMessageException;
+import cn.cpf.web.base.util.exception.PostMessageException;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.core.convert.converter.Converter;

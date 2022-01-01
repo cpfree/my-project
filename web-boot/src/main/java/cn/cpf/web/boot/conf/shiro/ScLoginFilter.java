@@ -1,21 +1,22 @@
 package cn.cpf.web.boot.conf.shiro;
 
 import cn.cpf.web.base.constant.dic.DicCommon;
-import cn.cpf.web.base.constant.postcode.ECommonPostCode;
 import cn.cpf.web.base.constant.postcode.ELoginPostCode;
 import cn.cpf.web.base.lang.base.IPostCode;
+import cn.cpf.web.base.lang.base.PostBean;
 import cn.cpf.web.base.model.entity.AccUser;
+import cn.cpf.web.base.util.cast.JsonUtils;
+import cn.cpf.web.base.util.exception.PostException;
 import cn.cpf.web.boot.conf.GlobalConfig;
+import cn.cpf.web.boot.constant.PostKeyConst;
 import cn.cpf.web.boot.util.CaptchaUtils;
+import cn.cpf.web.boot.util.CpRequestUtils;
 import cn.cpf.web.boot.util.CpSessionUtils;
+import cn.cpf.web.boot.util.ScResponseUtils;
 import cn.cpf.web.service.base.api.IAccUser;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
@@ -25,6 +26,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -44,14 +47,13 @@ public class ScLoginFilter extends FormAuthenticationFilter {
 
     /**
      * 一般被 preHandler(在拦截器链执行之前执行) 调用
-     *
+     * <p>
      * 请求首先进入此方法, 判断当前请求是否已认证, 如果没有认证
      *
      * @return 如果返回true则继续拦截器链；否则中断后续的拦截器链的执行直接返回；进行预处理（如基于表单的身份验证、授权）
      */
     @Override
     public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
-        log.debug("onPreHandle");
         // 判断当前请求是否已被认证 --> 1. 判断请求权限是否已验证 或者 当前请求不是登录请求, 2. 检查参数是否合法
         boolean isAllowed = isAccessAllowed(request, response, mappedValue);
         // 如果当前请求被允许, 同时是登录请求, 则直接跳转至登录成功页面
@@ -63,20 +65,11 @@ public class ScLoginFilter extends FormAuthenticationFilter {
         return isAllowed || onAccessDenied(request, response, mappedValue);
     }
 
-
-    public ServletRequest getHttpServletRequest(ServletRequest request) {
-        if (request instanceof ShiroHttpServletRequest) {
-            return ((ShiroHttpServletRequest)request).getRequest();
-        }
-        return request;
-    }
-
     /**
      * 请求未认证时的处理方法, 一般情况下, 请求未认证跳转至登录页面的逻辑就只在此处执行.
      */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        log.debug("onAccessDenied");
         // 注意此方法为父类方法, 并没有改动
         // 首先判断当前请求是否是登录请求 --> 默认判断请求的Url是否是登录的URL
         if (this.isLoginRequest(request, response)) {
@@ -86,8 +79,26 @@ public class ScLoginFilter extends FormAuthenticationFilter {
                 if (log.isTraceEnabled()) {
                     log.trace("Login submission detected.  Attempting to execute login.");
                 }
-                // 执行登录方法
-                return this.executeLogin(request, response);
+                final PostBean postBean = new PostBean();
+                try {
+                    // 执行登录方法
+                    return this.executeLogin(request, response);
+                } catch (PostException e) {
+                    postBean.setReturnCode(e.getPostCode());
+                    // 若是 ajax 请求, 则直接返回 json, 不再走过滤器
+                    postBean.put(PostKeyConst.NEED_CAPTCHA, true);
+                } catch (AuthenticationException e) {
+                    postBean.setReturnCode(ELoginPostCode.LOGIN_ERROR);
+                    // 若是 ajax 请求, 则直接返回 json, 不再走过滤器
+                    postBean.put(PostKeyConst.NEED_CAPTCHA, true);
+                    postBean.put("msg", e.getMessage());
+                } finally {
+                    final Map<String, Object> objectMap = postBean.toResultMap();
+                    ScResponseUtils.writeApplicationJson(response, JsonUtils.toJson(objectMap));
+                }
+                // 因为 shiro 默认登录成功之后, 将页面重定向至 index 页面, 而若请求是 ajax 的话, 则前台无法进行重定向,
+                // 因此这里返回 false, 不再走接下来的 Filter 和 Controller, 而是直接返回 json 数据给前台.
+                return false;
             } else {
                 // 到此, 应是访问的 `/login`, 但只是 GET 方法, 应该是在请求打开 login 页面
                 if (log.isTraceEnabled()) {
@@ -106,94 +117,111 @@ public class ScLoginFilter extends FormAuthenticationFilter {
         }
     }
 
+
     /**
      * 执行登录方法
+     * <p>
+     * // TODO 防止同一IP, 同一电脑, 多次执行登录请求
      */
     @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
-        log.debug("executeLogin");
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws IOException {
         // 获取登录请求的用户名和密码
         UsernamePasswordToken token = (UsernamePasswordToken) createToken(request, response);
         if (token == null) {
-            String msg = "请求用户名密码获取错误";
-            throw new IllegalStateException(msg);
+            throw new PostException(ELoginPostCode.LOGIN_REQUEST_ERROR);
         }
         log.info("创建 UsernamePasswordToken {} : " + token, token.hashCode());
+        /*
+         *  有3种情况, 1. 初次登录并不需要 captcha, 2. 同一IP尝试多次登录, 导致需要 captcha, 3. 用户登录失败多次导致需要 captcha
+         */
+        IPostCode captchaCheck = CaptchaUtils.checkKaptchaCode((HttpServletRequest) request, token.getUsername());
+        // 若 请求数据 和 session 里面均有验证码, 但是不匹配, 则直接返回错误
+        if (captchaCheck == ELoginPostCode.VERIFICATION_CODE_NOT_MATCH) {
+            throw new PostException(captchaCheck);
+        }
+
         Subject subject = this.getSubject(request, response);
         try {
-            // 账户密码验证
+            // 账户密码验证, 自定义的 realm 通过 token 获取数据库中的用户数据, 并使用 realm 中的匹配器匹配密码
             subject.login(token);
-            // 进行额外的验证
-            final IPostCode iPostCode = extraCheck(request);
-            // 如果额外验证不成功, 则抛出异常
-            if (iPostCode.isNotSuccess()) {
-                // 向前台返回数据
-                request.setAttribute("postCode", iPostCode);
-                throw new AuthenticationException(iPostCode.toJsonString());
+
+            /* 到此, 则证明 用户密码匹配成功, 接下来进行额外的验证 */
+            // 用户对象在subject.login()调用 doGetAuthenticationInfo() 方法时被存在session里
+            final AccUser user = CpSessionUtils.getUser();
+            // 1. 如果用户登录错误次数过多, 则需要验证码, 若 captcha 验证不通过, 则直接返回
+            if (Optional.ofNullable(user.getLoginErrorNum()).orElse(0) >= GlobalConfig.getMaxLoginWithNoCaptchaCode()) {
+                if (captchaCheck.isNotSuccess()) {
+                    CpRequestUtils.setNeedCaptcha(request, true);
+                    throw new AuthenticationException(new PostException(captchaCheck));
+                }
+            }
+            // 2. 查看账户是否已经被禁用
+            if (DicCommon.State.disable.isValue(user.getState())) {
+                throw new AuthenticationException(new PostException(ELoginPostCode.ACCOUNT_IS_DISABLED));
             }
         } catch (AuthenticationException e) {
+            // 登录失败后, 执行失败处理逻辑成功后, 依然返回 true, 执行 controller 的 `/login`
+            log.info("登录失败 : {} ==> AuthenticationException : {} ", token.getUsername(), e.getClass().getName());
             return this.onLoginFailure(token, e, request, response);
         }
         return this.onLoginSuccess(token, subject, request, response);
     }
 
     /**
-     * 登录失败执行逻辑
+     * 登录失败执行逻辑, 如果返回 true, 则将继续走过滤器, controller, 返回false 则不再走接下来的过滤器.
      */
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-        log.debug("onLoginFailure");
         // 1. 记录登录错误次数 + 1
         final AccUser user = CpSessionUtils.getUser();
-        user.setLoginErrorNum(Optional.of(user.getLoginErrorNum()).orElse(0) + 1);
-        iAccUser.updateByPrimaryKey(user);
+        if (user != null) {
+            user.setLoginErrorNum(Optional.of(user.getLoginErrorNum()).orElse(0) + 1);
+            iAccUser.updateByPrimaryKey(user);
+        }
         // 2. 清除 session 等
         // 3. 如果原先已登录, 则执行退出登录方法
         SecurityUtils.getSubject().logout();
-        return super.onLoginFailure(token, e, request, response);
+        // 执行父类 onLoginFailure 方法, 若不执行该方法, 则视为登录成功
+        super.onLoginFailure(token, e, request, response);
+
+        // 根据实际情况, 抛出 PostException
+        if (e instanceof UnknownAccountException) {
+            throw new PostException(ELoginPostCode.USER_NOT_FOUND);
+        } else if (e instanceof IncorrectCredentialsException) {
+            throw new PostException(ELoginPostCode.USER_OR_PASSWORD_ERROR);
+        }
+        final Throwable cause = e.getCause();
+        if (cause instanceof PostException) {
+            throw (PostException)cause;
+        }
+        throw e;
     }
 
     /**
      * 登录成功执行逻辑
+     * 父类方法,里面有 issueSuccessRedirect(request, response); 是登录成功之后, 强制跳转至登录页面, 现取消这句话.
      */
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) {
-        log.debug("onLoginSuccess");
+        log.debug("login success ==> user: {} ", token.getPrincipal());
         try {
             // 1. 重置登录次数
             final AccUser user = CpSessionUtils.getUser();
             user.setLoginErrorNum(0);
             iAccUser.updateByPrimaryKey(user);
-            // 初始化 session 等
-            return super.onLoginSuccess(token, subject, request, response);
+            return false;
         } catch (Exception e) {
             log.error(e.getMessage());
-            return onLoginFailure(token, new AuthenticationException("登录成功后相应失败", e), request, response);
+            return onLoginFailure(token, new AuthenticationException("登录成功后响应失败", e), request, response);
         }
     }
 
     /**
-     * 额外进行验证
+     * 判断是否是 ajax 请求
      */
-    private IPostCode extraCheck(ServletRequest request) {
-        log.debug("extraCheck");
-        // 获取用户对象, 用户对象在subject.login()调用 doGetAuthenticationInfo() 方法时被存在session里
-        @NonNull final AccUser user = CpSessionUtils.getUser();
-        // 1. 如果错误次数过多, 则需要验证码
-        if (Optional.ofNullable(user.getLoginErrorNum()).orElse(0) >= GlobalConfig.getMaxLoginWithNoCaptchaCode()) {
-            String checkCode = request.getParameter("captcha");
-            final IPostCode iPostCode = CaptchaUtils.checkKaptchaCode((HttpServletRequest) request, checkCode, user);
-            if (iPostCode.isNotSuccess()) {
-                return iPostCode;
-            }
-        }
-        // 2. 检查用户状态
-        // 当前账户已禁用
-        if (DicCommon.State.disable.isValue(user.getState())) {
-            return ELoginPostCode.ACCOUNT_IS_DISABLED;
-        }
-        return ECommonPostCode.NO_EXCEPTION;
+    private boolean isAjaxRequest(ShiroHttpServletRequest request) {
+        String requestedWith = request.getHeader("X-Requested-With");
+        return "XMLHttpRequest".equalsIgnoreCase(requestedWith);
     }
-
 
 }

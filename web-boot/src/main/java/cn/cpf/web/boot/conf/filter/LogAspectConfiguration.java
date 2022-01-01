@@ -67,14 +67,13 @@ public class LogAspectConfiguration {
         }
 
         final String name = Thread.currentThread().getName();
-        log.debug("\n [{} call start] ==> {} : {}" +
-                        "\n[DEBUG] Controller: {} ==> {}" +
-                        "\n[DEBUG] Params    : {}",
-                name, request.getRequestURL(), targetMethod.getDeclaringClass().getName()
-                , targetMethod.getName(), request.getMethod(), JsonUtils.toJson(arguments));
+
+        log.info("\n     [{} call start] ==> [{}] {} : {}::{}\n     Params    : {} \n session: {}",
+                name, request.getMethod(), request.getRequestURL(), targetMethod.getDeclaringClass().getName()
+                , targetMethod.getName(), JsonUtils.toJson(arguments), request.getSession().getId());
         //获取返回对象
         Object object = proceedingJoinPoint.proceed();
-        log.debug("\n [{} call end] ==> {}", name, object);
+        log.info("\n     [{} call end] ==> {}", name, object);
         return object;
     }
 

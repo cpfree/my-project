@@ -1,12 +1,14 @@
 package cn.cpf.web.base.lang.base;
 
+import java.io.Serializable;
+
 /**
  * <b>Description : </b> 往前台传递调用信息的接口
  *
  * @author CPF
  * @date 2019/3/12 10:34
  **/
-public interface IPostCode {
+public interface IPostCode extends Serializable {
 
     /**
      * 获取代码

@@ -6,10 +6,11 @@ public enum ELoginPostCode implements IPostCode {
 
     DEFAULT("0000", "未发现异常"),
     LOGIN_SUCCESS("0123", "登陆成功"),
+    LOGIN_REQUEST_ERROR("1697", "请求数据异常"),
     LOGIN_FAILURE("1401", "账户密码验证失败"),
     PHONE_PWD_MATCH("1402", "手机号和密码匹配成功"),
     VERIFICATION_CODE_NOT_FOUND("1403", "请输入图片验证码"),
-    VERIFICATION_CODE_ERROR("1404", "图片验证码错误"),
+    VERIFICATION_CODE_NOT_MATCH("1404", "图片验证码错误"),
     VERIFICATION_CODE_INVALIDATION("1405", "图片验证码失效"),
     USER_OR_PASSWORD_ERROR("1406", "用户名或密码错误"),
     USER_NOT_FOUND("1407", "未发现用户"),
@@ -20,7 +21,7 @@ public enum ELoginPostCode implements IPostCode {
     USER_ROLE_NOT_FOUND("1412", "未发现用户角色"),
     USER_INSTITUTION_IS_NOT_FOUND("1413", "未发现用户所属机构"),
     USER_INSTITUTION_IS_NOT_UNIQUE("1414", "用户机构不唯一"),
-    INSTITUTIONAL_ABNORMAL_STATE("1415", "机构非正常状态"),
+    LOGIN_ERROR("1415", "登录失败"),
 
     // 开发大厅
     youAccountIsWaitingInstManagerVerify("1417", "当前手机号已注册, 现在在审核中, 请等待机构管理员审核!");

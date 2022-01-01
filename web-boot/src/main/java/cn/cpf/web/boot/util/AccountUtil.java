@@ -20,13 +20,11 @@ public class AccountUtil {
     public static String passwordEncode(String password, String salt) {
         final byte[] passwordBytes = password.getBytes();
         final byte[] saltBytes = salt.getBytes();
-        final int len = passwordBytes.length + saltBytes.length;
-        byte[] bytes = new byte[len];
-        System.arraycopy(passwordBytes, 0, bytes, 0, passwordBytes.length);
-        System.arraycopy(passwordBytes, 0, bytes, passwordBytes.length, len);
+        final int passwordLength = passwordBytes.length;
+        byte[] bytes = new byte[passwordLength + saltBytes.length];
+        System.arraycopy(passwordBytes, 0, bytes, 0, passwordLength);
+        System.arraycopy(saltBytes, 0, bytes, passwordLength, saltBytes.length);
         return DigestUtils.md5DigestAsHex(bytes);
     }
-
-
 
 }

@@ -167,7 +167,14 @@ let accountModal = new Vue({
 
                     let _this = this;
                     $.sendPostRequest(apiUrl.request.loginVerification, formParams, function (data) {
-                        console.log('登录成功');
+                         _this.$confirm('登录成功, 跳转至首页面?', '登录成功', {
+                           confirmButtonText: '确定',
+                           type: 'success',
+                           showCancelButton: false,
+                           title: ''
+                         }).then(() => {
+                           $.sendFormRequest(apiUrl.request.loginVerification, formParams, top.document);
+                         });
                     },  function (data, status) {
                         if (data.needCaptcha) {
                             _this.needLoginCaptcha = data.needCaptcha;

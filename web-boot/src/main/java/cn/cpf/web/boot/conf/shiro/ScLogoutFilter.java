@@ -26,7 +26,7 @@ public class ScLogoutFilter extends LogoutFilter {
      * 初始设定登出后跳转的url, 默认为 "/"
      */
     public ScLogoutFilter() {
-        this.setRedirectUrl(PageTree.Base.LOGIN);
+        this.setRedirectUrl("/login");
     }
 
     /**

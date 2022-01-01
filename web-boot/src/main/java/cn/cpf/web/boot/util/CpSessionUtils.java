@@ -1,10 +1,12 @@
 package cn.cpf.web.boot.util;
 
+import cn.cpf.web.base.lang.base.IPostCode;
 import cn.cpf.web.base.model.entity.AccUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 
 /**
  * <b>Description : </b>
@@ -18,6 +20,10 @@ public class CpSessionUtils {
     /**
      * 存储用户信息的 session Key
      */
+    private static final String POST_CODE = "postcode";
+    /**
+     * 存储用户信息的 session Key
+     */
     private static final String USER_INFO_KEY = "user_info";
     /**
      * 角色
@@ -28,18 +34,24 @@ public class CpSessionUtils {
      */
     private static final String PERM_KEY = "perm_key";
 
+    public static Session getSession() {
+        final Session session = SecurityUtils.getSubject().getSession();
+        System.out.println("fff " + session.getId());
+        return session;
+    }
+
     /**
      * 设置用户对象
      */
     public static void setUser(@NonNull AccUser accUser) {
-        SecurityUtils.getSubject().getSession().setAttribute(USER_INFO_KEY, accUser);
+        getSession().setAttribute(USER_INFO_KEY, accUser);
     }
 
     /**
      * 获取用户对象
      */
     public static AccUser getUser() {
-        return (AccUser) SecurityUtils.getSubject().getSession().getAttribute(USER_INFO_KEY);
+        return (AccUser) getSession().getAttribute(USER_INFO_KEY);
     }
 
     /**

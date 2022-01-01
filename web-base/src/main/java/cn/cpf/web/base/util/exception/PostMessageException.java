@@ -1,21 +1,15 @@
 package cn.cpf.web.base.util.exception;
 
-import cn.cpf.web.base.lang.base.IPostCode;
-import lombok.NonNull;
-
 /**
- * <b>Description : </b>
+ * <b>Description : </b> 用于向前台传送消息
  *
  * @author CPF
- * @date 2019/6/14 15:07
+ * @date 2019/7/26 18:39
  **/
-public class PostException extends RuntimeException {
+public class PostMessageException extends RuntimeException {
 
-    private final IPostCode postCode;
-
-    public PostException(@NonNull IPostCode postCode) {
-        super(postCode.getDesc());
-        this.postCode = postCode;
+    public PostMessageException(String message) {
+        super(message);
     }
 
     /**
@@ -31,13 +25,8 @@ public class PostException extends RuntimeException {
      *              unknown.)
      * @since 1.4
      */
-    public PostException(IPostCode postCode, Throwable cause) {
-        super(cause);
-        this.postCode = postCode;
-    }
-
-    public IPostCode getPostCode() {
-        return postCode;
+    public PostMessageException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }
