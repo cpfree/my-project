@@ -6,10 +6,15 @@ import cn.cpf.web.boot.conf.shiro.ScLogoutFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,6 +53,9 @@ public class ShiroConfig {
         final DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(realm());
         manager.setCacheManager(cacheManager());
+        // 将 CookieRememberMeManager 注入到 SecurityManager 中，否则不会生效
+        manager.setRememberMeManager(rememberMeManager());
+        manager.setSessionManager(sessionManager());
         return manager;
     }
 
@@ -88,9 +96,9 @@ public class ShiroConfig {
         // 要求认证, 且有 document:read 的权限
         chainDefinition.addPathDefinition("/docs/**", "authc, perms[document:read]");
 
-
         // 要求用户权限 尽量不要设置：("/**", "authc"): 这种如果页面访问不到,则会导致返回登陆页面,而不是跳转到404页面.
-        chainDefinition.addPathDefinition("/authc/**", "authc");
+        // 对所有用户认证, authc 表示需要认证才能进行访问; user 表示配置记住我或认证通过可以访问的地址
+        chainDefinition.addPathDefinition("/authc/**", "user");
 
         chainDefinition.addPathDefinition("/**", "anon");
         return chainDefinition;
@@ -104,6 +112,52 @@ public class ShiroConfig {
         return new MemoryConstrainedCacheManager();
     }
 
+    /**
+     * 添加该注解, 可以防止浏览器初次访问, 被shiro重定向至相关页面时, url 后面有一个 `;jsessionid=XXXIX`
+     */
+    @Bean
+    protected DefaultWebSessionManager sessionManager() {
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
+        return sessionManager;
+    }
+
+
+    @Bean
+    public SimpleCookie rememberMeCookie(){
+        // 这个参数是 cookie 的名称，叫什么都行,我这块取名 rememberMe
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        // setcookie 的 httponly 属性如果设为 true 的话，会增加对 xss 防护的安全系数，
+        // 只能通过http访问，javascript无法访问，防止xss读取cookie
+        simpleCookie.setHttpOnly(true);
+        simpleCookie.setPath("/");
+        // 记住我 cookie 生效时间30天 ,单位是秒
+        simpleCookie.setMaxAge(2592000);
+        return simpleCookie;
+    }
+
+    /**
+     * cookie管理对象;记住我功能,rememberMe管理器
+     */
+    @Bean
+    public CookieRememberMeManager rememberMeManager(){
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        //rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
+        cookieRememberMeManager.setCipherKey(Base64.decode("SInVhmFL123J7y3KpOPFag=="));
+        return cookieRememberMeManager;
+    }
+
+    /**
+     * FormAuthenticationFilter 过滤器 过滤 记住我
+     */
+    @Bean
+    public FormAuthenticationFilter formAuthenticationFilter(){
+        FormAuthenticationFilter formAuthenticationFilter = new FormAuthenticationFilter();
+        // 对应 rememberMeCookie() 方法中的 name
+        formAuthenticationFilter.setRememberMeParam("rememberMe");
+        return formAuthenticationFilter;
+    }
 
     /**
      * <br> 添加一个 FilterRegistrationBean 来取消 Spring 对 ScLoginAuthenticationFilter 的注册

@@ -99,7 +99,8 @@ let accountModal = new Vue({
         loginForm: {
             username : '',
             password : '',
-            captcha : ''
+            captcha : '',
+            rememberMe: false
         },
         loginDialogVisible: false,
         needLoginCaptcha : false,
@@ -162,7 +163,7 @@ let accountModal = new Vue({
                         username : form.username,
                         password : passwordMD5,
                         captcha : form.captcha,
-                        rememberMe : false
+                        rememberMe : form.rememberMe
                     };
 
                     let _this = this;

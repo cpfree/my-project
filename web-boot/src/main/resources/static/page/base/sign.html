@@ -158,10 +158,18 @@
                            <div style="width: 100%; padding-bottom: 15px;margin: 0 auto;text-align: center;">
                               <el-button type="primary" @click="login">登 陆</el-button>
                            </div>
-                           <div style="padding-bottom: 25px;">
-                              <a @click="toSetPwd" style="float:right;cursor: pointer; color: goldenrod"><span
-                                    style="color: var(--i-orange)">忘记密码</span></a>
-                           </div>
+                           <el-row justify="center" :gutter="3">
+                              <el-col :xs="12" :sm="12" :md="12">
+                                 <el-checkbox v-model="loginForm.rememberMe" style="float:left">
+                                    <span style="color: var(--i-orange)">记住我</span>
+                                 </el-checkbox>
+                              </el-col>
+                              <el-col :xs="12" :sm="12" :md="12">
+                                 <el-link @click="toSetPwd" target="_blank" style="float:right">
+                                    <span style="color: var(--i-orange)">忘记密码</span>
+                                 </el-link>
+                              </el-col>
+                           </el-row>
                         </el-form>
                      </div>
                   </el-tab-pane>
