@@ -8,8 +8,12 @@ import com.github.cosycode.codedict.core.IDictItem;
  * @author CPF
  * @date 2019/4/2 14:51
  **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public interface DicCommonOrganization {
 
+    /**
+     * 角色枚举字典
+     */
     enum Role implements IDictItem {
 
         Admin("Admin", "管理员"),

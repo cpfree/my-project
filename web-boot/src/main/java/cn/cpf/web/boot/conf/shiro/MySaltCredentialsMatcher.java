@@ -3,10 +3,7 @@ package cn.cpf.web.boot.conf.shiro;
 import cn.cpf.web.base.model.entity.AccUser;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.util.DigestUtils;
 
 /**

@@ -8,6 +8,7 @@ import cn.cpf.web.base.lang.base.IPostCode;
  * @author CPF
  * @date 2019/4/10 11:34
  **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public enum ESysConfigPostCode implements IPostCode {
 
     sysConfigFailure("3032", "系统配置异常");

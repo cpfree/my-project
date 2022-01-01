@@ -8,6 +8,7 @@ import cn.cpf.web.base.lang.base.IPostCode;
  * @author CPF
  * @date 2019/3/12 10:57
  **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public enum EMailPostCode implements IPostCode {
 
     DEFAULT("0000", "未发现异常!"),

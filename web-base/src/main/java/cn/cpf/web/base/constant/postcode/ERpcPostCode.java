@@ -8,6 +8,7 @@ import cn.cpf.web.base.lang.base.IPostCode;
  * @author CPF
  * @date 2019/4/10 11:19
  **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public enum ERpcPostCode implements IPostCode {
 
     rpcKeyIdErr("5678", "远程调用标记错误"),

@@ -8,6 +8,7 @@ import cn.cpf.web.base.lang.base.IPostCode;
  * @author CPF
  * @date 2019/6/14 15:08
  **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public enum EExceptionPostCode implements IPostCode {
 
     notFoundInstGuidFromSession("5901", "未发现您的机构或会话过期", "未从session中发现您的机构信息");

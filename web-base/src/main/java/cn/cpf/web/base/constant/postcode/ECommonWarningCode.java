@@ -8,6 +8,7 @@ import cn.cpf.web.base.lang.base.IWarningCode;
  * @author CPF
  * @date 2019/10/25 11:31
  **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public enum ECommonWarningCode implements IWarningCode {
 
     /**

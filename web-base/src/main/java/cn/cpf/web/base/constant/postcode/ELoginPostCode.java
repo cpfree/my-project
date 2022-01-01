@@ -2,6 +2,15 @@ package cn.cpf.web.base.constant.postcode;
 
 import cn.cpf.web.base.lang.base.IPostCode;
 
+/**
+ * <b>Description : </b>
+ * <p>
+ * <b>created in </b> 2022/1/1
+ * </p>
+ *
+ * @author CPF
+ **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public enum ELoginPostCode implements IPostCode {
 
     DEFAULT("0000", "未发现异常"),
@@ -15,16 +24,15 @@ public enum ELoginPostCode implements IPostCode {
     USER_OR_PASSWORD_ERROR("1406", "用户名或密码错误"),
     USER_NOT_FOUND("1407", "未发现用户"),
     ACCOUNT_IS_EXIST("1408", "账号已存在, 请直接登陆或修改密码"),
-    ACCOUNT_IS_DISABLED("1409", "您的账号已被禁用，请联系您的机构管理员"),
+    ACCOUNT_IS_LOCKED("1404", "您的账号已被锁定, 请联系管理员解锁"),
+    ACCOUNT_IS_DISABLED("1409", "您的账号已被禁用，请联系管理员"),
     ACCOUNT_IS_CLOSED("1410", "用户已注销"),
     ACCOUNT_IS_PREPARATION("1411", "用户待激活"),
     USER_ROLE_NOT_FOUND("1412", "未发现用户角色"),
     USER_INSTITUTION_IS_NOT_FOUND("1413", "未发现用户所属机构"),
     USER_INSTITUTION_IS_NOT_UNIQUE("1414", "用户机构不唯一"),
     LOGIN_ERROR("1415", "登录失败"),
-
-    // 开发大厅
-    youAccountIsWaitingInstManagerVerify("1417", "当前手机号已注册, 现在在审核中, 请等待机构管理员审核!");
+    ;
 
     private final String code;
 

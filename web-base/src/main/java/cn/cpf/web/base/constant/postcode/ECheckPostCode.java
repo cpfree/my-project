@@ -8,6 +8,7 @@ import cn.cpf.web.base.lang.base.IPostCode;
  * @author CPF
  * @date 2019/6/17 19:13
  **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public enum ECheckPostCode implements IPostCode {
 
     instNameIsExist("0501", "机构名称已经存在!");

@@ -8,6 +8,7 @@ import cn.cpf.web.base.lang.base.IPostCode;
  * @author CPF
  * @date 2019/4/25 15:55
  **/
+@SuppressWarnings({"AlibabaEnumConstantsMustHaveComment", "java:S115"})
 public enum EDataLostPostCode implements IPostCode {
 
     fileDownloadIoException("5006", "文件下载失败", "文件下载IO异常"),

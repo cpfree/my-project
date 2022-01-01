@@ -1,5 +1,6 @@
 package cn.cpf.web.boot.conf.shiro;
 
+import cn.cpf.web.base.constant.dic.DicAccUser;
 import cn.cpf.web.base.constant.dic.DicCommon;
 import cn.cpf.web.base.constant.postcode.ELoginPostCode;
 import cn.cpf.web.base.lang.base.IPostCode;
@@ -159,6 +160,10 @@ public class ScLoginFilter extends FormAuthenticationFilter {
             if (DicCommon.State.disable.isValue(user.getState())) {
                 throw new AuthenticationException(new PostException(ELoginPostCode.ACCOUNT_IS_DISABLED));
             }
+            // 3. 查看账户是否被锁定
+            if (DicAccUser.LockType.disable.isValue(user.getLockType())) {
+                throw new AuthenticationException(new PostException(ELoginPostCode.ACCOUNT_IS_LOCKED));
+            }
         } catch (AuthenticationException e) {
             // 登录失败后, 执行失败处理逻辑成功后, 依然返回 true, 执行 controller 的 `/login`
             log.info("登录失败 : {} ==> AuthenticationException : {} ", token.getUsername(), e.getClass().getName());
@@ -175,7 +180,11 @@ public class ScLoginFilter extends FormAuthenticationFilter {
         // 1. 记录登录错误次数 + 1
         final AccUser user = CpSessionUtils.getUser();
         if (user != null) {
-            user.setLoginErrorNum(Optional.of(user.getLoginErrorNum()).orElse(0) + 1);
+            final int loginErrorNum = Optional.of(user.getLoginErrorNum()).orElse(0) + 1;
+            if (loginErrorNum >= GlobalConfig.getTimeOfLockWhenLoginFailure()) {
+                user.setLockType(DicAccUser.LockType.disable.value());
+            }
+            user.setLoginErrorNum(loginErrorNum);
             iAccUser.updateByPrimaryKey(user);
         }
         // 2. 清除 session 等
