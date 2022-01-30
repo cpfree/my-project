@@ -1,14 +1,23 @@
 //package cn.cpf.web.boot.conf.filter;
 //
 //import lombok.extern.slf4j.Slf4j;
+//import org.springframework.context.annotation.Configuration;
 //import org.springframework.web.servlet.HandlerInterceptor;
 //import org.springframework.web.servlet.ModelAndView;
 //
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 //
+///**
+// * <b>Description : </b>
+// * <p>
+// * <b>created in </b> 2021/12/29
+// * </p>
+// *
+// * @author CPF
+// **/
 //@Slf4j
-//public class ActionInterceptor implements HandlerInterceptor {
+//public class ScActionInterceptor implements HandlerInterceptor {
 //
 //    /**
 //     * 预处理回调方法，实现处理器的预处理（如检查登陆），第三个参数为响应的处理器，自定义 Controller
@@ -27,6 +36,8 @@
 //     */
 //    @Override
 //    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+//
+//        log.debug("spring filter: postHandle");
 //    }
 //
 //    /**
@@ -34,6 +45,7 @@
 //     */
 //    @Override
 //    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+//        log.debug("spring filter: afterCompletion");
 //    }
 //
 //}

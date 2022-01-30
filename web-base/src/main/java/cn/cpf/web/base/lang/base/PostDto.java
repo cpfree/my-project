@@ -13,7 +13,7 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDto<T> implements Serializable {
 
-    transient private IPostCode returnCode = null;
+    private transient IPostCode returnCode = null;
 
     private T bean = null;
 

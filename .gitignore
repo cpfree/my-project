@@ -19,3 +19,6 @@ HELP.md
 /mod/dict/target/
 /mod/plugins/target/
 /.doc/
+
+**/resources/config/application.yml
+

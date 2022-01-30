@@ -18,6 +18,8 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.apache.shiro.web.filter.authc.*;
+import org.apache.shiro.web.filter.authz.*;
 
 /**
  * <b>Description : </b> shiro 的配置文件
@@ -64,14 +66,29 @@ public class ShiroConfig {
      *
      * 若没有 @Bean("shiroFilterFactoryBean") 则当前 Bean 生效
      *
-     * authc: 所有url都必须认证通过才可以访问;
-     * anon: 所有url都都可以匿名访问;
-     * user: remember me的可以访问
-     *
      * 设置问题
      * 1. 尽量不要设置为 chainDefinition.addPathDefinition("/**", "authc");
+     * <p>
+     * <br><br><b>认证过滤器</b>
+     * <br> anon : {@link AnonymousFilter} 没有参数，表示可以匿名使用
+     * <br> authc : {@link FormAuthenticationFilter} 表示需要认证(登录)才能访问，没有参数
+     * <br> authcBasic : {@link BasicHttpAuthenticationFilter} 没有参数表示httpBasic认证
+     * <br> user : {@link UserFilter} 没有参数表示必须存在用户，当登入操作时不做检查, 简单来说, 就是 remember me的可以访问
      *
-     * @return 过滤器
+     * <br><br><b>授权过滤器</b>
+     * <br> perms : {@link org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter}
+     *              参数可以写多个，多个时必须加上引号，并且参数之间用逗号分割，例如/admins/user/**=perms["user:add:*,user:modify:*"]，
+     *              当有多个参数时必须每个参数都通过才通过，想当于isPermitedAll()方法。
+     * <br> port : {@link PortFilter} 当请求的url的端口不是8081是跳转到schemal://serverName:8081?queryString,其中schmal是协议http或https等，
+     *              serverName是你访问的host,8081是url配置里port的端口，queryString是你访问的url里的？后面的参数。
+     * <br> rest : {@link HttpMethodPermissionFilter} 根据请求的方法，相当于/admins/user/**=perms[user:method] ,其中method为post，get，delete等。
+     * <br> roles : {@link RolesAuthorizationFilter} 参数可以写多个，多个时必须加上引号，并且参数之间用逗号分割，当有多个参数时，例如admins/user/**=roles["admin,guest"], 每个参数通过才算通过，相当于hasAllRoles()方法。
+     * <br> ssl : {@link SslFilter} 没有参数，表示安全的url请求，协议为https
+     *
+     * <br><br><b>其它</b>
+     * <br> logout : {@link LogoutFilter} 退出的Filter实例
+     * <br> noSessionCreation : {@link org.apache.shiro.web.filter.session.NoSessionCreationFilter} 未创建session的Filter实例
+     * </p>
      */
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {

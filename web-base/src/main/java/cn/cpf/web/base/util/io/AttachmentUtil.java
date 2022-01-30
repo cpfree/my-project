@@ -33,12 +33,13 @@ public class AttachmentUtil {
         String header = request.getHeader("User-Agent").toUpperCase();
         if (header.contains("MSIE") || header.contains("TRIDENT") || header.contains("EDGE")) {
             downLoadFileName = URLEncoder.encode(downLoadFileName, "utf-8");
-            downLoadFileName = downLoadFileName.replace("+", "%20");    //IE下载文件名空格变+号问题
+            // IE下载文件名空格变+号问题
+            downLoadFileName = downLoadFileName.replace("+", "%20");
         } else {
             downLoadFileName = new String(downLoadFileName.getBytes(), "ISO8859-1");
         }
-
-        response.setContentType("application/vnd.ms-excel;charset=utf-8");// 设置文件类型
+        // 设置文件类型
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
         response.setHeader("Content-Disposition", "attachment; filename=" + downLoadFileName);
 
         long fileLength = file.length();

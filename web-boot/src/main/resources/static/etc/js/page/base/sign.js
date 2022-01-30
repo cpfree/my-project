@@ -149,16 +149,14 @@ let accountModal = new Vue({
                 if (valid) {
                     let form = this.loginForm;
                     let password = form.password;
-                    let md = forge.md.md5.create();
-                    md.update(password);
-                    let passwordMD5 = md.digest().toHex();
-                    let nullMd = forge.md.md5.create();
-                    nullMd = nullMd.update("");
-                    let nullPassword = nullMd.digest().toHex();
+                    password = password.trim();
+                    let passwordMD5 = MD5(password);
+                    let nullPassword = MD5('');
                     if (passwordMD5 === nullPassword) {
-                        layer.msg("密码为空");
+                        _this.$message({showClose: true, type: 'warning', message: '密码为空'});
                         return ;
                     }
+
                     let formParams = {
                         username : form.username,
                         password : passwordMD5,
@@ -204,16 +202,14 @@ let accountModal = new Vue({
             let _this = this;
             let form = this.registerForm;
             let password = form.pwd1;
-            let md = forge.md.md5.create();
-            md.update(password);
-            let passwordMD5 = md.digest().toHex();
-            let nullMd = forge.md.md5.create();
-            nullMd = nullMd.update("");
-            let nullPassword = nullMd.digest().toHex();
+            password = password.trim();
+            let passwordMD5 = MD5(password);
+            let nullPassword = MD5('');
             if (passwordMD5 === nullPassword) {
-                layer.msg("密码为空");
+                _this.$message({showClose: true, type: 'warning', message: '密码为空'});
                 return ;
             }
+
             let formParams = {
                 username : form.username,
                 password : passwordMD5,

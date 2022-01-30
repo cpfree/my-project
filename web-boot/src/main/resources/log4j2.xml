@@ -46,7 +46,6 @@
         <Logger name="org.apache.commons" level="WARN"/>
         <Logger name="org.apache.struts" level="WARN"/>
         <Logger name="org.mybatis.spring" level="DEBUG"/>
-        <Logger name="ats.ity" level="DEBUG"/>
 
         <Root level="DEBUG">
             <AppenderRef ref="console_out_appender" />

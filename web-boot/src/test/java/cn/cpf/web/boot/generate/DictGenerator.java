@@ -10,12 +10,11 @@ import cn.cpf.web.dal.combine.SysDesignCombineMapper;
 import cn.cpf.web.service.base.api.ISysDictItem;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +27,6 @@ import java.util.stream.Collectors;
  * @date 2019/12/2 17:35
  **/
 @SpringBootTest(classes = WebBootApplication.class)
-@RunWith(SpringJUnit4ClassRunner.class)
 class DictGenerator {
 
     @Autowired
@@ -37,7 +35,7 @@ class DictGenerator {
     private SysDesignCombineMapper designCombineMapper;
 
     @Test
-    void contextLoads() {
+    void contextLoads() throws IOException {
         final String[] tableArr = {"sys_dict_item"};
         for (String table : tableArr) {
 //        final List<SysDictItem> sysDictItemList = iSysDictItem.selectByExample(new SysDictItemExample());
@@ -46,7 +44,6 @@ class DictGenerator {
             final List<SysFieldBo> sysFieldBos = designCombineMapper.selectSysFieldBoByTableName(table);
             final Set<String> dictTypeSet = sysFieldBos.stream().map(SysFieldExtend::getDictType).filter(StringUtils::isNotBlank).collect(Collectors.toSet());
             final Map<String, List<SysDictItem>> stringListMap = iSysDictItem.selectByDictType(dictTypeSet);
-
 
             final TableDataHandler tableDataHandler = new TableDataHandler();
             tableDataHandler.setSysTable(sysTableBo);

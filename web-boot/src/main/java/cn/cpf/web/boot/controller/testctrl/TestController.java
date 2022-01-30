@@ -1,16 +1,12 @@
-package cn.cpf.web.boot.testctrl;
+package cn.cpf.web.boot.controller.testctrl;
 
-import cn.cpf.web.boot.conf.RocketConfig;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <b>Description : </b> 用于测试的 Controller, 其中的方法与业务无关
@@ -24,14 +20,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/test")
 public class TestController {
-
-    @Autowired
-    private RocketConfig rocketConfig;
-
-    @PostConstruct
-    public void start() {
-        log.warn(rocketConfig);
-    }
 
     @RequestMapping({"/", "/index"})
     public String index() {
